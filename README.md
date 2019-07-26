@@ -6,4 +6,4 @@
       - doit pouvoir gérer plus de 10000 entrées en moins de 9s
 
   2. Resolution:
-      - Voir algorythme de Edmund Karp
+      - Voir algorythme de Edmond Karp

@@ -4,7 +4,7 @@
 
   1. Parser:
       - Doit pouvoir gérer plus de 4000 entrées en moins de 5s (9s mediocre, + inacceptable)
-      - Établir une structure en liste chaînée (Position des boites + Liaisons entre elles)
+      - Établir une structure en liste chaînée ou arbre (Position des boites + Liaisons entre elles)
 
   2. Resolution:
       - Voir algorythme de Edmond Karp

@@ -6,7 +6,7 @@
 #    By: naali <naali@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/17 16:13:53 by naali             #+#    #+#              #
-#    Updated: 2019/07/26 11:01:23 by nabih            ###   ########.fr        #
+#    Updated: 2019/07/26 17:08:29 by nabih            ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -21,11 +21,11 @@ CC				=	gcc
 CFLAG 			=	-Wall -Wextra -Werror
 
 INCLUDES		=	-I./includes	\
-					-I./libft
+					-I./libft/includes
 
 OBJ_PATH		=	./objs
 
-SRC				=	# SOURCE ICI
+SRC				=	main.c
 
 OBJ 			=	$(addprefix $(OBJ_PATH)/, $(SRC:%.c=%.o))
 
@@ -63,7 +63,6 @@ fclean			:	clean
 					@make fclean -C libft
 					@rm -rf $(NAME)
 					@echo "${vertfonce}DONE${neutre}"
-					@rm -f filler.trace
 
 libs			:
 					make -C ./libft/

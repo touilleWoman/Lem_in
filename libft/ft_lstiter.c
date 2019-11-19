@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
+/*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/26 16:48:42 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/19 10:16:33 by naali            ###   ########.fr       */
+/*   Created: 2018/11/13 16:44:50 by naali             #+#    #+#             */
+/*   Updated: 2018/11/16 01:28:45 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <lem_in.h>
+#include "./libft.h"
 
-int			main(void)
+void		ft_lstiter(t_list *lst, void (*f)(t_list *elem))
 {
-	return (0);
+	t_list	*tmp;
+
+	tmp = NULL;
+	if (lst != NULL && f != NULL)
+		while (lst != NULL)
+		{
+			tmp = lst->next;
+			(*f)(lst);
+			lst = tmp;
+		}
 }

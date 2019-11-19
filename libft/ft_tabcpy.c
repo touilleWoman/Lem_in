@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_tabcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/26 16:48:42 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/19 10:16:33 by naali            ###   ########.fr       */
+/*   Created: 2019/11/07 13:54:48 by nabih             #+#    #+#             */
+/*   Updated: 2019/11/07 14:21:59 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <lem_in.h>
+#include "libft.h"
 
-int			main(void)
+char			**ft_tabcpy(char **dst, const char **src, unsigned int max)
 {
-	return (0);
+	unsigned int	i;
+
+	i = 0;
+	while (i < max)
+	{
+		ft_strcpy(dst[i], src[i]);
+		i = i + 1;
+	}
+	return (dst);
 }

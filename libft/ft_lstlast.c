@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
+/*   By: naali <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/26 16:48:42 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/19 10:16:33 by naali            ###   ########.fr       */
+/*   Created: 2018/11/17 17:57:04 by naali             #+#    #+#             */
+/*   Updated: 2018/11/19 12:25:52 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <lem_in.h>
+#include "./libft.h"
 
-int			main(void)
+void		ft_lstlast(t_list **alst, t_list *new)
 {
-	return (0);
+	t_list	*tmp;
+
+	tmp = NULL;
+	if (alst != NULL)
+		tmp = *alst;
+	while (tmp != NULL && tmp->next != NULL)
+		tmp = tmp->next;
+	if (tmp != NULL && new != NULL)
+		tmp->next = new;
 }

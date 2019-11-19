@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
+/*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/26 16:48:42 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/19 10:16:33 by naali            ###   ########.fr       */
+/*   Created: 2018/11/12 16:42:21 by naali             #+#    #+#             */
+/*   Updated: 2018/11/16 01:27:26 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <lem_in.h>
+#include "./libft.h"
 
-int			main(void)
+void		ft_putstr(char const *str)
 {
-	return (0);
+	size_t	i;
+
+	i = 0;
+	if (str == NULL)
+		return ;
+	while (str[i] != '\0')
+	{
+		ft_putchar(str[i]);
+		i = i + 1;
+	}
 }

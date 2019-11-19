@@ -1,18 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
+/*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/26 16:48:42 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/19 10:16:33 by naali            ###   ########.fr       */
+/*   Created: 2018/11/18 11:49:51 by naali             #+#    #+#             */
+/*   Updated: 2018/11/18 12:32:29 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <lem_in.h>
+#include "./libft.h"
 
-int			main(void)
+size_t			ft_lstsize(t_list *alst)
 {
-	return (0);
+	size_t		size;
+	t_list		*tmp;
+
+	size = 0;
+	tmp = NULL;
+	if (alst != NULL)
+	{
+		tmp = alst;
+		while (tmp != NULL)
+		{
+			size = size + 1;
+			tmp = tmp->next;
+		}
+	}
+	return (size);
 }

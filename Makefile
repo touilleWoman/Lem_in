@@ -6,7 +6,7 @@
 #    By: naali <naali@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/17 16:13:53 by naali             #+#    #+#              #
-#    Updated: 2019/07/26 17:08:29 by nabih            ###   ########.fr        #
+#    Updated: 2019/11/19 10:14:37 by naali            ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -21,7 +21,7 @@ CC				=	gcc
 CFLAG 			=	-Wall -Wextra -Werror
 
 INCLUDES		=	-I./includes	\
-					-I./libft/includes
+					-I./libft
 
 OBJ_PATH		=	./objs
 

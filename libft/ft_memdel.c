@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
+/*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/26 16:48:42 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/19 10:16:33 by naali            ###   ########.fr       */
+/*   Created: 2018/11/12 13:04:41 by naali             #+#    #+#             */
+/*   Updated: 2018/11/16 01:28:04 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <lem_in.h>
+#include <stdlib.h>
+#include "./libft.h"
 
-int			main(void)
+void		ft_memdel(void **ap)
 {
-	return (0);
+	if (ap != NULL)
+	{
+		if (*ap != NULL)
+			free(*ap);
+		*ap = NULL;
+	}
 }

@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
+/*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/26 16:48:42 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/19 10:16:33 by naali            ###   ########.fr       */
+/*   Created: 2018/11/07 11:51:33 by naali             #+#    #+#             */
+/*   Updated: 2018/11/16 01:29:29 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <lem_in.h>
+#include "./libft.h"
 
-int			main(void)
+void		ft_bzero(void *s, size_t n)
 {
-	return (0);
+	size_t			i;
+	unsigned char	*cpy;
+
+	i = 0;
+	cpy = (unsigned char*)s;
+	while (i < n)
+	{
+		cpy[i] = 0;
+		i = i + 1;
+	}
 }

@@ -1,18 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
+/*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/26 16:48:42 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/19 10:16:33 by naali            ###   ########.fr       */
+/*   Created: 2018/11/07 11:33:12 by naali             #+#    #+#             */
+/*   Updated: 2018/11/16 01:36:33 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <lem_in.h>
+#include "./libft.h"
 
-int			main(void)
+void		*ft_memset(void *s, int c, size_t len)
 {
-	return (0);
+	size_t			i;
+	unsigned char	c_c;
+	unsigned char	*cpy;
+
+	i = 0;
+	c_c = (unsigned char)c;
+	cpy = (unsigned char*)s;
+	while (i < len)
+	{
+		cpy[i] = c_c;
+		i = i + 1;
+	}
+	return (s);
 }

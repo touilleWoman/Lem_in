@@ -1,18 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
+/*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/26 16:48:42 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/19 10:16:33 by naali            ###   ########.fr       */
+/*   Created: 2018/11/07 14:43:31 by naali             #+#    #+#             */
+/*   Updated: 2018/11/16 01:25:55 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <lem_in.h>
+#include "./libft.h"
 
-int			main(void)
+char		*ft_strncpy(char *dst, const char *src, size_t len)
 {
-	return (0);
+	size_t		i;
+
+	i = 0;
+	while (i < len && src[i] != '\0')
+	{
+		dst[i] = src[i];
+		i = i + 1;
+	}
+	while (i < len)
+	{
+		dst[i] = '\0';
+		i = i + 1;
+	}
+	return (dst);
 }

@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 17:03:23 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/20 06:17:02 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/20 11:50:54 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,11 @@ struct					s_node//	Liste des noeuds a visiter ou deja visite
 */
 
 t_path					*new_path(/*voir info a transmettre*/);
+void					pushback_path(t_path **start, t_path *node);
 void					del_path(t_path **start, uint32_t id);
 void					clear_path(t_path **start);
-void					swap_path(t_path *p1, t_path *p2);
-t_path					get_last_path(t_path **start);
+void					swap_id_path(t_path *p1, t_path *p2);
+t_path					*get_last_path(t_path **start);
 
 t_node					*new_node(/*voir info a transmettre*/);
 void					del_node(t_node **start, uint32_t id);

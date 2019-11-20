@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 16:48:42 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/19 10:16:33 by naali            ###   ########.fr       */
+/*   Updated: 2019/11/20 06:12:44 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,11 @@
 
 int			main(void)
 {
+	uint32_t		ui32;
+	unsigned int	ui;
+
+	ui = -1;
+	ui32 = -1;
+	printf("unsigned int = %u,  uint32_t = %u\n", ui, ui32);
 	return (0);
 }

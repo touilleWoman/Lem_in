@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 16:48:42 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/20 11:59:11 by naali            ###   ########.fr       */
+/*   Updated: 2019/11/21 19:25:46 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,13 @@ void		print_list_id(t_path **test)
 int			main(int ac, char **av)
 {
 	t_path		*test;
+	t_path		*dst;
 	uint32_t	i;
 	uint32_t	max;
 
 	i = 0;
 	test = NULL;
+	dst = NULL;
 	if (ac < 2)
 		return (0);
 	max = atoi(av[1]);
@@ -47,22 +49,26 @@ int			main(int ac, char **av)
 	}
 
 	print_list_id(&test);
+	printf("nb path == %u\n\n", count_path(test));
 
 	if (ac >= 3)
 	{
 		i = 2;
 		while (i < (uint32_t)ac)
 		{
-			del_path(&test, atoi(av[i]));
+			send_path_away(&test, &dst, atoi(av[i]));
 			i++;
 		}
-		swap_id_path(test, get_last_path(&test));
 	}
 
 	print_list_id(&test);
+	printf("nb path == %u\n\n", count_path(test));
+	print_list_id(&dst);
+	printf("nb path == %u\n", count_path(dst));
 
+	printf("src = %p\ndst = %p\n", test, dst);
 	clear_path(&test);
+	clear_path(&dst);
 
-	print_list_id(&test);
 	return (0);
 }

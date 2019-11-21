@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 17:03:23 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/20 11:50:54 by naali            ###   ########.fr       */
+/*   Updated: 2019/11/21 19:15:58 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct	s_node	t_node;
 
 struct					s_path//	Liste des chemins d'un seul noeud!!!
 {
-	uint32_t		id;//			static incrementer a la creation
+	uint32_t		id;//			Static incrementer a la creation
 	uint8_t			taken;//		Booleen Vrai ou Faux (Utiliser ou pas)
 	int				weight;//		Poids == predecesseur + 1; =======> sera peut etre changer en unsigned
 	t_path			*next;//		pointe sur le chemin suivant du meme noeud
@@ -42,9 +42,11 @@ struct					s_path//	Liste des chemins d'un seul noeud!!!
 
 struct					s_node//	Liste des noeuds a visiter ou deja visite
 {
-	uint32_t		id;//			static incrementer a la creation
+	uint32_t		id;//			Static incrementer a la creation
 	char			*name;//		Nom du noeud
 	uint8_t			taken;//		Booleen Vrai ou Faux (Utiliser ou pas)
+	uint8_t			start;//		Booleen Vrai ou Faux
+	uint8_t			end;//			Booleen Vrai ou Faux
 	t_path			*path_lst;//	Pointe sur 1er chemin de la liste des chemins connecter au noeud
 	t_node			*next;//		Pointe sur le noeud suivant
 };
@@ -54,12 +56,19 @@ struct					s_node//	Liste des noeuds a visiter ou deja visite
 **      DES LISTES
 */
 
-t_path					*new_path(/*voir info a transmettre*/);
+t_path					*new_path(/* surement les noms des noeuds entre lesquels il est */);
 void					pushback_path(t_path **start, t_path *node);
+void					pushfront_path(t_path **start, t_path *node);
+void					pushafter_path(t_path **start, uint32_t id, t_path *node);
+uint32_t				count_path(const t_path *start);
 void					del_path(t_path **start, uint32_t id);
 void					clear_path(t_path **start);
 void					swap_id_path(t_path *p1, t_path *p2);
 t_path					*get_last_path(t_path **start);
+t_path					*get_path_by_id(t_path **start, uint32_t id);
+t_path					*remove_from_path(t_path **start, uint32_t id,
+											uint8_t flag);
+void					send_path_away(t_path **src, t_path **dst, uint32_t id);
 
 t_node					*new_node(/*voir info a transmettre*/);
 void					del_node(t_node **start, uint32_t id);

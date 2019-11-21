@@ -6,12 +6,36 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 09:24:18 by naali             #+#    #+#             */
-/*   Updated: 2019/11/20 12:00:11 by naali            ###   ########.fr       */
+/*   Updated: 2019/11/21 19:21:59 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem_in.h>
 
+/*
+** Met les id des noeuds
+** a jour
+*/
+static void				update_id_path(t_path **start)
+{
+	uint32_t		id;
+	t_path			*tmp;
+
+	id = 1;
+	if (start != NULL && *start != NULL)
+	{
+		tmp = *start;
+		while (tmp != NULL)
+		{
+			tmp->id = id++;
+			tmp = tmp->next;
+		}
+	}
+}
+
+/*
+** Cree un nouveau noeud
+*/
 t_path					*new_path()
 {
 	t_path			*path;
@@ -27,6 +51,10 @@ t_path					*new_path()
 	return (path);
 }
 
+/*
+** Place un noeud
+** en fin de liste
+*/
 void					pushback_path(t_path **start, t_path *node)
 {
 	t_path			*tmp;
@@ -42,6 +70,75 @@ void					pushback_path(t_path **start, t_path *node)
 		*start = node;
 }
 
+/*
+** Place un noeud
+** en debut de liste
+*/
+void					pushfront_path(t_path **start, t_path *node)
+{
+	t_path			*tmp;
+	uint32_t		id;
+
+	if (start != NULL && node != NULL)
+	{
+		id = 1;
+		tmp = NULL;
+		node->next = *start;
+		*start = node;
+		update_id_path(start);
+	}
+}
+
+/*
+** Place le noeud apres le noeud
+** avec l'id passe en parametre
+*/
+void					pushafter_path(t_path **start, uint32_t id, t_path *node)
+{
+	t_path			*tmp;
+
+	if (start != NULL && *start != NULL && node != NULL)
+	{
+		tmp = *start;
+		while (tmp != NULL && tmp->id != id)
+			tmp = tmp->next;
+		if (tmp != NULL && tmp->id == id)
+		{
+			node->next = tmp->next;
+			tmp->next = node;
+			while (tmp != NULL)
+			{
+				tmp->id = id++;
+				tmp = tmp->next;
+			}
+		}
+		else
+			pushback_path(start, node);
+		update_id_path(start);
+	}
+}
+
+/*
+** Compte le nombre de
+** noeud dans la liste
+*/
+uint32_t				count_path(const t_path *start)
+{
+	uint32_t		nb;
+
+	nb = 0;
+	while (start != NULL)
+	{
+		start = start->next;
+		nb++;
+	}
+	return (nb);
+}
+
+/*
+** Renvoi le dernier
+** noeud de la liste
+*/
 t_path					*get_last_path(t_path **start)
 {
 	t_path			*tmp;
@@ -56,6 +153,28 @@ t_path					*get_last_path(t_path **start)
 	return (tmp);
 }
 
+/*
+** Renvoi un pointeur sur le noeud
+** avec l'id passe en parametre
+*/
+t_path					*get_path_by_id(t_path **start, uint32_t id)
+{
+	t_path			*tmp;
+
+	tmp = NULL;
+	if (start != NULL && *start != NULL)
+	{
+		tmp = *start;
+		while (tmp != NULL && tmp->id != id)
+			tmp = tmp->next;
+	}
+	return (tmp);
+}
+
+/*
+** Detruit le noeud
+** en fonction de l'id
+*/
 void					del_path(t_path **start, uint32_t id)
 {
 	t_path			*tmp1;
@@ -80,9 +199,14 @@ void					del_path(t_path **start, uint32_t id)
 				ft_memdel((void**)&tmp2);
 			}
 		}
+		update_id_path(start);
 	}
 }
 
+/*
+** Vide la liste et met
+** a NULL le pointeur
+*/
 void					clear_path(t_path **start)
 {
 	t_path			*tmp;
@@ -99,17 +223,105 @@ void					clear_path(t_path **start)
 	}
 }
 
-static void				ft_swap(int *val1, int *val2)
-{
-	int				tmp;
-
-	tmp = *val1;
-	*val1 = *val2;
-	*val2 = tmp;
-}
-
+/*
+** Echange les ids de 2 maillons
+** sans changer les positions des noeuds
+*/
 void					swap_id_path(t_path *p1, t_path *p2)
 {
 	if (p1 != NULL && p2 != NULL)
 		ft_swap((int*)&(p1->id), (int*)&(p2->id));
+}
+
+/*
+** Retire le noeud avec l'id passe en parametre de la liste
+** elle ne le detruit pas mais renvoi un pointeur sur lui.
+*/
+static t_path			*remov_first_path(t_path **start)
+{
+	t_path			*ret;
+
+	ret = *start;
+	*start = ret->next;
+	ret->next = NULL;
+	return (ret);
+}
+
+static t_path			*remov_last_path(t_path **start)
+{
+	t_path			*tmp;
+	t_path			*ret;
+
+	ret = get_last_path(start);
+	tmp = get_path_by_id(start, ret->id - 1);
+	tmp->next = NULL;
+	return (ret);
+}
+
+t_path					*remove_from_path(t_path **start, uint32_t id,\
+											uint8_t flag)
+{
+	t_path			*tmp;
+	t_path			*ret;
+
+	ret = NULL;
+	if (start != NULL && *start != NULL)
+	{
+		if (id > 1 && id < count_path(*start))
+		{
+			tmp = get_path_by_id(start, (id - 1));
+			ret = tmp->next;
+			tmp->next = ret->next;
+			ret->next = NULL;
+		}
+		else if (id == 1 || id == count_path(*start))
+			ret = (id == 1) ? remov_first_path(start) : remov_last_path(start);
+		(flag == LM_TRUE) ? update_id_path(start) : 0;
+	}
+	return (ret);
+}
+
+/*
+** Echange les positions de
+** deux noeuds
+*/
+void					swap_path_by_id(t_path **start, uint32_t id1, uint32_t id2)
+{
+	t_path			*tmp1;
+	t_path			*tmp2;
+
+	if ((id1 >= 1 && id1 <= count_path(*start))\
+		&& (id1 >= 1 && id1 <= count_path(*start)))
+	{
+		tmp1 = remove_from_path(start, id1, LM_FALSE);
+		tmp2 = remove_from_path(start, id2, LM_FALSE);
+		if (id1 < id2)
+		{
+			(id1 == 1) ? pushfront_path(start, tmp2)\
+				: pushafter_path(start, (id1 - 1), tmp2);
+			pushafter_path(start, (id2 - 1), tmp1);
+		}
+		else if (id1 > id2)
+		{
+			(id2 == 1) ? pushfront_path(start, tmp1)\
+				: pushafter_path(start, (id2 - 1), tmp1);
+			pushafter_path(start, (id1 - 1), tmp2);
+		}
+	}
+}
+
+/*
+** Transfert un noeud d'une liste
+** a une autre liste
+*/
+void					send_path_away(t_path **src, t_path **dst, uint32_t id)
+{
+	t_path			*tmp;
+
+	if ((src != NULL && *src != NULL) && (dst != NULL))
+	{
+		tmp = remove_from_path(src, id, LM_TRUE);
+		pushback_path(dst, tmp);
+		update_id_path(dst);
+	}
 }

@@ -6,7 +6,7 @@
 #    By: naali <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/09 11:18:25 by naali             #+#    #+#              #
-#    Updated: 2019/11/07 14:11:05 by nabih            ###   ########.fr        #
+#    Updated: 2019/11/21 16:30:02 by nabih            ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -35,7 +35,7 @@ SRC			=	ft_atoi.c			ft_bzero.c			ft_isalnum.c		ft_isalpha.c		ft_isascii.c	\
 				ft_putstr.c			ft_putendl.c		ft_putnbr.c			ft_putchar_fd.c		ft_putstr_fd.c	\
 				ft_putendl_fd.c		ft_putnbr_fd.c		ft_lstnew.c			ft_lstdelone.c		ft_lstdel.c		\
 				ft_lstadd.c			ft_lstiter.c		ft_lstmap.c			ft_lstlast.c		ft_lstfind.c	\
-				ft_lstsize.c		ft_lstfindsize.c	get_next_line.c		ft_tabcpy.c
+				ft_lstsize.c		ft_lstfindsize.c	get_next_line.c		ft_tabcpy.c			ft_swap.c
 
 SRCSDIR		=	.
 

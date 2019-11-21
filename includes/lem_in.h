@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 17:03:23 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/21 19:15:58 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/21 21:04:40 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # define LM_FALSE 0
 # define LM_SUCCESS 1
 # define LM_ERROR -1
+
+# define HASHCODE 1000
 
 typedef struct	s_path	t_path;
 typedef struct	s_node	t_node;

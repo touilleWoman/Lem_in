@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 17:03:23 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/21 21:04:40 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/22 19:49:08 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ typedef struct	s_node	t_node;
 
 struct					s_path//	Liste des chemins d'un seul noeud!!!
 {
-	uint32_t		id;//			Static incrementer a la creation
+	uint32_t		id;//			Static incrementer a la creation - modif de creation...
+	char			*linked[2];//	Stockage des noms de noeuds relier.
 	uint8_t			taken;//		Booleen Vrai ou Faux (Utiliser ou pas)
 	int				weight;//		Poids == predecesseur + 1; =======> sera peut etre changer en unsigned
 	t_path			*next;//		pointe sur le chemin suivant du meme noeud
@@ -44,7 +45,7 @@ struct					s_path//	Liste des chemins d'un seul noeud!!!
 
 struct					s_node//	Liste des noeuds a visiter ou deja visite
 {
-	uint32_t		id;//			Static incrementer a la creation
+	uint32_t		id;//			Static incrementer a la creation - modif de creation
 	char			*name;//		Nom du noeud
 	uint8_t			taken;//		Booleen Vrai ou Faux (Utiliser ou pas)
 	uint8_t			start;//		Booleen Vrai ou Faux

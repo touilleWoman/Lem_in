@@ -6,7 +6,7 @@
 #    By: naali <naali@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/17 16:13:53 by naali             #+#    #+#              #
-#    Updated: 2019/11/20 11:21:32 by naali            ###   ########.fr        #
+#    Updated: 2019/11/22 20:52:21 by nabih            ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -25,8 +25,10 @@ INCLUDES		=	-I./includes	\
 
 OBJ_PATH		=	./objs
 
-SRC				=	main.c			\
-					lst_path.c
+SRC				=	main.c				\
+					lst_node.c			\
+					lst_path.c			\
+					hash_encryption.c
 
 OBJ 			=	$(addprefix $(OBJ_PATH)/, $(SRC:%.c=%.o))
 

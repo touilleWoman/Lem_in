@@ -6,74 +6,55 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 16:48:42 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/22 19:57:10 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/22 23:20:32 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem_in.h>
 
-void		print_list_id(t_path **test)
+int				main(int ac, char **av)
 {
-	t_path	*tmp;
+	uint32_t	i;
+	t_lemin		lem;
 
-	if (test != NULL)
+	i = 1;
+	ft_bzero(lem.tab, sizeof(t_node*) * HASHCODE);
+	if (ac >= 2 && HASHCODE > 10)
 	{
-		tmp = *test;
-		while (tmp != NULL)
+		while (i < (uint32_t)ac)
 		{
-			printf("id noeud = %d a l'adress %p\n", tmp->id, tmp);
-			tmp = tmp->next;
+			add_node_in_tab(&lem, new_node(av[i], LM_FALSE, LM_FALSE));
+			i++;
 		}
-		if (*test != NULL)
-			ft_putchar('\n');
+		print_tab(lem.tab, HASHCODE);
 	}
+	return (0);
 }
 
-
 /*
-** MAIN Test
-** Structure
+** Test d'affichage
 */
-/* int			main(int ac, char **av) */
-/* { */
-/* 	t_path		*test; */
-/* 	t_path		*dst; */
-/* 	uint32_t	i; */
-/* 	uint32_t	max; */
+void			print_tab(t_node *(tab)[HASHCODE], uint32_t max)
+{
+	t_node		*tmp;
+	uint32_t	i;
 
-/* 	i = 0; */
-/* 	test = NULL; */
-/* 	dst = NULL; */
-/* 	if (ac < 2) */
-/* 		return (0); */
-/* 	max = atoi(av[1]); */
-/* 	while (i < max) */
-/* 	{ */
-/* 		pushback_path(&test, new_path()); */
-/* 		i++; */
-/* 	} */
-
-/* 	print_list_id(&test); */
-/* 	printf("nb path == %u\n\n", count_path(test)); */
-
-/* 	if (ac >= 3) */
-/* 	{ */
-/* 		i = 2; */
-/* 		while (i < (uint32_t)ac) */
-/* 		{ */
-/* 			send_path_away(&test, &dst, atoi(av[i])); */
-/* 			i++; */
-/* 		} */
-/* 	} */
-
-/* 	print_list_id(&test); */
-/* 	printf("nb path == %u\n\n", count_path(test)); */
-/* 	print_list_id(&dst); */
-/* 	printf("nb path == %u\n", count_path(dst)); */
-
-/* 	printf("src = %p\ndst = %p\n", test, dst); */
-/* 	clear_path(&test); */
-/* 	clear_path(&dst); */
-
-/* 	return (0); */
-/* } */
+	i = 0;
+	while (i < max)
+	{
+		if (tab[i] != NULL)
+		{
+			tmp = tab[i];
+			while (tmp != NULL)
+			{
+				printf("|[%d] ==> %s|", i, tmp->name);
+				if (tmp->next != NULL)
+					printf(" ");
+				tmp = tmp->next;
+			}
+			printf("\n");
+		}
+		i++;
+	}
+}
+/* Fin de TEST */

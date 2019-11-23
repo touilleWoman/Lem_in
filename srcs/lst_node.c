@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 20:50:08 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/22 23:16:22 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/23 05:26:31 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_node					*new_node(char *name, uint8_t start, uint8_t end)
 
 	if ((node = malloc(sizeof(t_node))) == NULL)
 		return (NULL);
-	if ((id = hash_name(name)) == LM_ERROR)
+	if ((id = hash_name(name)) == LM_ERROR || id >= HASHCODE)
 	{
 		free(node);
 		return (NULL);
@@ -144,7 +144,6 @@ t_node					*get_node_by_name(t_node **start, char *name)
 
 /*
 ** Free 1 noeud
-**
 */
 static void				free_node(t_node **node)
 {

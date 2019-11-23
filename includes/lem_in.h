@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 17:03:23 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/23 03:57:29 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/23 06:04:51 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,17 @@ typedef struct	s_node	t_node;
 struct					s_path//	Liste des chemins d'un seul noeud!!!
 {
 	uint32_t		id;//			Static incrementer a la creation - modif de creation...
-	char			*linked[2];//	Stockage des noms de noeuds relier.
 	uint8_t			taken;//		Booleen Vrai ou Faux (Utiliser ou pas)
 	int				weight;//		Poids == predecesseur + 1; =======> sera peut etre changer en unsigned
+	t_node			*linked[2];//	Stockage des noms de noeuds relier. => a modifier en pointeur sur noeud
 	t_path			*next;//		pointe sur le chemin suivant du meme noeud
 };
 
 struct					s_node//	Liste des noeuds a visiter ou deja visite
 {
-	uint32_t		id;//			Static incrementer a la creation - modif de creation
+	uint32_t		id;//			Indice dans le tableau de HASH
 	char			*name;//		Nom du noeud
-	uint8_t			taken;//		Booleen Vrai ou Faux (Utiliser ou pas)
+	uint32_t		taken;//		Booleen Vrai ou Faux (Utiliser ou pas) ou (Nombre de fourmies dans le cas de start et end)
 	uint8_t			start;//		Booleen Vrai ou Faux
 	uint8_t			end;//			Booleen Vrai ou Faux
 	t_path			*path_lst;//	Pointe sur 1er chemin de la liste des chemins connecter au noeud
@@ -56,6 +56,7 @@ struct					s_node//	Liste des noeuds a visiter ou deja visite
 
 typedef struct			s_lemin
 {
+	uint32_t			nb_ants;
 	t_node				*tab[HASHCODE];
 }						t_lemin;
 

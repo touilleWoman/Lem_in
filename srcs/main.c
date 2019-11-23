@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 16:48:42 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/23 04:00:49 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/23 05:08:51 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int				main(int ac, char **av)
 {
 	uint32_t	i;
 	t_lemin		lem;
+	t_node		*tmp;
 	uint8_t		flg;
 
 	i = 1;
@@ -26,7 +27,16 @@ int				main(int ac, char **av)
 		while (i < (uint32_t)ac && flg == LM_FALSE)
 		{
 			if ((flg = node_exist(&lem, av[i])) == LM_FALSE)
-				add_node_in_tab(&lem, new_node(av[i], LM_FALSE, LM_FALSE));
+			{
+				if ((tmp = new_node(av[i], LM_FALSE, LM_FALSE)) == NULL)
+				{
+					printf("Node Creation Failure\n");
+					clear_hashtab(&lem);
+					flg = LM_TRUE;
+				}
+				else
+					add_node_in_tab(&lem, tmp);
+			}
 			else
 			{
 				printf("Erreur doublon [%s]\n", av[i]);
@@ -35,6 +45,7 @@ int				main(int ac, char **av)
 			i++;
 		}
 		print_tab(lem.tab, HASHCODE);
+		clear_hashtab(&lem);
 	}
 	return (0);
 }

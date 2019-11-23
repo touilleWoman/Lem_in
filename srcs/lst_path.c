@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 09:24:18 by naali             #+#    #+#             */
-/*   Updated: 2019/11/22 20:51:10 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/23 06:10:01 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ void					pushback_path(t_path **start, t_path *node)
 {
 	t_path			*tmp;
 
-	if (start == NULL)
-		return ;
 	if (start != NULL && *start != NULL && node != NULL)
 	{
 		tmp = get_last_path(start);
@@ -76,13 +74,11 @@ void					pushback_path(t_path **start, t_path *node)
 */
 void					pushfront_path(t_path **start, t_path *node)
 {
-	t_path			*tmp;
 	uint32_t		id;
 
 	if (start != NULL && node != NULL)
 	{
 		id = 1;
-		tmp = NULL;
 		node->next = *start;
 		*start = node;
 		update_id_path(start);

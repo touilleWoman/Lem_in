@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 17:03:23 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/22 23:23:01 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/23 03:57:29 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ int32_t					hash_name(char *name);// Stocker dans l'id des noeuds
 **  DU TABLEAU DE HASH
 */
 void					add_node_in_tab(t_lemin *lem, t_node *node);
+uint8_t					node_exist(t_lemin *lem, char *name);
+void					clear_hashtab(t_lemin *lem);
 
 /*
 ** Fonctions de Gestion

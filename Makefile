@@ -6,7 +6,7 @@
 #    By: naali <naali@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/17 16:13:53 by naali             #+#    #+#              #
-#    Updated: 2019/11/22 23:32:37 by nabih            ###   ########.fr        #
+#    Updated: 2019/11/23 08:26:00 by nabih            ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -30,6 +30,8 @@ SRC				=	main.c				\
 					lst_node.c			\
 					lst_path.c			\
 					hash_encryption.c
+
+SRC				+=	get_info.c
 
 OBJ 			=	$(addprefix $(OBJ_PATH)/, $(SRC:%.c=%.o))
 

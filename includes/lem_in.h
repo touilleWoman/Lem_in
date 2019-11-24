@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 17:03:23 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/23 06:04:51 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/24 10:10:55 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # define LM_FALSE 0
 # define LM_SUCCESS 1
 # define LM_ERROR -1
+# define LM_IGNORE 0
+# define LM_STOP 2
 
 # define HASHCODE 1000
 
@@ -56,8 +58,13 @@ struct					s_node//	Liste des noeuds a visiter ou deja visite
 
 typedef struct			s_lemin
 {
-	uint32_t			nb_ants;
-	t_node				*tab[HASHCODE];
+	t_node			*tab[HASHCODE];
+	char			*line;
+	char			*start;
+	char			*end;
+	int32_t			nb_ants;
+	uint8_t			isstart;
+	uint8_t			isend;
 }						t_lemin;
 
 /*
@@ -108,6 +115,7 @@ int32_t					hash_name(char *name);// Stocker dans l'id des noeuds
 */
 void					add_node_in_tab(t_lemin *lem, t_node *node);
 uint8_t					node_exist(t_lemin *lem, char *name);
+t_node					*get_node_in_hash(t_lemin *lem, char *name);
 void					clear_hashtab(t_lemin *lem);
 
 /*

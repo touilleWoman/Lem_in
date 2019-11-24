@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 23:19:25 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/23 05:02:03 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/24 10:11:02 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,31 @@ void					clear_hashtab(t_lemin *lem)
 			clear_node(&((lem->tab)[i]));
 		i++;
 	}
+}
+
+/*
+** Renvoi le pointeur sur le
+** noeud rechercher
+*/
+t_node					*get_node_in_hash(t_lemin *lem, char *name)
+{
+	int32_t			id;
+	t_node			*ret;
+
+	if (lem != NULL && name != NULL)
+	{
+		tmp = NULL;
+		id = hash_name(name);
+		if (id >= 0 && id < HASHCODE)
+			tmp = (lem->tab)[id];
+		while (tmp != NULL)
+		{
+			if (ft_strcmp(tmp->name, name) == 0)
+				return (tmp);
+			tmp = tmp->next;
+		}
+	}
+	return (ret);
 }
 
 /*

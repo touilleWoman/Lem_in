@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 23:19:25 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/24 10:17:13 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/24 16:39:56 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,19 @@ void					clear_hashtab(t_lemin *lem)
 	{
 		if ((lem->tab)[i] != NULL)
 			clear_node(&((lem->tab)[i]));
+		i++;
+	}
+}
+
+void					clear_hashpth(t_lemin *lem)
+{
+	uint32_t		i;
+
+	i = 0;
+	while (i < HASHCODE)
+	{
+		if ((lem->pth)[i] != NULL)
+			clear_path(&((lem->pth)[i]));
 		i++;
 	}
 }

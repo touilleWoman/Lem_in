@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 17:03:23 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/24 14:58:38 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/24 17:54:23 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ struct					s_node//	Liste des noeuds a visiter ou deja visite
 	uint32_t		id;//			Indice dans le tableau de HASH
 	char			*name;//		Nom du noeud
 	uint32_t		taken;//		Booleen Vrai ou Faux (Utiliser ou pas) ou (Nombre de fourmies dans le cas de start et end)
+	uint32_t		nb_paths;//		Nombre de chemin (Entrant ou sortant peu importe)
 	uint8_t			start;//		Booleen Vrai ou Faux
 	uint8_t			end;//			Booleen Vrai ou Faux
 	t_path			*path_lst;//	Pointe sur 1er chemin de la liste des chemins connecter au noeud
@@ -64,6 +65,8 @@ typedef struct			s_lemin
 	char			*start;
 	char			*end;
 	int32_t			nb_ants;
+	int32_t			nb_nodes;
+	int32_t			nb_paths;
 	uint8_t			isstart;
 	uint8_t			isend;
 }						t_lemin;
@@ -118,6 +121,7 @@ void					add_node_in_tab(t_lemin *lem, t_node *node);
 uint8_t					node_exist(t_lemin *lem, char *name);
 t_node					*get_node_in_hash(t_lemin *lem, char *name);
 void					clear_hashtab(t_lemin *lem);
+void					clear_hashpth(t_lemin *lem);
 
 /*
 ** Fonctions de Gestion

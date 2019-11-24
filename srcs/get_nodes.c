@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 15:03:12 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/24 15:04:53 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/24 17:20:55 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,9 @@ static int8_t			check_cmd(t_lemin *lem, char *line)
 }
 
 /*
-** Verifie la ligne
-**    recuperer
+**     Verifie la ligne
+**        recuperer
+** Appel check_cmd si besoin
 */
 static int8_t			check_line(t_lemin *lem, char *line)
 {
@@ -59,7 +60,7 @@ static int8_t			check_line(t_lemin *lem, char *line)
 			{
 				if (line[i] == '-')
 					return (LM_STOP);
-				else if (line[i] == ' ')
+				else if (line[i] == ' ' && i != 0)
 				{
 					line[i] = '\0';
 					return (LM_SUCCESS);
@@ -73,6 +74,10 @@ static int8_t			check_line(t_lemin *lem, char *line)
 	return (LM_ERROR);
 }
 
+/*
+**       Cree un nouveau noeud
+** et l'insert dans la table de hash
+*/
 static int8_t			create_n_add(t_lemin *lem)
 {
 	t_node			*tmp;
@@ -89,7 +94,6 @@ static int8_t			create_n_add(t_lemin *lem)
 			lem->end = ft_strdup(lem->line);
 		lem->isstart = 0;
 		lem->isend = 0;
-		printf("SUCCESS: %s\n", lem->line);
 	}
 	else
 		return (LM_ERROR);
@@ -114,11 +118,12 @@ int8_t					get_node(t_lemin *lem)
 		{
 			if (create_n_add(lem) != LM_SUCCESS)
 				return (LM_ERROR);
+			lem->nb_nodes += 1;
 		}
 		ft_memdel((void**)&(lem->line));
 	}
-	ft_memdel((void**)&(lem->line));
-	if (lem->start == NULL || lem->end == NULL)
-		return (LM_ERROR);
-	return ((ret == LM_STOP) ? LM_SUCCESS : LM_ERROR);
+	return ((ret == LM_STOP
+			&& lem->nb_nodes > 1
+			&& lem->start
+			&& lem->end) ? LM_SUCCESS : LM_ERROR);
 }

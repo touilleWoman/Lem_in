@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 17:03:23 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/24 17:54:23 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/24 21:30:25 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct			s_lemin
 	char			*line;
 	char			*start;
 	char			*end;
+	int32_t			dash;
 	int32_t			nb_ants;
 	int32_t			nb_nodes;
 	int32_t			nb_paths;

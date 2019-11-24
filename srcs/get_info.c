@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 08:23:51 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/24 17:57:19 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/24 21:32:58 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int8_t					get_info(t_lemin *lem)
 	{
 		if ((ret = get_node(lem)) == LM_SUCCESS)
 		{
-			ret = get_path(lem);
-			if (ret == LM_SUCCESS)// A DELETE
-				print_tab(lem->tab, HASHCODE);// A DELETE
+			if ((ret = get_path(lem)) == LM_ERROR)
+				return (clear_info(lem, LM_ERROR));
+			print_tab(lem->tab, HASHCODE);// A DELETE
 		}
 		else
 			return (clear_info(lem, LM_ERROR));

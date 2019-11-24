@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:48:44 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/24 18:27:47 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/24 22:08:26 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,18 @@
 static int8_t			check_for_valide_path(t_lemin *lem, char *line)
 {
 	t_node			*tmp;
-	int				dash;
 
-	dash = 0;
-	while (line[dash] != '-')
-		dash++;
-	line[dash] = '\0';
-	if (ft_strcmp(line, &(line[dash + 1])) == 0)
+	lem->dash = 0;
+	while (line[lem->dash] != '-')
+		(lem->dash)++;
+	line[lem->dash] = '\0';
+	if (ft_strcmp(line, &(line[lem->dash + 1])) == 0)
 		return (LM_ERROR);
 	if ((tmp = get_node_in_hash(lem, line)) != NULL)
 	{
 		tmp->nb_paths += 1;
-		if ((tmp = get_node_in_hash(lem, &(line[dash + 1]))) != NULL)
+		if ((tmp = get_node_in_hash(lem, &(line[lem->dash + 1]))) != NULL)
 		{
-			line[dash] = '-';
 			tmp->nb_paths += 1;
 			return (LM_SUCCESS);
 		}
@@ -79,6 +77,18 @@ int8_t					get_path(t_lemin *lem)
 	{
 		if ((ret = check_for_valide_path(lem, lem->line)) == LM_ERROR)
 			return (ret);
+		/*
+		** CREATE and ADD path to hashtable
+		   Debut de reflexion:
+		   - Start a l'indice 0
+		   - End a l'indice HASHCODE - 1
+		   - Les autres a l'indice HASHCODE - 2
+		   - Si Start et/ou End == NULL => Resolution impossible
+		   - Partir de 0
+		   - Tester chaque path verifier la destination
+		   - Recuperer les paths de destination et les positionner a 2
+		   - Etc
+		*/
 		lem->nb_paths += 1;
 		ft_memdel((void**)&(lem->line));
 	}

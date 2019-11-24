@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 17:03:23 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/24 10:10:55 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/24 14:58:38 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ struct					s_path//	Liste des chemins d'un seul noeud!!!
 {
 	uint32_t		id;//			Static incrementer a la creation - modif de creation...
 	uint8_t			taken;//		Booleen Vrai ou Faux (Utiliser ou pas)
-	int				weight;//		Poids == predecesseur + 1; =======> sera peut etre changer en unsigned
+	int32_t			weight;//		Poids == predecesseur + 1; =======> sera peut etre changer en unsigned
 	t_node			*linked[2];//	Stockage des noms de noeuds relier. => a modifier en pointeur sur noeud
 	t_path			*next;//		pointe sur le chemin suivant du meme noeud
 };
@@ -59,6 +59,7 @@ struct					s_node//	Liste des noeuds a visiter ou deja visite
 typedef struct			s_lemin
 {
 	t_node			*tab[HASHCODE];
+	t_path			*pth[HASHCODE];
 	char			*line;
 	char			*start;
 	char			*end;

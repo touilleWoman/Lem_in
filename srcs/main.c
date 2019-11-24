@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 16:48:42 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/23 11:51:54 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/24 14:55:30 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,41 +16,23 @@
 int				main()
 {
 	t_lemin		lem;
-	/* t_node		*tmp; */
 
 	if (HASHCODE > 100 && HASHCODE < 50000)
 	{
 		lem.line = NULL;
 		ft_bzero(lem.tab, sizeof(t_node*) * HASHCODE);
+		ft_bzero(lem.pth, sizeof(t_node*) * HASHCODE);
 		if (get_info(&lem) == LM_SUCCESS)
+		{
+			ft_putstr(lem.start);
+			ft_putchar('\n');
+			ft_putstr(lem.end);
+			ft_putchar('\n');
 			printf("start solver\n");
+		}
 		else
 			printf("An error occured\n");
-		/* if (ac >= 2 && HASHCODE > 10) */
-		/* { */
-		/* 	while (i < (uint32_t)ac && flg == LM_FALSE) */
-		/* 	{ */
-		/* 		if ((flg = node_exist(&lem, av[i])) == LM_FALSE) */
-		/* 		{ */
-		/* 			if ((tmp = new_node(av[i], LM_FALSE, LM_FALSE)) == NULL) */
-		/* 			{ */
-		/* 				printf("Node Creation Failure\n"); */
-		/* 				clear_hashtab(&lem); */
-		/* 				flg = LM_TRUE; */
-		/* 			} */
-		/* 			else */
-		/* 				add_node_in_tab(&lem, tmp); */
-		/* 		} */
-		/* 		else */
-		/* 		{ */
-		/* 			printf("Erreur doublon [%s]\n", av[i]); */
-		/* 			clear_hashtab(&lem); */
-		/* 		} */
-		/* 		i++; */
-		/* 	} */
-		/* 	print_tab(lem.tab, HASHCODE); */
-		/* 	clear_hashtab(&lem); */
-		/* } */
+		clear_hashtab(&lem);
 	}
 	return (0);
 }
@@ -71,7 +53,9 @@ void			print_tab(t_node *(tab)[HASHCODE], uint32_t max)
 			tmp = tab[i];
 			while (tmp != NULL)
 			{
-				printf("|[%d] ==> %s (Entree:%s) (Sortie:%s)|", i, tmp->name, (tmp->start == 1) ? "oui" : "non", (tmp->end == 1) ? "oui" : "non");
+				printf("|[%d] ==> %s (Entree:%s) (Sortie:%s)|", i, tmp->name,
+						(tmp->start == 1) ? "oui" : "non",
+							(tmp->end == 1) ? "oui" : "non");
 				if (tmp->next != NULL)
 					printf(" ");
 				tmp = tmp->next;

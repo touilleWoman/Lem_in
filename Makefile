@@ -6,7 +6,7 @@
 #    By: naali <naali@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/17 16:13:53 by naali             #+#    #+#              #
-#    Updated: 2019/11/24 16:51:05 by nabih            ###   ########.fr        #
+#    Updated: 2019/11/25 01:40:22 by nabih            ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -27,6 +27,7 @@ OBJ_PATH		=	./objs
 
 SRC				=	main.c				\
 					lem_tab.c			\
+					lem_path.c			\
 					lst_node.c			\
 					lst_path.c			\
 					hash_encryption.c

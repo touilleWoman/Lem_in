@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 17:03:23 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/24 21:30:25 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/25 01:41:21 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ struct					s_path//	Liste des chemins d'un seul noeud!!!
 {
 	uint32_t		id;//			Static incrementer a la creation - modif de creation...
 	uint8_t			taken;//		Booleen Vrai ou Faux (Utiliser ou pas)
-	int32_t			weight;//		Poids == predecesseur + 1; =======> sera peut etre changer en unsigned
-	t_node			*linked[2];//	Stockage des noms de noeuds relier. => a modifier en pointeur sur noeud
+	uint32_t		weight;//		Poids == predecesseur + 1 en unsigned
+	char			*name[2];//		Stockage des noms de noeuds relier
+	t_node			*linked[2];//	Pointeur sur noeud
 	t_path			*next;//		pointe sur le chemin suivant du meme noeud
 };
 
@@ -76,7 +77,7 @@ typedef struct			s_lemin
 ** Fonctions de Gestion
 **   DES LISTES PATH
 */
-t_path					*new_path(/* surement les noms des noeuds entre lesquels il est */);
+t_path					*new_path(char *node1, char *node2);
 void					pushback_path(t_path **start, t_path *node);
 void					pushfront_path(t_path **start, t_path *node);
 void					pushafter_path(t_path **start, uint32_t id,\
@@ -122,6 +123,8 @@ void					add_node_in_tab(t_lemin *lem, t_node *node);
 uint8_t					node_exist(t_lemin *lem, char *name);
 t_node					*get_node_in_hash(t_lemin *lem, char *name);
 void					clear_hashtab(t_lemin *lem);
+
+void					add_path_at_id(t_lemin *lem, t_path *pth, uint32_t id);
 void					clear_hashpth(t_lemin *lem);
 
 /*
@@ -129,5 +132,6 @@ void					clear_hashpth(t_lemin *lem);
 **      DES TESTS
 */
 void					print_tab(t_node *(tab[HASHCODE]), uint32_t max);
+void					print_pth(t_path *(tab)[HASHCODE], uint32_t max);
 
 #endif

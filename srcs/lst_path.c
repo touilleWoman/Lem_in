@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 09:24:18 by naali             #+#    #+#             */
-/*   Updated: 2019/11/23 06:10:01 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/25 01:27:03 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void				update_id_path(t_path **start)
 /*
 ** Cree un nouveau noeud
 */
-t_path					*new_path()
+t_path					*new_path(char *node1, char *node2)
 {
 	t_path			*path;
 	static uint32_t	id = 0;
@@ -47,6 +47,10 @@ t_path					*new_path()
 	path->id = id;
 	path->taken = LM_FALSE;
 	path->weight = 0;
+	path->name[0] = ft_strdup(node1);
+	path->name[1] = ft_strdup(node2);
+	(path->linked)[0] = NULL;
+	(path->linked)[1] = NULL;
 	path->next = NULL;
 	return (path);
 }
@@ -182,6 +186,8 @@ void					del_path(t_path **start, uint32_t id)
 		if (tmp1->id == id)
 		{
 			*start = tmp1->next;
+			ft_memdel((void**)&(tmp1->name)[0]);
+			ft_memdel((void**)&(tmp1->name)[1]);
 			ft_memdel((void**)&tmp1);
 		}
 		else
@@ -192,6 +198,8 @@ void					del_path(t_path **start, uint32_t id)
 			{
 				tmp2 = tmp1->next;
 				tmp1->next = tmp1->next->next;
+				ft_memdel((void**)&(tmp2->name)[0]);
+				ft_memdel((void**)&(tmp2->name)[1]);
 				ft_memdel((void**)&tmp2);
 			}
 		}

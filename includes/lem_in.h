@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 17:03:23 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/25 01:41:21 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/25 13:23:43 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,8 @@ void					clear_hashpth(t_lemin *lem);
 ** Fonctions de Gestion
 **      DES TESTS
 */
-void					print_tab(t_node *(tab[HASHCODE]), uint32_t max);
-void					print_pth(t_path *(tab)[HASHCODE], uint32_t max);
+void			print_tab(t_node *(tab[HASHCODE]), uint32_t max);
+void			print_pth(t_path *(tab)[HASHCODE], uint32_t max);
+void			print_info_inout(t_lemin *lem);
 
 #endif

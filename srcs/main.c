@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 16:48:42 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/25 01:41:29 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/25 13:23:30 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,8 @@ int				main()
 		ft_bzero(lem.pth, sizeof(t_node*) * HASHCODE);
 		if (get_info(&lem) == LM_SUCCESS)
 		{
-			ft_putstr("NB nodes = ");
-			ft_putnbr(lem.nb_nodes);
-			ft_putchar('\n');
-			ft_putstr("NB paths = ");
-			ft_putnbr(lem.nb_paths);
-			ft_putchar('\n');
-			ft_putstr("Entrer = ");
-			ft_putstr(lem.start);
-			ft_putchar('\n');
-			ft_putstr("Sortie = ");
-			ft_putstr(lem.end);
-			ft_putchar('\n');
-			printf("start solver\n");
+			print_info_inout(&lem);
+			/* call solver here */
 		}
 		else
 			printf("An error occured\n");
@@ -48,6 +37,23 @@ int				main()
 /*
 ** Test d'affichage
 */
+void			print_info_inout(t_lemin *lem)
+{
+	ft_putstr("NB nodes = ");
+	ft_putnbr(lem->nb_nodes);
+	ft_putchar('\n');
+	ft_putstr("NB paths = ");
+	ft_putnbr(lem->nb_paths);
+	ft_putchar('\n');
+	ft_putstr("Entrer = ");
+	ft_putstr(lem->start);
+	ft_putchar('\n');
+	ft_putstr("Sortie = ");
+	ft_putstr(lem->end);
+	ft_putchar('\n');
+	printf("start solver\n");
+}
+
 void			print_tab(t_node *(tab)[HASHCODE], uint32_t max)
 {
 	t_node		*tmp;

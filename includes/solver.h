@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 13:50:43 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/25 19:52:46 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/26 15:48:42 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,15 @@
 
 # include "get_info.h"
 
-typedef struct			s_flow
+typedef struct s_solver	t_solver;
+
+struct					s_solver
 {
-	uint32_t		now;
-	uint32_t		start;
-	uint32_t		end;
-	uint32_t		flow_max;
-}						t_flow;
+	uint32_t		nb_node;
+	t_node			*op_lst;
+	t_node			*cl_lst;
+	t_solver		*next;
+};
 
 int8_t					solver(t_lemin *lem);
 

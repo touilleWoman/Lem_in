@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:48:44 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/25 01:38:01 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/26 20:32:01 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,23 @@ static int8_t			check_line(char *line)
 ** Recuperation
 **  DES  PATHS
 */
+static int8_t			add_path(t_lemin *lem)
+{
+	t_path			*tmp;
+
+	if ((tmp = new_path(lem->line, &(lem->line)[lem->dash + 1])) == NULL)
+		return (LM_ERROR);
+	if (ft_strcmp(tmp->name[0], lem->start) == 0
+		|| ft_strcmp(tmp->name[1], lem->start) == 0)
+		add_path_at_id(lem, tmp, 0);
+	else if (ft_strcmp(tmp->name[0], lem->end) == 0
+			 || ft_strcmp(tmp->name[1], lem->end) == 0)
+		add_path_at_id(lem, tmp, HASHCODE - 1);
+	else
+		add_path_at_id(lem, tmp, HASHCODE - 2);//Cette ligne est a changer pour permettre une meilleure repartition des pipes
+	return (LM_SUCCESS);
+}
+
 int8_t					get_path(t_lemin *lem)
 {
 	t_path			*tmp;
@@ -79,15 +96,8 @@ int8_t					get_path(t_lemin *lem)
 	{
 		if ((ret = check_for_valide_path(lem, lem->line)) == LM_ERROR)
 			return (ret);
-		tmp = new_path(lem->line, &(lem->line)[lem->dash + 1]);
-		if (ft_strcmp(tmp->name[0], lem->start) == 0
-			|| ft_strcmp(tmp->name[1], lem->start) == 0)
-			add_path_at_id(lem, tmp, 0);
-		else if (ft_strcmp(tmp->name[0], lem->end) == 0
-			|| ft_strcmp(tmp->name[1], lem->end) == 0)
-			add_path_at_id(lem, tmp, HASHCODE - 1);
-		else
-			add_path_at_id(lem, tmp, HASHCODE - 2);
+		if (add_path(lem) == LM_ERROR)
+			return (LM_ERROR);
 		lem->nb_paths += 1;
 		ft_memdel((void**)&(lem->line));
 	}

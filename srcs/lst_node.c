@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 20:50:08 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/24 17:55:06 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/26 19:52:17 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ t_node					*new_node(char *name, uint8_t start, uint8_t end)
 	}
 	node->id = id;
 	node->name = ft_strdup(name);
-	node->taken = LM_FALSE;
+	node->wght1 = 0;
+	node->wght2 = 0;
 	node->nb_paths = 0;
 	node->start = start;
 	node->end = end;

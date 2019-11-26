@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 17:03:23 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/25 13:23:43 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/26 20:35:35 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ struct					s_node//	Liste des noeuds a visiter ou deja visite
 {
 	uint32_t		id;//			Indice dans le tableau de HASH
 	char			*name;//		Nom du noeud
-	uint32_t		taken;//		Booleen Vrai ou Faux (Utiliser ou pas) ou (Nombre de fourmies dans le cas de start et end)
+	uint32_t		wght1;//		...
+	uint32_t		wght2;//		...
 	uint32_t		nb_paths;//		Nombre de chemin (Entrant ou sortant peu importe)
 	uint8_t			start;//		Booleen Vrai ou Faux
 	uint8_t			end;//			Booleen Vrai ou Faux

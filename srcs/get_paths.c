@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:48:44 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/26 20:32:01 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/27 04:45:18 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,18 +68,25 @@ static int8_t			check_line(char *line)
 */
 static int8_t			add_path(t_lemin *lem)
 {
-	t_path			*tmp;
+	t_node			*tmp;
+	t_path			*tmp1;
+	t_path			*tmp2;
 
-	if ((tmp = new_path(lem->line, &(lem->line)[lem->dash + 1])) == NULL)
+	if ((tmp1 = new_path(lem->line, &(lem->line)[lem->dash + 1])) == NULL
+		|| (tmp2 = copy_path(tmp1)) == NULL)
 		return (LM_ERROR);
-	if (ft_strcmp(tmp->name[0], lem->start) == 0
-		|| ft_strcmp(tmp->name[1], lem->start) == 0)
-		add_path_at_id(lem, tmp, 0);
-	else if (ft_strcmp(tmp->name[0], lem->end) == 0
-			 || ft_strcmp(tmp->name[1], lem->end) == 0)
-		add_path_at_id(lem, tmp, HASHCODE - 1);
-	else
-		add_path_at_id(lem, tmp, HASHCODE - 2);//Cette ligne est a changer pour permettre une meilleure repartition des pipes
+	tmp = get_node_in_hash(lem, tmp1->name[0]);
+	pushfront_path(&(tmp->path_lst), tmp1);
+	tmp = get_node_in_hash(lem, tmp2->name[0]);
+	pushfront_path(&(tmp->path_lst), tmp2);
+	/* if (ft_strcmp(tmp->name[0], lem->start) == 0 */
+	/* 	|| ft_strcmp(tmp->name[1], lem->start) == 0) */
+	/* 	add_path_at_id(lem, tmp, 0); */
+	/* else if (ft_strcmp(tmp->name[0], lem->end) == 0 */
+	/* 		 || ft_strcmp(tmp->name[1], lem->end) == 0) */
+	/* 	add_path_at_id(lem, tmp, HASHCODE - 1); */
+	/* else */
+	/* 	add_path_at_id(lem, tmp, HASHCODE - 2);//Cette ligne est a changer pour permettre une meilleure repartition des pipes */
 	return (LM_SUCCESS);
 }
 

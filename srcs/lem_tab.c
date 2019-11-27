@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 23:19:25 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/25 14:24:06 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/27 04:41:59 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,7 @@ t_node					*get_node_in_hash(t_lemin *lem, char *name)
 		id = hash_name(name);
 		if (id >= 0 && id < HASHCODE)
 			ret = (lem->tab)[id];
-		while (ret != NULL)
-		{
-			if (ft_strcmp(ret->name, name) == 0)
-				return (ret);
-			ret = ret->next;
-		}
+		ret = get_node_by_name(&ret, name);
 	}
 	return (ret);
 }

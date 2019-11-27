@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 09:24:18 by naali             #+#    #+#             */
-/*   Updated: 2019/11/27 16:57:42 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/27 19:14:29 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ t_path					*new_path(char *node1, char *node2)
 	path->weight = 1;
 	path->name[0] = ft_strdup(node1);
 	path->name[1] = ft_strdup(node2);
-	(path->linked)[0] = NULL;
-	(path->linked)[1] = NULL;
 	path->next = NULL;
 	return (path);
 }

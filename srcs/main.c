@@ -6,13 +6,12 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 16:48:42 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/27 18:28:14 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/27 19:14:08 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem_in.h>
 #include <get_info.h>
-#include <solver.h>
 
 int				main()
 {
@@ -28,7 +27,9 @@ int				main()
 			/* print_tab(lem->tab, HASHCODE);// A DELETE */
 			/* print_info_inout(&lem);// A DELETE */
 			ft_putstr("start solver\n");
-			solver(&lem);
+			/*
+			   --> RESOLUTION A INSERER ICI
+			*/
 		}
 		else
 			printf("An error occured\n");

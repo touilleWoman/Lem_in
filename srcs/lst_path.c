@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 09:24:18 by naali             #+#    #+#             */
-/*   Updated: 2019/11/27 04:43:47 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/27 16:57:42 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_path					*new_path(char *node1, char *node2)
 	id++;
 	path->id = id;
 	path->taken = LM_FALSE;
-	path->weight = 0;
+	path->weight = 1;
 	path->name[0] = ft_strdup(node1);
 	path->name[1] = ft_strdup(node2);
 	(path->linked)[0] = NULL;
@@ -63,6 +63,8 @@ t_path					*copy_path(const t_path *pth)
 		return (NULL);
 	ft_memcpy((void*)path, (void*)(pth), sizeof(t_path));
 	ft_swap_ptr((void**)&(path->name[0]), (void**)&(path->name[1]));
+	path->name[0] = ft_strdup(path->name[0]);
+	path->name[1] = ft_strdup(path->name[1]);
 	return (path);
 }
 
@@ -183,6 +185,22 @@ t_path					*get_path_by_id(t_path **start, uint32_t id)
 }
 
 /*
+** Free path
+*/
+static void				free_path(t_path **path)
+{
+	t_path			*tmp;
+
+	tmp = *path;
+	if (tmp != NULL)
+	{
+		ft_memdel((void**)&(tmp->name[0]));
+		ft_memdel((void**)&(tmp->name[1]));
+		ft_memdel((void**)&tmp);
+	}
+}
+
+/*
 ** Detruit le noeud
 ** en fonction de l'id
 */
@@ -197,9 +215,7 @@ void					del_path(t_path **start, uint32_t id)
 		if (tmp1->id == id)
 		{
 			*start = tmp1->next;
-			ft_memdel((void**)&(tmp1->name)[0]);
-			ft_memdel((void**)&(tmp1->name)[1]);
-			ft_memdel((void**)&tmp1);
+			free_path(&tmp1);
 		}
 		else
 		{
@@ -209,9 +225,7 @@ void					del_path(t_path **start, uint32_t id)
 			{
 				tmp2 = tmp1->next;
 				tmp1->next = tmp1->next->next;
-				ft_memdel((void**)&(tmp2->name)[0]);
-				ft_memdel((void**)&(tmp2->name)[1]);
-				ft_memdel((void**)&tmp2);
+				free_path(&tmp2);
 			}
 		}
 		update_id_path(start);
@@ -232,7 +246,7 @@ void					clear_path(t_path **start)
 		while (tmp != NULL)
 		{
 			*start = tmp->next;
-			ft_memdel((void**)&tmp);
+			free_path(&tmp);
 			tmp = *start;
 		}
 	}

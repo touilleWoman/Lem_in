@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 17:03:23 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/27 04:48:59 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/27 18:43:45 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,8 @@ struct					s_path//	Liste des chemins d'un seul noeud!!!
 {
 	uint32_t		id;//			Static incrementer a la creation - modif de creation...
 	uint8_t			taken;//		Booleen Vrai ou Faux (Utiliser ou pas)
-	uint32_t		weight;//		Poids == predecesseur + 1 en unsigned
+	uint32_t		weight;//		Poids == (0; 1; 2)
 	char			*name[2];//		Stockage des noms de noeuds relier
-	t_node			*linked[2];//	Pointeur sur noeud
 	t_path			*next;//		pointe sur le chemin suivant du meme noeud
 };
 
@@ -50,6 +49,7 @@ struct					s_node//	Liste des noeuds a visiter ou deja visite
 {
 	uint32_t		id;//			Indice dans le tableau de HASH
 	char			*name;//		Nom du noeud
+	uint32_t		dist;//			dist == nombre de deplacement depuis start
 	uint32_t		nb_paths;//		Nombre de chemin (Entrant ou sortant peu importe)
 	uint8_t			start;//		Booleen Vrai ou Faux
 	uint8_t			end;//			Booleen Vrai ou Faux

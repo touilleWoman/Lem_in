@@ -6,12 +6,13 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 16:48:42 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/27 04:52:10 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/27 18:28:14 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem_in.h>
 #include <get_info.h>
+#include <solver.h>
 
 int				main()
 {
@@ -21,11 +22,13 @@ int				main()
 	{
 		lem.line = NULL;
 		ft_bzero(lem.tab, sizeof(t_node*) * HASHCODE);
-//		ft_bzero(lem.pth, sizeof(t_node*) * HASHCODE);
+		ft_bzero(lem.pth, sizeof(t_path*) * HASHCODE);
 		if (get_info(&lem) == LM_SUCCESS)
 		{
-			print_info_inout(&lem);
-			/* call solver here */
+			/* print_tab(lem->tab, HASHCODE);// A DELETE */
+			/* print_info_inout(&lem);// A DELETE */
+			ft_putstr("start solver\n");
+			solver(&lem);
 		}
 		else
 			printf("An error occured\n");
@@ -39,6 +42,9 @@ int				main()
 */
 void			print_info_inout(t_lemin *lem)
 {
+	ft_putstr("NB Fourmies = ");
+	ft_putnbr(lem->nb_ants);
+	ft_putchar('\n');
 	ft_putstr("NB nodes = ");
 	ft_putnbr(lem->nb_nodes);
 	ft_putchar('\n');
@@ -51,7 +57,6 @@ void			print_info_inout(t_lemin *lem)
 	ft_putstr("Sortie = ");
 	ft_putstr(lem->end);
 	ft_putchar('\n');
-	printf("start solver\n");
 }
 
 void			print_tab(t_node *(tab)[HASHCODE], uint32_t max)

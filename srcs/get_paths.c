@@ -6,11 +6,29 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:48:44 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/27 18:27:42 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/29 20:17:06 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <get_info.h>
+
+static uint8_t			check_existing_path(t_lemin *lem, char *line, t_node *n)
+{
+	t_path			*tmp;
+
+	tmp = n->path_lst;
+	if (tmp != NULL)
+	{
+		while (tmp != NULL)
+		{
+			if (ft_strcmp(line, tmp->name[0]) == 0
+				&& ft_strcmp(&(line[lem->dash + 1]), tmp->name[1]) == 0)
+				return (LM_TRUE);
+			tmp = tmp->next;
+		}
+	}
+	return (LM_FALSE);
+}
 
 static int8_t			check_for_valide_path(t_lemin *lem, char *line)
 {
@@ -24,6 +42,8 @@ static int8_t			check_for_valide_path(t_lemin *lem, char *line)
 		return (LM_ERROR);
 	if ((tmp = get_node_in_hash(lem, line)) != NULL)
 	{
+		if (check_existing_path(lem, line, tmp) == LM_TRUE)
+			return (LM_IGNORE);
 		tmp->nb_paths += 1;
 		if ((tmp = get_node_in_hash(lem, &(line[lem->dash + 1]))) != NULL)
 		{
@@ -94,9 +114,12 @@ int8_t					get_path(t_lemin *lem)
 	{
 		if ((ret = check_for_valide_path(lem, lem->line)) == LM_ERROR)
 			return (ret);
-		if (add_path(lem) == LM_ERROR)
-			return (LM_ERROR);
-		lem->nb_paths += 1;
+		if (ret != LM_IGNORE)
+		{
+			if (add_path(lem) == LM_ERROR)
+				return (LM_ERROR);
+			lem->nb_paths += 1;
+		}
 		ft_memdel((void**)&(lem->line));
 	}
 	ft_memdel((void**)&(lem->line));

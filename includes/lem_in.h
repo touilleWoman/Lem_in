@@ -39,7 +39,7 @@ typedef struct	s_node	t_node;
 struct					s_path//	Liste des chemins d'un seul noeud!!!
 {
 	uint32_t		id;//			Static incrementer a la creation - modif de creation...
-	uint8_t			flow;//			Booleen Vrai ou Faux (Utiliser ou pas)
+	uint8_t			flow;//			La capacité résiduelle de flot, valeur peut etre 0, 1, ou 2
 	char			*name[2];//		Stockage des noms de noeuds relier
 	uint32_t		unid;
 	t_path			*next;//		pointe sur le chemin suivant du meme noeud

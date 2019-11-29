@@ -6,11 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 16:48:42 by nabih             #+#    #+#             */
-<<<<<<< .merge_file_GM4Hiu
-/*   Updated: 2019/11/27 19:14:08 by nabih            ###   ########.fr       */
-=======
 /*   Updated: 2019/11/29 14:21:52 by naali            ###   ########.fr       */
->>>>>>> .merge_file_kdWICP
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +27,9 @@ int				main()
 			print_tab(lem.tab, HASHCODE);// A DELETE
 			/* print_info_inout(&lem);// A DELETE */
 			ft_putstr("start solver\n");
-<<<<<<< .merge_file_GM4Hiu
 			/*
 			   --> RESOLUTION A INSERER ICI
 			*/
-=======
->>>>>>> .merge_file_kdWICP
 		}
 		else
 			printf("An error occured\n");

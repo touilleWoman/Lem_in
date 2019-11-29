@@ -37,6 +37,8 @@ SRC				+=	get_info.c			\
 					get_nodes.c			\
 					get_paths.c
 
+SRC				+=	solver.c 			\
+
 OBJ 			=	$(addprefix $(OBJ_PATH)/, $(SRC:%.c=%.o))
 
 LIB_PATH		=	-L./libft

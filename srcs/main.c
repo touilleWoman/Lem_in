@@ -28,8 +28,7 @@ int				main()
 			/* print_info_inout(&lem);// A DELETE */
 			ft_putstr("start solver\n");
 			   // --> RESOLUTION A INSERER ICI
-			// solver()
-
+			solver(&lem);
 		}
 		else
 			printf("An error occured\n");

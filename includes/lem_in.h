@@ -138,4 +138,7 @@ void			print_tab(t_node *(tab[HASHCODE]), uint32_t max);
 void			print_pth(t_path **tab);
 void			print_info_inout(t_lemin *lem);
 
+void		solver(t_lemin *lem);
+
+
 #endif

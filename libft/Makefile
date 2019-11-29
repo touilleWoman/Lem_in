@@ -35,7 +35,8 @@ SRC			=	ft_atoi.c			ft_bzero.c			ft_isalnum.c		ft_isalpha.c		ft_isascii.c	\
 				ft_putstr.c			ft_putendl.c		ft_putnbr.c			ft_putchar_fd.c		ft_putstr_fd.c	\
 				ft_putendl_fd.c		ft_putnbr_fd.c		ft_lstnew.c			ft_lstdelone.c		ft_lstdel.c		\
 				ft_lstadd.c			ft_lstiter.c		ft_lstmap.c			ft_lstlast.c		ft_lstfind.c	\
-				ft_lstsize.c		ft_lstfindsize.c	get_next_line.c		ft_tabcpy.c			ft_swap.c
+				ft_lstsize.c		ft_lstfindsize.c	get_next_line.c		ft_tabcpy.c			ft_swap.c		\
+				ft_lstadd_bot.c
 
 SRCSDIR		=	.
 

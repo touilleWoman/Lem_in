@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 20:50:08 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/27 16:57:31 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/29 14:43:27 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 t_node					*new_node(char *name, uint8_t start, uint8_t end)
 {
 	int32_t			id;
+	static int32_t	unid = 0;
 	t_node			*node;
 
 	if ((node = malloc(sizeof(t_node))) == NULL)
@@ -27,7 +28,9 @@ t_node					*new_node(char *name, uint8_t start, uint8_t end)
 		free(node);
 		return (NULL);
 	}
+	unid++;
 	node->id = id;
+	node->unid = unid;
 	node->name = ft_strdup(name);
 	node->dist = 0;
 	node->nb_paths = 0;

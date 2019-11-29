@@ -6,7 +6,7 @@
 #    By: naali <naali@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/17 16:13:53 by naali             #+#    #+#              #
-#    Updated: 2019/11/27 18:23:50 by nabih            ###   ########.fr        #
+#    Updated: 2019/11/29 14:18:37 by naali            ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -36,8 +36,6 @@ SRC				+=	get_info.c			\
 					get_nb_ants.c		\
 					get_nodes.c			\
 					get_paths.c
-
-SRC				+=	solver.c
 
 OBJ 			=	$(addprefix $(OBJ_PATH)/, $(SRC:%.c=%.o))
 

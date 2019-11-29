@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 09:24:18 by naali             #+#    #+#             */
-/*   Updated: 2019/11/27 16:57:42 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/29 14:52:21 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,9 @@ t_path					*new_path(char *node1, char *node2)
 		return (NULL);
 	id++;
 	path->id = id;
-	path->taken = LM_FALSE;
-	path->weight = 1;
+	path->flow = 1;
 	path->name[0] = ft_strdup(node1);
 	path->name[1] = ft_strdup(node2);
-	(path->linked)[0] = NULL;
-	(path->linked)[1] = NULL;
 	path->next = NULL;
 	return (path);
 }
@@ -62,7 +59,6 @@ t_path					*copy_path(const t_path *pth)
 	if ((path = malloc(sizeof(t_path))) == NULL)
 		return (NULL);
 	ft_memcpy((void*)path, (void*)(pth), sizeof(t_path));
-	ft_swap_ptr((void**)&(path->name[0]), (void**)&(path->name[1]));
 	path->name[0] = ft_strdup(path->name[0]);
 	path->name[1] = ft_strdup(path->name[1]);
 	return (path);

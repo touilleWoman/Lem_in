@@ -6,13 +6,12 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 16:48:42 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/27 18:28:14 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/29 14:21:52 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem_in.h>
 #include <get_info.h>
-#include <solver.h>
 
 int				main()
 {
@@ -22,13 +21,12 @@ int				main()
 	{
 		lem.line = NULL;
 		ft_bzero(lem.tab, sizeof(t_node*) * HASHCODE);
-		ft_bzero(lem.pth, sizeof(t_path*) * HASHCODE);
+//		ft_bzero(lem.pth, sizeof(t_path*) * HASHCODE);
 		if (get_info(&lem) == LM_SUCCESS)
 		{
-			/* print_tab(lem->tab, HASHCODE);// A DELETE */
+			print_tab(lem.tab, HASHCODE);// A DELETE
 			/* print_info_inout(&lem);// A DELETE */
 			ft_putstr("start solver\n");
-			solver(&lem);
 		}
 		else
 			printf("An error occured\n");

@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 17:03:23 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/29 14:55:23 by naali            ###   ########.fr       */
+/*   Updated: 2019/11/29 19:52:32 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ typedef struct			s_lemin
 	t_node			*tab[HASHCODE];
 	t_path			*pth[HASHCODE];
 	char			*line;
-	char			*start;
-	char			*end;
+	t_node			*start;
+	t_node			*end;
 	int32_t			nb_ants;
 	int32_t			nb_nodes;
 	int32_t			nb_paths;

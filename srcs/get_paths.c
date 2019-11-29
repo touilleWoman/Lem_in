@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:48:44 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/29 20:17:06 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/29 20:49:18 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ static uint8_t			check_existing_path(t_lemin *lem, char *line, t_node *n)
 	{
 		while (tmp != NULL)
 		{
-			if (ft_strcmp(line, tmp->name[0]) == 0
-				&& ft_strcmp(&(line[lem->dash + 1]), tmp->name[1]) == 0)
+			if (ft_strcmp(&(line[lem->dash + 1]), tmp->name[1]) == 0)
 				return (LM_TRUE);
 			tmp = tmp->next;
 		}
@@ -114,7 +113,7 @@ int8_t					get_path(t_lemin *lem)
 	{
 		if ((ret = check_for_valide_path(lem, lem->line)) == LM_ERROR)
 			return (ret);
-		if (ret != LM_IGNORE)
+		if (ret == LM_SUCCESS)
 		{
 			if (add_path(lem) == LM_ERROR)
 				return (LM_ERROR);
@@ -123,5 +122,5 @@ int8_t					get_path(t_lemin *lem)
 		ft_memdel((void**)&(lem->line));
 	}
 	ft_memdel((void**)&(lem->line));
-	return (ret);
+	return ((ret != LM_ERROR) ? LM_SUCCESS : LM_ERROR);
 }

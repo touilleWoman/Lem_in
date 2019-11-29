@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 17:03:23 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/27 18:43:45 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/29 14:55:23 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,16 @@ typedef struct	s_node	t_node;
 struct					s_path//	Liste des chemins d'un seul noeud!!!
 {
 	uint32_t		id;//			Static incrementer a la creation - modif de creation...
-	uint8_t			taken;//		Booleen Vrai ou Faux (Utiliser ou pas)
-	uint32_t		weight;//		Poids == (0; 1; 2)
+	uint8_t			flow;//			Booleen Vrai ou Faux (Utiliser ou pas)
 	char			*name[2];//		Stockage des noms de noeuds relier
+	uint32_t		unid;
 	t_path			*next;//		pointe sur le chemin suivant du meme noeud
 };
 
 struct					s_node//	Liste des noeuds a visiter ou deja visite
 {
 	uint32_t		id;//			Indice dans le tableau de HASH
+	uint32_t		unid;//			INDICE UNIQUE
 	char			*name;//		Nom du noeud
 	uint32_t		dist;//			dist == nombre de deplacement depuis start
 	uint32_t		nb_paths;//		Nombre de chemin (Entrant ou sortant peu importe)
@@ -64,10 +65,10 @@ typedef struct			s_lemin
 	char			*line;
 	char			*start;
 	char			*end;
-	int32_t			dash;
 	int32_t			nb_ants;
 	int32_t			nb_nodes;
 	int32_t			nb_paths;
+	int32_t			dash;
 	uint8_t			isstart;
 	uint8_t			isend;
 }						t_lemin;

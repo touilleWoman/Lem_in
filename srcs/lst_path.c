@@ -36,7 +36,7 @@ static void				update_id_path(t_path **start)
 /*
 ** Cree un nouveau noeud
 */
-t_path					*new_path(char *node1, char *node2)
+t_path					*new_path(uint32_t unid, char *name)
 {
 	t_path			*path;
 	static uint32_t	id = 0;
@@ -46,23 +46,23 @@ t_path					*new_path(char *node1, char *node2)
 	id++;
 	path->id = id;
 	path->flow = 1;
-	path->name[0] = ft_strdup(node1);
-	path->name[1] = ft_strdup(node2);
+	path->name = ft_strdup(name);
+	path->unid = unid;
 	path->next = NULL;
 	return (path);
 }
 
-t_path					*copy_path(const t_path *pth)
-{
-	t_path			*path;
+// t_path					*copy_path(const t_path *pth)
+// {
+// 	t_path			*path;
 
-	if ((path = malloc(sizeof(t_path))) == NULL)
-		return (NULL);
-	ft_memcpy((void*)path, (void*)(pth), sizeof(t_path));
-	path->name[0] = ft_strdup(path->name[0]);
-	path->name[1] = ft_strdup(path->name[1]);
-	return (path);
-}
+// 	if ((path = malloc(sizeof(t_path))) == NULL)
+// 		return (NULL);
+// 	ft_memcpy((void*)path, (void*)(pth), sizeof(t_path));
+// 	path->name[0] = ft_strdup(path->name[0]);
+// 	path->name[1] = ft_strdup(path->name[1]);
+// 	return (path);
+// }
 
 /*
 ** Place un noeud
@@ -87,14 +87,14 @@ void					pushback_path(t_path **start, t_path *node)
 */
 void					pushfront_path(t_path **start, t_path *node)
 {
-	uint32_t		id;
+	// uint32_t		id;
 
 	if (start != NULL && node != NULL)
 	{
-		id = 1;
+		// id = 1;
 		node->next = *start;
 		*start = node;
-		update_id_path(start);
+		// update_id_path(start);
 	}
 }
 
@@ -190,8 +190,9 @@ static void				free_path(t_path **path)
 	tmp = *path;
 	if (tmp != NULL)
 	{
-		ft_memdel((void**)&(tmp->name[0]));
-		ft_memdel((void**)&(tmp->name[1]));
+		ft_memdel((void**)&(tmp->name));
+		// ft_memdel((void**)&(tmp->name[0]));
+		// ft_memdel((void**)&(tmp->name[1]));
 		ft_memdel((void**)&tmp);
 	}
 }

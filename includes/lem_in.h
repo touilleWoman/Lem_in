@@ -40,8 +40,8 @@ struct					s_path//	Liste des chemins d'un seul noeud!!!
 {
 	uint32_t		id;//			Static incrementer a la creation - modif de creation...
 	uint8_t			flow;//			La capacité résiduelle de flot, valeur peut etre 0, 1, ou 2
-	char			*name[2];//		Stockage des noms de noeuds relier
-	uint32_t		unid;
+	char			*name;//		Stockage de nom de noeud relier
+	uint32_t		unid;//			unid de node lié à node en question
 	t_path			*next;//		pointe sur le chemin suivant du meme noeud
 };
 
@@ -77,8 +77,10 @@ typedef struct			s_lemin
 ** Fonctions de Gestion
 **   DES LISTES PATH
 */
-t_path					*new_path(char *node1, char *node2);
-t_path					*copy_path(const t_path *pth);
+// t_path					*new_path(char *node1, char *node2);
+t_path					*new_path(uint32_t unid, char *name);
+
+// t_path					*copy_path(const t_path *pth);
 void					pushback_path(t_path **start, t_path *node);
 void					pushfront_path(t_path **start, t_path *node);
 void					pushafter_path(t_path **start, uint32_t id,\

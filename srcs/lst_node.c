@@ -28,7 +28,7 @@ t_node					*new_node(char *name, uint8_t start, uint8_t end)
 		free(node);
 		return (NULL);
 	}
-	unid++;
+	unid += 1;
 	node->id = id;
 	node->unid = unid;
 	node->name = ft_strdup(name);

@@ -27,9 +27,9 @@ int				main()
 			print_tab(lem.tab, HASHCODE);// A DELETE
 			/* print_info_inout(&lem);// A DELETE */
 			ft_putstr("start solver\n");
-			/*
-			   --> RESOLUTION A INSERER ICI
-			*/
+			   // --> RESOLUTION A INSERER ICI
+			// solver()
+
 		}
 		else
 			printf("An error occured\n");
@@ -73,9 +73,8 @@ void			print_tab(t_node *(tab)[HASHCODE], uint32_t max)
 			tmp = tab[i];
 			while (tmp != NULL)
 			{
-				printf("|[%d] ==> %s (Entree:%s) (Sortie:%s) (nb_paths:%d)|", i, tmp->name,
-						(tmp->start == 1) ? "oui" : "non",
-						(tmp->end == 1) ? "oui" : "non", tmp->nb_paths);
+				printf("|unid[%d]id[%d] ==> %s (nb_paths:%d)|", tmp->unid, i, tmp->name,
+						 tmp->nb_paths);
 				printf("=PATH=>");
 				print_pth(&(tmp->path_lst));
 				if (tmp->next != NULL)
@@ -97,7 +96,7 @@ void			print_pth(t_path **tab)
 	tmp = *tab;
 	while (tmp != NULL)
 	{
-		printf("|noeud1(%s), noeud2(%s)|", tmp->name[0], tmp->name[1]);
+		printf("[%s]", tmp->name);
 		if (tmp->next != NULL)
 			printf(" ");
 		tmp = tmp->next;

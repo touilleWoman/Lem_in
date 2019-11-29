@@ -68,17 +68,26 @@ static int8_t			check_line(char *line)
 */
 static int8_t			add_path(t_lemin *lem)
 {
-	t_node			*tmp;
-	t_path			*tmp1;
-	t_path			*tmp2;
+	// t_node			*tmp;
+	t_path			*path1;
+	t_path			*path2;
+	t_node			*node1;
+	t_node			*node2;
 
-	if ((tmp1 = new_path(lem->line, &(lem->line)[lem->dash + 1])) == NULL
-		|| (tmp2 = copy_path(tmp1)) == NULL)
+	node1 = get_node_in_hash(lem, lem->line);
+	node2 = get_node_in_hash(lem, &(lem->line)[lem->dash + 1]);
+	// if ((tmp1 = new_path(lem->line, &(lem->line)[lem->dash + 1])) == NULL
+		// || (tmp2 = copy_path(tmp1)) == NULL)
+	// 	return (LM_ERROR);
+	if ((path1 = new_path(node1->unid, node1->name)) == NULL
+		|| (path2 = new_path(node2->unid, node2->name)) == NULL)
 		return (LM_ERROR);
-	tmp = get_node_in_hash(lem, tmp1->name[0]);
-	pushfront_path(&(tmp->path_lst), tmp1);
-	tmp = get_node_in_hash(lem, tmp2->name[0]);
-	pushfront_path(&(tmp->path_lst), tmp2);
+	// tmp = get_node_in_hash(lem, tmp1->name[0]);
+	// pushfront_path(&(tmp->path_lst), tmp1);
+	pushfront_path(&(node1->path_lst), path2);
+	// tmp = get_node_in_hash(lem, tmp2->name[0]);
+	// pushfront_path(&(tmp->path_lst), tmp2);
+	pushfront_path(&(node2->path_lst), path1);
 	return (LM_SUCCESS);
 }
 

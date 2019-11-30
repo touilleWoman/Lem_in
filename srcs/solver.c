@@ -76,7 +76,7 @@ uint8_t		breadth_first_search(t_lemin *lem)
 			return (LM_TRUE);
 		}
 		iter_adja_of_current(*current, &visited, &open, lem);
-		del_first_elem(&open);
+		del_top_elem(&open);
 	}
 	del_address_lst(visited);
 	del_address_lst(open);

@@ -18,7 +18,7 @@
 
 void		debug_print_address_lst(t_list **alst);
 t_list		*address_list_new(t_node ** const new);
-void		del_first_elem(t_list **alst);
+void		del_top_elem(t_list **alst);
 void		del_address_lst(t_list *lst);
 uint8_t		not_in_address_lst(t_list *lst, t_node const *address);
 

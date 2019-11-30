@@ -52,7 +52,7 @@ uint8_t		not_in_address_lst(t_list *lst, t_node const *address)
 // 		ft_lstadd_bot(&visited, address_list_new(current));
 // }
 
-void		del_first_elem(t_list **alst)
+void		del_top_elem(t_list **alst)
 {
 	t_list	*cp;
 

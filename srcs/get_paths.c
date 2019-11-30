@@ -6,28 +6,28 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:48:44 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/29 20:49:18 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/30 20:22:46 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <get_info.h>
 
-// static uint8_t			check_existing_path(t_lemin *lem, char *line, t_node *n)
-// {
-// 	t_path			*tmp;
+static uint8_t			check_existing_path(t_lemin *lem, char *line, t_node *n)
+{
+ 	t_path			*tmp;
 
-// 	tmp = n->path_lst;
-// 	if (tmp != NULL)
-// 	{
-// 		while (tmp != NULL)
-// 		{
-// 			if (ft_strcmp(&(line[lem->dash + 1]), tmp->name[1]) == 0)
-// 				return (LM_TRUE);
-// 			tmp = tmp->next;
-// 		}
-// 	}
-// 	return (LM_FALSE);
-// }
+ 	tmp = n->path_lst;
+ 	if (tmp != NULL)
+ 	{
+ 		while (tmp != NULL)
+ 		{
+ 			if (ft_strcmp(&(line[lem->dash + 1]), tmp->name) == 0)
+ 				return (LM_TRUE);
+ 			tmp = tmp->next;
+ 		}
+ 	}
+ 	return (LM_FALSE);
+}
 
 static int8_t			check_for_valide_path(t_lemin *lem, char *line)
 {
@@ -41,9 +41,8 @@ static int8_t			check_for_valide_path(t_lemin *lem, char *line)
 		return (LM_ERROR);
 	if ((tmp = get_node_in_hash(lem, line)) != NULL)
 	{
-		// modifier cette fonction, parce que t_path -> name a été modifié
-		// if (check_existing_path(lem, line, tmp) == LM_TRUE)
-		// 	return (LM_IGNORE);
+		if (check_existing_path(lem, line, tmp) == LM_TRUE)
+		 	return (LM_IGNORE);
 		tmp->nb_paths += 1;
 		if ((tmp = get_node_in_hash(lem, &(line[lem->dash + 1]))) != NULL)
 		{
@@ -88,25 +87,18 @@ static int8_t			check_line(char *line)
 */
 static int8_t			add_path(t_lemin *lem)
 {
-	// t_node			*tmp;
 	t_path			*path1;
 	t_path			*path2;
 	t_node			*node1;
 	t_node			*node2;
 
-	node1 = get_node_in_hash(lem, lem->line);
-	node2 = get_node_in_hash(lem, &(lem->line)[lem->dash + 1]);
-	// if ((tmp1 = new_path(lem->line, &(lem->line)[lem->dash + 1])) == NULL
-		// || (tmp2 = copy_path(tmp1)) == NULL)
-	// 	return (LM_ERROR);
+	if ((node1 = get_node_in_hash(lem, lem->line)) == NULL
+		|| (node2 = get_node_in_hash(lem, &(lem->line)[lem->dash + 1])) == NULL)
+		return (LM_ERROR);
 	if ((path1 = new_path(node1->unid, node1->name)) == NULL
 		|| (path2 = new_path(node2->unid, node2->name)) == NULL)
 		return (LM_ERROR);
-	// tmp = get_node_in_hash(lem, tmp1->name[0]);
-	// pushfront_path(&(tmp->path_lst), tmp1);
 	pushfront_path(&(node1->path_lst), path2);
-	// tmp = get_node_in_hash(lem, tmp2->name[0]);
-	// pushfront_path(&(tmp->path_lst), tmp2);
 	pushfront_path(&(node2->path_lst), path1);
 	return (LM_SUCCESS);
 }
@@ -121,7 +113,8 @@ int8_t					get_path(t_lemin *lem)
 	while ((lem->line != NULL || get_next_line(0, &lem->line) == 1)
 			&& (ret = check_line(lem->line)) != LM_ERROR)
 	{
-		if ((ret = check_for_valide_path(lem, lem->line)) == LM_ERROR)
+		if (ret != LM_IGNORE\
+			&& (ret = check_for_valide_path(lem, lem->line)) == LM_ERROR)
 			return (ret);
 		if (ret == LM_SUCCESS)
 		{

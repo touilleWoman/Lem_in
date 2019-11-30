@@ -6,7 +6,7 @@
 #    By: naali <naali@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/17 16:13:53 by naali             #+#    #+#              #
-#    Updated: 2019/11/29 14:18:37 by naali            ###   ########.fr        #
+#    Updated: 2019/11/30 20:34:49 by nabih            ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -20,8 +20,18 @@ CC				=	gcc
 
 CFLAG 			=	-Wall -Wextra -Werror
 
-INCLUDES		=	-I./includes	\
-					-I./libft
+INC_FLAG		=	-I
+
+HEADERS_PATH	=	./includes		\
+					./libft
+
+HEADERS			=	includes.h		\
+					lem_in.h		\
+					get_info.h		\
+					solver.h		\
+					libft.h
+
+INCLUDES		=	$(addprefix $(INC_FLAG), $(HEADERS_PATH))
 
 OBJ_PATH		=	./objs
 
@@ -51,6 +61,7 @@ LFLAG			=	$(LIB_PATH) $(LIBS)
 ######################################################################
 
 vpath %.c ./srcs/:
+vpath %.h ./includes/:./libft/
 
 all				:	libs $(NAME)
 
@@ -59,7 +70,7 @@ $(NAME)			:	$(OBJ)
 					@$(CC) $(CFLAG) -o $(NAME) $(OBJ) $(LFLAG) $(INCLUDES) -g -fsanitize=address
 					@echo "${rose}DONE${neutre}"
 
-$(OBJ_PATH)/%.o	:	%.c
+$(OBJ_PATH)/%.o	:	%.c $(HEADERS)
 					@mkdir $(OBJ_PATH) 2> /dev/null || true
 					@echo "${vertfonce}Creating $@ ...\c${neutre}"
 					@$(CC) $(CFLAG) -o $@ -c $< $(INCLUDES)

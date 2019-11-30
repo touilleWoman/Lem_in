@@ -20,7 +20,7 @@ void		iter_adja_of_current(t_path *p, t_list **visited, t_list **open, t_lemin *
 	while (p)
 	{
 		adjacen_node = get_node_in_hash(lem, p->name);
-		printf("visited list:\n");
+		// printf("visited list:\n");
 		if (p->flow > 0 && not_in_address_lst(*visited, adjacen_node))
 		{
 			ft_lstadd_bot(visited, address_list_new(&adjacen_node));
@@ -60,13 +60,10 @@ uint8_t		breadth_first_search(t_lemin *lem)
 	while (open != NULL)
 	{
 		current = get_top_elem(open);
-		printf("unid[%d] ==> %s (nb_paths:%d)|\n", (*current)->unid, (*current)->name,
-				 (*current)->nb_paths);
 		if (not_in_address_lst(visited, *current))
 			ft_lstadd_bot(&visited, address_list_new(current));
 		if (*current == lem->end)
 			return (LM_TRUE);
-		// print_pth(&(current->path_lst));
 		iter_adja_of_current((*current)->path_lst, &visited, &open, lem);
 		del_first_elem(&open);
 

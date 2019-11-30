@@ -37,7 +37,6 @@ t_list		*address_list_new(t_node ** const new)
 
 uint8_t		not_in_address_lst(t_list *lst, t_node const *address)
 {
-	debug_print_address_lst(&lst);
 	while (lst != NULL)
 	{
 		if (address == *(t_node**)(lst->content))

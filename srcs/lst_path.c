@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 09:24:18 by naali             #+#    #+#             */
-/*   Updated: 2019/11/29 20:38:43 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/30 21:02:41 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,9 +191,8 @@ static void				free_path(t_path **path)
 	if (tmp != NULL)
 	{
 		ft_memdel((void**)&(tmp->name));
-		// ft_memdel((void**)&(tmp->name[0]));
-		// ft_memdel((void**)&(tmp->name[1]));
 		ft_memdel((void**)&tmp);
+		*path = NULL;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 17:03:23 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/29 19:52:32 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/30 21:21:09 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ struct					s_node//	Liste des noeuds a visiter ou deja visite
 typedef struct			s_lemin
 {
 	t_node			*tab[HASHCODE];
-	t_path			*pth[HASHCODE];
+//	t_path			*pth[HASHCODE];
 	char			*line;
 	t_node			*start;
 	t_node			*end;

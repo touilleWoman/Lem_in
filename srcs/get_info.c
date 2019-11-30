@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 08:23:51 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/27 18:25:39 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/30 21:17:09 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 static int8_t			clear_info(t_lemin *lem, int8_t flg)
 {
 	ft_memdel((void**)&(lem->line));
-	ft_memdel((void**)&(lem->start));
-	ft_memdel((void**)&(lem->end));
+	lem->start = NULL;
+	lem->end = NULL;
+	/* ft_memdel((void**)&(lem->start)); */
+	/* ft_memdel((void**)&(lem->end)); */
 	clear_hashtab(lem);
-	clear_hashpth(lem);
+//	clear_hashpth(lem);
 	return (flg);
 }
 

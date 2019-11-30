@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 15:03:12 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/29 19:53:36 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/30 21:15:59 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int8_t					get_node(t_lemin *lem)
 			&& ((ret = check_line(lem, lem->line)) == LM_SUCCESS\
 				|| ret == LM_IGNORE))
 	{
-		if (ret != LM_IGNORE && ret != LM_STOP)
+		if (ret != LM_IGNORE)
 		{
 			if (create_n_add(lem) != LM_SUCCESS)
 				return (LM_ERROR);

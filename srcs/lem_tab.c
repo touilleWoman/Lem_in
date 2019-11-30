@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 23:19:25 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/29 14:35:21 by naali            ###   ########.fr       */
+/*   Updated: 2019/11/30 21:09:23 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ uint8_t					node_exist(t_lemin *lem, char *name)
 	int32_t			id;
 	t_node			*tmp;
 
+	tmp = NULL;
 	if (lem != NULL && name != NULL)
 	{
-		tmp = NULL;
 		id = hash_name(name);
 		if (id >= 0 && id < HASHCODE)
 			tmp = (lem->tab)[id];

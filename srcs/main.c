@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 16:48:42 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/29 19:55:33 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/30 21:20:48 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int				main()
 	{
 		lem.line = NULL;
 		ft_bzero(lem.tab, sizeof(t_node*) * HASHCODE);
-//		ft_bzero(lem.pth, sizeof(t_path*) * HASHCODE);
 		if (get_info(&lem) == LM_SUCCESS)
 		{
 			print_tab(lem.tab, HASHCODE);// A DELETE
@@ -30,7 +29,7 @@ int				main()
 			solver(&lem);
 		}
 		else
-			printf("An error occured\n");
+			ft_putstr("An error occured\n");
 		clear_hashtab(&lem);
 	}
 	return (0);

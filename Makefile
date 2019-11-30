@@ -6,7 +6,7 @@
 #    By: naali <naali@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/17 16:13:53 by naali             #+#    #+#              #
-#    Updated: 2019/11/30 20:34:49 by nabih            ###   ########.fr        #
+#    Updated: 2019/11/30 21:21:41 by nabih            ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -37,10 +37,11 @@ OBJ_PATH		=	./objs
 
 SRC				=	main.c				\
 					lem_tab.c			\
-					lem_path.c			\
 					lst_node.c			\
 					lst_path.c			\
 					hash_encryption.c
+
+#					lem_path.c
 
 SRC				+=	get_info.c			\
 					get_nb_ants.c		\
@@ -67,7 +68,7 @@ all				:	libs $(NAME)
 
 $(NAME)			:	$(OBJ)
 					@echo "${vertfonce}Compiling ...${neutre}\c"
-					@$(CC) $(CFLAG) -o $(NAME) $(OBJ) $(LFLAG) $(INCLUDES) -g -fsanitize=address
+					@$(CC) $(CFLAG) -o $(NAME) $(OBJ) $(LFLAG) $(INCLUDES)
 					@echo "${rose}DONE${neutre}"
 
 $(OBJ_PATH)/%.o	:	%.c $(HEADERS)

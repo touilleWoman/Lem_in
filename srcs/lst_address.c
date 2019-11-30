@@ -65,3 +65,16 @@ void		del_first_elem(t_list **alst)
 	}
 }
 
+void		del_address_lst(t_list *lst)
+{
+	t_list *keep;
+
+	while (lst)
+	{
+		keep = lst->next;
+		free(lst->content);
+		free(lst);
+		lst = keep;
+	}
+}
+

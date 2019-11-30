@@ -12,22 +12,22 @@
 
 #include <get_info.h>
 
-static uint8_t			check_existing_path(t_lemin *lem, char *line, t_node *n)
-{
-	t_path			*tmp;
+// static uint8_t			check_existing_path(t_lemin *lem, char *line, t_node *n)
+// {
+// 	t_path			*tmp;
 
-	tmp = n->path_lst;
-	if (tmp != NULL)
-	{
-		while (tmp != NULL)
-		{
-			if (ft_strcmp(&(line[lem->dash + 1]), tmp->name[1]) == 0)
-				return (LM_TRUE);
-			tmp = tmp->next;
-		}
-	}
-	return (LM_FALSE);
-}
+// 	tmp = n->path_lst;
+// 	if (tmp != NULL)
+// 	{
+// 		while (tmp != NULL)
+// 		{
+// 			if (ft_strcmp(&(line[lem->dash + 1]), tmp->name[1]) == 0)
+// 				return (LM_TRUE);
+// 			tmp = tmp->next;
+// 		}
+// 	}
+// 	return (LM_FALSE);
+// }
 
 static int8_t			check_for_valide_path(t_lemin *lem, char *line)
 {
@@ -41,8 +41,9 @@ static int8_t			check_for_valide_path(t_lemin *lem, char *line)
 		return (LM_ERROR);
 	if ((tmp = get_node_in_hash(lem, line)) != NULL)
 	{
-		if (check_existing_path(lem, line, tmp) == LM_TRUE)
-			return (LM_IGNORE);
+		// modifier cette fonction, parce que t_path -> name a été modifié
+		// if (check_existing_path(lem, line, tmp) == LM_TRUE)
+		// 	return (LM_IGNORE);
 		tmp->nb_paths += 1;
 		if ((tmp = get_node_in_hash(lem, &(line[lem->dash + 1]))) != NULL)
 		{

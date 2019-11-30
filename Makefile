@@ -38,6 +38,7 @@ SRC				+=	get_info.c			\
 					get_paths.c
 
 SRC				+=	solver.c 			\
+					lst_address.c		\
 
 OBJ 			=	$(addprefix $(OBJ_PATH)/, $(SRC:%.c=%.o))
 

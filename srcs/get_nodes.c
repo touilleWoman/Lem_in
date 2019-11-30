@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 15:03:12 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/24 17:20:55 by nabih            ###   ########.fr       */
+/*   Updated: 2019/11/29 19:53:36 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,9 @@ static int8_t			create_n_add(t_lemin *lem)
 		tmp = new_node(lem->line, lem->isstart, lem->isend);
 		add_node_in_tab(lem, tmp);
 		if (lem->isstart == 1)
-			lem->start = ft_strdup(lem->line);
+			lem->start = tmp;
 		else if (lem->isend == 1)
-			lem->end = ft_strdup(lem->line);
+			lem->end = tmp;
 		lem->isstart = 0;
 		lem->isend = 0;
 	}

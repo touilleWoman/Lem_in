@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 09:24:18 by naali             #+#    #+#             */
-/*   Updated: 2019/11/29 14:52:21 by naali            ###   ########.fr       */
+/*   Updated: 2019/11/29 20:38:43 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ t_path					*copy_path(const t_path *pth)
 	if ((path = malloc(sizeof(t_path))) == NULL)
 		return (NULL);
 	ft_memcpy((void*)path, (void*)(pth), sizeof(t_path));
-	path->name[0] = ft_strdup(path->name[0]);
-	path->name[1] = ft_strdup(path->name[1]);
+	path->name[0] = ft_strdup(pth->name[1]);
+	path->name[1] = ft_strdup(pth->name[0]);
 	return (path);
 }
 

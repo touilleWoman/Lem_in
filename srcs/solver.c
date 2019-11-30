@@ -25,12 +25,11 @@ void		iter_adja_of_current(t_node *current, t_list **visited, t_list **open, t_l
 		{
 			ft_lstadd_bot(visited, address_list_new(&adjacen_node));
 			ft_lstadd_bot(open, address_list_new(&adjacen_node));
-			// adjacen_node->parent_name = &(current->name);
+			adjacen_node->parent_name = (current->name);
 		}
 		p = p->next;
 	}
 }
-
 
 t_node		**get_top_elem(t_list *lst)
 {
@@ -57,13 +56,17 @@ uint8_t		breadth_first_search(t_lemin *lem)
 	t_list	*visited;
 	t_node	**current;
 
+	visited = NULL;
 	open = address_list_new(&(lem->start));
 	while (open != NULL)
 	{
 		current = get_top_elem(open);
-		printf("debug open start\n");
-		debug_print_address_lst(&open);
-		printf("debug end\n");
+		// printf("debug open start\n");
+		// debug_print_address_lst(&open);
+		// printf("debug end\n");
+		// printf("debug visited start\n");
+		// debug_print_address_lst(&visited);
+		// printf("debug end\n");
 		if (not_in_address_lst(visited, *current))
 			ft_lstadd_bot(&visited, address_list_new(current));
 		if (*current == lem->end)
@@ -89,7 +92,7 @@ int8_t			modify_flow(t_node *parent, t_node *child, int flow)
 	{
 		if (ft_strcmp(p->name, child->name) == 0)
 		{
-			printf("flow of pathname[%s] changed from [%d] to [%d]\n", p->name, p->flow, flow);
+			// printf("flow of pathname[%s] changed from [%d] to [%d]\n", p->name, p->flow, flow);
 			p->flow = flow;
 			return (LM_SUCCESS);
 		}
@@ -98,39 +101,34 @@ int8_t			modify_flow(t_node *parent, t_node *child, int flow)
 	return (LM_ERROR);
 }
 
-// uint32_t		fulkerson_algo(t_lemin *lem)
-// {
-// 	breadth_first_search(lem)
+uint32_t		fulkerson_algo(t_lemin *lem)
+{
+	uint32_t	max_flow;
+	t_node		*parent;
+	t_node		*child;
 
-// 	uint32_t	max_flow;
-// 	t_node		*parent;
-// 	t_node		*child;
-
-// 	(void)parent;
-// 	(void)child;
-// 	max_flow = 0;
-// 	if (breadth_first_search(lem))
-// 	{
-// 		printf("BFS done, max_flow = [%d]\n", max_flow);
-// 		max_flow++;
-// 		// child = lem->end;
-// 		// if (child != lem->start)
-// 		// {
-// 			// printf("parent name%s\n", *(child->parent_name));
-// 			// parent = get_node_in_hash(lem, str);
-// 			// printf("parent name reckeck%s\n", parent->name);
-
-// 			// modify_flow(parent, child, 0);
-// 			// modify_flow(child, parent, 2);
-// 			// child = parent;
-// 		// }
-// 	}
-// 	return (max_flow);
-// }
+	max_flow = 0;
+	while (breadth_first_search(lem))
+	{
+		printf("BFS lauched, max_flow = [%d]\n", max_flow);
+		max_flow++;
+		child = lem->end;
+		while (child != lem->start)
+		{
+			printf("parent name%s\n", (child->parent_name));
+			parent = get_node_in_hash(lem, child->parent_name);
+			modify_flow(parent, child, 0);
+			modify_flow(child, parent, 2);
+			child = parent;
+		}
+	}
+	return (max_flow);
+}
 
 void		solver(t_lemin *lem)
 {
-	// fulkerson_algo(lem);
-	breadth_first_search(lem);
+	uint32_t	max_flow;
 
+	max_flow = fulkerson_algo(lem);
+	printf("fulkerson_algo done, max_flow=%d\n", max_flow);
 }

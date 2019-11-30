@@ -52,7 +52,7 @@ struct					s_node//	Liste des noeuds a visiter ou deja visite
 	uint32_t		id;//			Indice dans le tableau de HASH
 	uint32_t		unid;//			INDICE UNIQUE
 	char			*name;//		Nom du noeud
-	char			**parent_name;// pointe sur char* name de son node parent,
+	char			*parent_name;// pointe sur char* name de son node parent,
 									// pas de nouveau malloc, pas besoin de free
 	uint32_t		dist;//			dist == nombre de deplacement depuis start
 	uint32_t		nb_paths;//		Nombre de chemin (Entrant ou sortant peu importe)

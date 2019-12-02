@@ -239,23 +239,29 @@ uint32_t		print_anthill(t_lemin *lem, t_list **cir, uint32_t nb_inside, uint32_t
 	uint32_t	floor;
 	uint32_t	nb_exit;
 	char		*name;
+	static uint32_t total_exit = 0;
+	uint32_t	index;
 
 	i = 0;
 	nb_exit = 0;
 	if (nb_enter == 0)
 		initial_floor += 1;
-
+	index = nb_inside + total_exit;
 	floor = initial_floor;
 	while (nb_inside)
 	{
 		while (i < nb_paths)
 		{
 			name = get_node_in_circuit(cir[i], floor);
-			printf("L%d-%s ", nb_inside, name);
+			printf("L%d-%s ", index, name);
 			if (ft_strcmp(name, (lem->end)->name) == 0)
+			{
 				nb_exit++;
+				total_exit++;
+			}
 			i++;
 			nb_inside--;
+			index--;
 		}
 		i = 0;
 		floor++;

@@ -141,8 +141,10 @@ uint32_t		fulkerson_algo(t_lemin *lem)
 	}
 	return (max_flow);
 }
-
-uint8_t		retrace_circuits_from_graph(t_lemin *lem, uint32_t nb_p)
+/*
+** circuits est tableau de circuits trouvé, tab len = nb_p
+*/
+t_list		**retrace_circuits_from_graph(t_lemin *lem, uint32_t nb_p)
 {
 	t_list			**circuits;
 	uint32_t		i;
@@ -154,6 +156,7 @@ uint8_t		retrace_circuits_from_graph(t_lemin *lem, uint32_t nb_p)
 	circuits = (t_list**)malloc(sizeof(t_list*) * nb_p);
 	if (!circuits)
 		return (LM_FALSE);
+	ft_bzero(circuits, nb_p);
 	while (i < nb_p)
 	{
 		printf("Path No [%d]\n",i);
@@ -164,17 +167,17 @@ uint8_t		retrace_circuits_from_graph(t_lemin *lem, uint32_t nb_p)
 			if ((exit_name = get_occupied_node(enter)) == NULL)
 			{
 				printf("exit_name == NULL\n");
-				return (LM_FALSE);
+				return (NULL);
 			}
 			exit = get_node_in_hash(lem, exit_name);
 			ft_lstadd_top(&(circuits[i]), address_list_new(&exit));
 			flow_plus_modif(enter, exit, -1);
-			flow_plus_modif(exit, enter, +1);
+			flow_plus_modif(exit, enter, 1);
 			enter = exit;
 		}
 		i++;
 	}
-	return (LM_TRUE);
+	return (circuits);
 }
 
 void		solver(t_lemin *lem)

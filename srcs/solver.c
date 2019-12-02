@@ -83,22 +83,39 @@ uint8_t		breadth_first_search(t_lemin *lem)
 	return (LM_FALSE);
 }
 
-int8_t			modify_flow(t_node *parent, t_node *child, int flow)
+int8_t			flow_plus_modif(t_node *enter, t_node *exit, int8_t modif)
 {
 	t_path	*p;
 
-	p = parent->path_lst;
+	p = enter->path_lst;
 	while(p)
 	{
-		if (ft_strcmp(p->name, child->name) == 0)
+		if (ft_strcmp(p->name, exit->name) == 0)
 		{
-			// printf("flow of pathname[%s] changed from [%d] to [%d]\n", p->name, p->flow, flow);
-			p->flow = flow;
+			// printf("flow of pathname[%s] changed from [%d] to [%d]\n", p->name, p->flow, modif);
+			p->flow += modif;
 			return (LM_SUCCESS);
 		}
 		p = p->next;
 	}
 	return (LM_ERROR);
+}
+
+char			*get_occupied_node(t_node *enter)
+{
+	t_path		*p;
+
+	p = enter->path_lst;
+	while(p)
+	{
+		if (p->flow == 2)
+		{
+			printf("Enter node[%s] to exit node[%s]\n",enter->name, p->name);
+			return (p->name);
+		}
+		p = p->next;
+	}
+	return (NULL);
 }
 
 uint32_t		fulkerson_algo(t_lemin *lem)
@@ -117,12 +134,47 @@ uint32_t		fulkerson_algo(t_lemin *lem)
 		{
 			printf("parent name%s\n", (child->parent_name));
 			parent = get_node_in_hash(lem, child->parent_name);
-			modify_flow(parent, child, 0);
-			modify_flow(child, parent, 2);
+			flow_plus_modif(parent, child, -1);
+			flow_plus_modif(child, parent, 1);
 			child = parent;
 		}
 	}
 	return (max_flow);
+}
+
+uint8_t		retrace_circuits_from_graph(t_lemin *lem, uint32_t nb_p)
+{
+	t_list			**circuits;
+	uint32_t		i;
+	t_node			*enter;
+	t_node			*exit;
+	char			*exit_name;
+
+	i = 0;
+	circuits = (t_list**)malloc(sizeof(t_list*) * nb_p);
+	if (!circuits)
+		return (LM_FALSE);
+	while (i < nb_p)
+	{
+		printf("Path No [%d]\n",i);
+		enter = lem->end;
+		circuits[i] = address_list_new(&enter);
+		while (enter != lem->start)
+		{
+			if ((exit_name = get_occupied_node(enter)) == NULL)
+			{
+				printf("exit_name == NULL\n");
+				return (LM_FALSE);
+			}
+			exit = get_node_in_hash(lem, exit_name);
+			ft_lstadd_top(&(circuits[i]), address_list_new(&exit));
+			flow_plus_modif(enter, exit, -1);
+			flow_plus_modif(exit, enter, +1);
+			enter = exit;
+		}
+		i++;
+	}
+	return (LM_TRUE);
 }
 
 void		solver(t_lemin *lem)
@@ -131,4 +183,10 @@ void		solver(t_lemin *lem)
 
 	max_flow = fulkerson_algo(lem);
 	printf("fulkerson_algo done, max_flow=%d\n", max_flow);
+	print_tab(lem->tab, HASHCODE);
+	retrace_circuits_from_graph(lem, max_flow);
+	printf("after retrac\n");
+	print_tab(lem->tab, HASHCODE);
+
+
 }

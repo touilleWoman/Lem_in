@@ -93,7 +93,7 @@ void			print_pth(t_path **tab)
 	tmp = *tab;
 	while (tmp != NULL)
 	{
-		printf("[%s]", tmp->name);
+		printf("[%s, flow=%d]", tmp->name, tmp->flow);
 		if (tmp->next != NULL)
 			printf(" ");
 		tmp = tmp->next;

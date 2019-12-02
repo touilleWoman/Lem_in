@@ -180,16 +180,132 @@ t_list		**retrace_circuits_from_graph(t_lemin *lem, uint32_t nb_p)
 	return (circuits);
 }
 
+
+
+
+
+void		debug_print_circuits(t_list **circuits, int nb_paths)
+{
+	int		i;
+	t_node	*node;
+	t_list	*cp;
+
+	i = 0;
+	while (i < nb_paths)
+	{
+		printf("circuit[%d]:\n", i);
+		cp = circuits[i];
+		while (cp)
+		{
+			node = *(t_node**)(cp->content);
+			printf("%s\n", node->name);
+			cp = cp->next;
+		}
+		i++;
+	}
+}
+
+uint32_t		nb_ants_inside(uint32_t nb_enter, uint32_t nb_exit)
+{
+	static uint32_t nb = 0;
+
+	nb += nb_enter;
+	nb -= nb_exit;
+	// printf("nb_inside:%d, nb_enter:%d, nb_exit:%d\n", nb, nb_enter, nb_exit);
+	return(nb);
+}
+
+char		*get_node_in_circuit(t_list *cir, uint32_t floor)
+{
+	t_node *node;
+
+	while (cir && floor != 0)
+	{
+		cir = cir->next;
+		floor--;
+	}
+	if (cir)
+	{
+		node = *((t_node**)(cir->content));
+		return (node->name);
+	}
+	return (NULL);
+}
+
+uint32_t		print_anthill(t_lemin *lem, t_list **cir, uint32_t nb_inside, uint32_t nb_paths, uint32_t nb_enter)
+{
+	uint32_t	i;
+	static uint32_t	initial_floor = 1;
+	uint32_t	floor;
+	uint32_t	nb_exit;
+	char		*name;
+
+	i = 0;
+	nb_exit = 0;
+	if (nb_enter == 0)
+		initial_floor += 1;
+
+	floor = initial_floor;
+	while (nb_inside)
+	{
+		while (i < nb_paths)
+		{
+			name = get_node_in_circuit(cir[i], floor);
+			printf("L%d-%s ", nb_inside, name);
+			if (ft_strcmp(name, (lem->end)->name) == 0)
+				nb_exit++;
+			i++;
+			nb_inside--;
+		}
+		i = 0;
+		floor++;
+	}
+	return (nb_exit);
+}
+
+void		send_ants(t_lemin *lem, t_list **cir, int32_t max_flow)
+{
+	uint32_t nb_inside;
+	uint32_t nb_enter;
+	uint32_t nb_exit;
+
+	nb_exit = 0;
+	while (LM_TRUE)
+	{
+		if (lem->nb_ants > max_flow)
+			nb_enter = max_flow;
+		else
+			nb_enter = lem->nb_ants;
+		lem->nb_ants -= nb_enter;
+		nb_inside = nb_ants_inside(nb_enter, nb_exit);
+		if (nb_inside == 0)
+			break ;
+		nb_exit = print_anthill(lem, cir, nb_inside, max_flow, nb_enter);
+		printf("\n");
+	}
+}
+
+
+
+
 void		solver(t_lemin *lem)
 {
 	uint32_t	max_flow;
+	t_list			**max_cir;
+
 
 	max_flow = fulkerson_algo(lem);
 	printf("fulkerson_algo done, max_flow=%d\n", max_flow);
-	print_tab(lem->tab, HASHCODE);
-	retrace_circuits_from_graph(lem, max_flow);
-	printf("after retrac\n");
-	print_tab(lem->tab, HASHCODE);
-
-
+	// print_tab(lem->tab, HASHCODE);
+	max_cir = retrace_circuits_from_graph(lem, max_flow);
+	// printf("after retrac\n");
+	// print_tab(lem->tab, HASHCODE);
+	send_ants(lem, max_cir, max_flow);
+	// printf("%s\n",get_node_in_circuit(max_cir[0], 0));
+	// printf("%s\n",get_node_in_circuit(max_cir[0], 1));
+	// printf("%s\n",get_node_in_circuit(max_cir[0], 2));
+	// printf("%s\n",get_node_in_circuit(max_cir[0], 3));
+	// printf("%s\n",get_node_in_circuit(max_cir[0], 4));
+	// printf("%s\n",get_node_in_circuit(max_cir[0], 5));
+	// printf("%s\n",get_node_in_circuit(max_cir[0], 6));
 }

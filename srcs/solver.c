@@ -110,7 +110,7 @@ char			*get_occupied_node(t_node *enter)
 	{
 		if (p->flow == 2)
 		{
-			printf("Enter node[%s] to exit node[%s]\n",enter->name, p->name);
+			// printf("Enter node[%s] to exit node[%s]\n",enter->name, p->name);
 			return (p->name);
 		}
 		p = p->next;
@@ -132,7 +132,7 @@ uint32_t		fulkerson_algo(t_lemin *lem)
 		child = lem->end;
 		while (child != lem->start)
 		{
-			printf("parent name%s\n", (child->parent_name));
+			// printf("parent name%s\n", (child->parent_name));
 			parent = get_node_in_hash(lem, child->parent_name);
 			flow_plus_modif(parent, child, -1);
 			flow_plus_modif(child, parent, 1);
@@ -159,7 +159,6 @@ t_list		**retrace_circuits_from_graph(t_lemin *lem, uint32_t nb_p)
 	ft_bzero(circuits, nb_p);
 	while (i < nb_p)
 	{
-		printf("Path No [%d]\n",i);
 		enter = lem->end;
 		circuits[i] = address_list_new(&enter);
 		while (enter != lem->start)
@@ -179,9 +178,6 @@ t_list		**retrace_circuits_from_graph(t_lemin *lem, uint32_t nb_p)
 	}
 	return (circuits);
 }
-
-
-
 
 
 void		debug_print_circuits(t_list **circuits, int nb_paths)

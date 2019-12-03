@@ -31,7 +31,7 @@ void		del_top_elem(t_list **alst);
 void		del_address_lst(t_list *lst);
 uint8_t		not_in_address_lst(t_list *lst, t_node const *address);
 char		*get_node_in_circuit(t_list *cir, uint32_t floor);
-void		send_ants(t_lemin *lem, t_list **cir_one, t_list **cir_two, int32_t cir_nb[2]);
+void		print_ants(t_lemin *lem, t_list **cir_one, t_list **cir_two, int32_t cir_nb[2]);
 
 void		debug_print_circuits(t_list **circuits, int nb_paths);
 

@@ -74,6 +74,8 @@ void		print_anthill_one(t_lemin *lem, t_list **cir_one, int32_t cir_nb, t_anthil
 		while (i < cir_nb)
 		{
 			node_name = get_node_in_circuit(cir_one[i], floor);
+			if (node_name == NULL)
+				return ;
 			print_line(ant_index, node_name);
 			if (ft_strcmp(node_name, (lem->end)->name) == 0)
 			{
@@ -108,13 +110,12 @@ void		update_anthill_two_data(t_anthill *h2, t_anthill *h1)
 }
 
 
-void		send_ants(t_lemin *lem, t_list **cir_one, t_list **cir_two, int32_t cir_nb[2])
+void		print_ants(t_lemin *lem, t_list **cir_one, t_list **cir_two, int32_t cir_nb[2])
 {
 	uint32_t	cir_one_round;
 	uint32_t	cir_two_round;
 	t_anthill	h;
 	t_anthill	h2;
-
 
 	cir_one_round = lem->nb_ants / cir_nb[0];
 	if (cir_nb[2])
@@ -130,11 +131,8 @@ void		send_ants(t_lemin *lem, t_list **cir_one, t_list **cir_two, int32_t cir_nb
 	h2.nb_inside = 0;
 	h2.start_floor = 1;
 	h2.new_enter = 0;
-	int n= 0;
 	while (LM_TRUE)
 	{
-		n++;
-		// printf("round========[%d]\n", n);
 		if (h.nb_inside)
 		{
 			if (cir_one_round)
@@ -151,8 +149,6 @@ void		send_ants(t_lemin *lem, t_list **cir_one, t_list **cir_two, int32_t cir_nb
 			h2.nb_inside = 1;
 		if (h2.nb_inside)
 		{
-			// debug_print_struct(&h2);
-
 			if (cir_two_round)
 			{
 				h2.new_enter = cir_nb[1];
@@ -166,7 +162,5 @@ void		send_ants(t_lemin *lem, t_list **cir_one, t_list **cir_two, int32_t cir_nb
 		printf("\n");
 		if (h.nb_inside == 0 && h2.nb_inside == 0)
 			break;
-
 	}
-
 }

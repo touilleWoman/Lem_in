@@ -149,10 +149,12 @@ uint32_t		fulkerson_algo(t_lemin *lem, uint32_t wanted_flow)
 	}
 	return (max_flow);
 }
+
 /*
-** circuits est tableau de circuits trouvé, tab len = nb_p
+** circuits est tableau de circuits trouvé, tab len = cir_nb
 */
-t_list		**retrace_circuits_from_graph(t_lemin *lem, uint32_t nb_p)
+
+t_list		**retrace_circuits_from_graph(t_lemin *lem, uint32_t cir_nb)
 {
 	t_list			**circuits;
 	uint32_t		i;
@@ -161,11 +163,11 @@ t_list		**retrace_circuits_from_graph(t_lemin *lem, uint32_t nb_p)
 	char			*exit_name;
 
 	i = 0;
-	circuits = (t_list**)malloc(sizeof(t_list*) * nb_p);
+	circuits = (t_list**)malloc(sizeof(t_list*) * cir_nb);
 	if (!circuits)
 		return (LM_FALSE);
-	ft_bzero(circuits, nb_p);
-	while (i < nb_p)
+	ft_bzero(circuits, cir_nb);
+	while (i < cir_nb)
 	{
 		enter = lem->end;
 		circuits[i] = address_list_new(&enter);
@@ -174,6 +176,7 @@ t_list		**retrace_circuits_from_graph(t_lemin *lem, uint32_t nb_p)
 			if ((exit_name = get_occupied_node(enter)) == NULL)
 			{
 				printf("exit_name == NULL\n");
+				//free circuits ici !!
 				return (NULL);
 			}
 			exit = get_node_in_hash(lem, exit_name);
@@ -186,7 +189,6 @@ t_list		**retrace_circuits_from_graph(t_lemin *lem, uint32_t nb_p)
 	}
 	return (circuits);
 }
-
 
 void		debug_print_circuits(t_list **circuits, int nb_paths)
 {
@@ -209,8 +211,6 @@ void		debug_print_circuits(t_list **circuits, int nb_paths)
 	}
 }
 
-
-
 char		*get_node_in_circuit(t_list *cir, uint32_t floor)
 {
 	t_node *node;
@@ -229,8 +229,6 @@ char		*get_node_in_circuit(t_list *cir, uint32_t floor)
 }
 
 
-
-
 /*
 ** cir_nb[0] represents the number of circuits in cir_one,
 ** it's equal to nb of flow returned by fulkerson_algo().
@@ -247,24 +245,16 @@ void		solver(t_lemin *lem)
 	cir_two = NULL;
 	cir_nb[0] = fulkerson_algo(lem, lem->nb_ants);
 	cir_nb[1] = 0;
-	// printf("fulkerson_algo done, cir_nb[0]=%d\n", cir_nb[0]);
-	// print_tab(lem->tab, HASHCODE);
 	cir_one = retrace_circuits_from_graph(lem, cir_nb[0]);
-	// printf("after retrac cir_nb[0]\n");
-	// print_tab(lem->tab, HASHCODE);
-
 	if (lem->nb_ants % cir_nb[0] != 0)
 	{
-		printf("circuit two lauched\n");
 		cir_nb[1] = lem->nb_ants % cir_nb[0];
 		fulkerson_algo(lem, cir_nb[1]);
-		// printf("cir_nb[1]%d\n", cir_nb[1]);
-		// print_tab(lem->tab, HASHCODE);
 		cir_two = retrace_circuits_from_graph(lem, cir_nb[1]);
-		// printf("after retrac cir_nb[1]\n");
-		// print_tab(lem->tab, HASHCODE);
 	}
-	send_ants(lem, cir_one, cir_two, cir_nb);
+	// debug_print_circuits(cir_one, cir_nb[0]);
+	// debug_print_circuits(cir_two, cir_nb[1]);
+	print_ants(lem, cir_one, cir_two, cir_nb);
 }
 
 

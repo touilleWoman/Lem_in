@@ -98,6 +98,11 @@ void		update_anthill_data(t_anthill *h)
 	h->total_enter += h->new_enter;
 	h->nb_inside = h->total_enter - h->total_exit;
 	h->max_ant_index = h->nb_inside + h->total_exit;
+	if (h->nb_inside)
+		h->activated = LM_TRUE;
+	else
+		h->activated = LM_FALSE;
+
 }
 
 void		update_anthill_two_data(t_anthill *h2, t_anthill *h1)
@@ -107,6 +112,10 @@ void		update_anthill_two_data(t_anthill *h2, t_anthill *h1)
 	h2->total_enter += h2->new_enter;
 	h2->nb_inside = h2->total_enter - h2->total_exit;
 	h2->max_ant_index = h1->max_ant_index + h2->nb_inside + h2->total_exit;
+	if (h2->nb_inside)
+		h2->activated = LM_TRUE;
+	else
+		h2->activated = LM_FALSE;
 }
 
 static int32_t	send_ants_cir_one(t_lemin *lem, int32_t cir_nb)
@@ -124,61 +133,55 @@ static int32_t	send_ants_cir_one(t_lemin *lem, int32_t cir_nb)
 	return (sent);
 }
 
+static int32_t	send_ants_cir_two(int32_t cir_nb)
+{
+	int32_t			sent;
+	static	int32_t	cir_two_round = 1;
 
+	if (cir_two_round)
+	{
+		sent = cir_nb;
+		cir_two_round--;
+	}
+	else
+		sent = 0;
+	return (sent);
+}
+
+void		init_anthill(t_anthill *h)
+{
+	h->total_exit = 0;
+	h->total_enter = 0;
+	h->nb_inside = 0;
+	h->start_floor = 1;
+	h->activated = LM_FALSE;
+}
 
 void		print_ants(t_lemin *lem, t_list **cir_one, t_list **cir_two, int32_t cir_nb[2])
 {
-	// uint32_t	cir_one_round;
-	uint32_t	cir_two_round;
 	t_anthill	h;
 	t_anthill	h2;
 
-	// cir_one_round = lem->nb_ants / cir_nb[0];
-	if (cir_nb[2])
-		cir_two_round = 1;
-	else
-		cir_two_round = 0;
-
-	h.total_exit = 0;
-	h.total_enter = 0;
-	h.nb_inside = 1;
-	h.start_floor = 1;
-	h2.total_exit = 0;
-	h2.total_enter = 0;
-	h2.nb_inside = 0;
-	h2.start_floor = 1;
-	h2.new_enter = 0;
-	while (LM_TRUE)
+	printf("\nTotal ants[%d]\n\n", lem->nb_ants);
+	init_anthill(&h);
+	init_anthill(&h2);
+	h.activated = LM_TRUE;
+	while (h.activated || h2.activated)
 	{
-		if (h.nb_inside)
+		if (h.activated)
 		{
-			// if (cir_one_round)
-			// {
-			// 	h.new_enter = cir_nb[0];
-			// 	cir_one_round--;
-			// }
-			// else
-			// 	h.new_enter = 0;
 			h.new_enter = send_ants_cir_one(lem, cir_nb[0]);
 			update_anthill_data(&h);
 			print_anthill_one(lem, cir_one, cir_nb[0], &h);
 		}
 		if (h.new_enter == 0 && cir_nb[1])
-			h2.nb_inside = 1;
-		if (h2.nb_inside)
+			h2.activated = LM_TRUE;
+		if (h2.activated)
 		{
-			if (cir_two_round)
-			{
-				h2.new_enter = cir_nb[1];
-				cir_two_round--;
-			}
-			else
-				h2.new_enter = 0;
+			h2.new_enter = send_ants_cir_two(cir_nb[1]);
 			update_anthill_two_data(&h2, &h);
 			print_anthill_two(lem, cir_two, cir_nb[1], &h2);
 		}
 		printf("\n");
-		if (h.nb_inside == 0 && h2.nb_inside == 0)
-			break;
 	}
 }

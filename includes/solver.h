@@ -23,7 +23,7 @@ typedef	struct	s_anthill
 	uint32_t	nb_inside;
 	uint32_t	start_floor;
 	uint32_t	max_ant_index;
-	// uint8_t		activated;
+	uint8_t		activated;
 }				t_anthill;
 
 void		debug_print_address_lst(t_list **alst);

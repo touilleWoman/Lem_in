@@ -84,7 +84,7 @@ void		print_anthill_one(t_lemin *lem, t_list **cir_one, int32_t cir_nb, t_anthil
 			}
 			i++;
 			ant_index--;
-			(print_nb)--;
+			print_nb--;
 		}
 		i = 0;
 		floor++;
@@ -109,19 +109,36 @@ void		update_anthill_two_data(t_anthill *h2, t_anthill *h1)
 	h2->max_ant_index = h1->max_ant_index + h2->nb_inside + h2->total_exit;
 }
 
+static int32_t	send_ants_cir_one(t_lemin *lem, int32_t cir_nb)
+{
+	int32_t			sent;
+	static	int32_t	cir_one_round = 0;
+
+	if (cir_one_round < lem->nb_ants / cir_nb)
+	{
+		sent = cir_nb;
+		cir_one_round++;
+	}
+	else
+		sent = 0;
+	return (sent);
+}
+
+
 
 void		print_ants(t_lemin *lem, t_list **cir_one, t_list **cir_two, int32_t cir_nb[2])
 {
-	uint32_t	cir_one_round;
+	// uint32_t	cir_one_round;
 	uint32_t	cir_two_round;
 	t_anthill	h;
 	t_anthill	h2;
 
-	cir_one_round = lem->nb_ants / cir_nb[0];
+	// cir_one_round = lem->nb_ants / cir_nb[0];
 	if (cir_nb[2])
 		cir_two_round = 1;
 	else
 		cir_two_round = 0;
+
 	h.total_exit = 0;
 	h.total_enter = 0;
 	h.nb_inside = 1;
@@ -135,13 +152,14 @@ void		print_ants(t_lemin *lem, t_list **cir_one, t_list **cir_two, int32_t cir_n
 	{
 		if (h.nb_inside)
 		{
-			if (cir_one_round)
-			{
-				h.new_enter = cir_nb[0];
-				cir_one_round--;
-			}
-			else
-				h.new_enter = 0;
+			// if (cir_one_round)
+			// {
+			// 	h.new_enter = cir_nb[0];
+			// 	cir_one_round--;
+			// }
+			// else
+			// 	h.new_enter = 0;
+			h.new_enter = send_ants_cir_one(lem, cir_nb[0]);
 			update_anthill_data(&h);
 			print_anthill_one(lem, cir_one, cir_nb[0], &h);
 		}

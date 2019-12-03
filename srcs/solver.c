@@ -209,15 +209,7 @@ void		debug_print_circuits(t_list **circuits, int nb_paths)
 	}
 }
 
-uint32_t		nb_ants_inside(uint32_t new_enter, uint32_t new_exit)
-{
-	static uint32_t nb_inside = 0;
 
-	nb_inside += new_enter;
-	nb_inside -= new_exit;
-	// printf("nb_inside:%d, new_enter:%d, new_exit:%d\n", nb, new_enter, new_exit);
-	return(nb_inside);
-}
 
 char		*get_node_in_circuit(t_list *cir, uint32_t floor)
 {
@@ -236,98 +228,43 @@ char		*get_node_in_circuit(t_list *cir, uint32_t floor)
 	return (NULL);
 }
 
-uint32_t		print_anthill(t_lemin *lem, t_list **cir, uint32_t nb_inside, uint32_t nb_enter, uint32_t flow_var[2])
-{
-	uint32_t	i;
-	static uint32_t	initial_floor = 1;
-	uint32_t	floor;
-	uint32_t	nb_exit;
-	char		*name;
-	static uint32_t total_exit = 0;
-	uint32_t	index;
-
-	i = 0;
-	nb_exit = 0;
-	if (nb_enter == 0)
-		initial_floor += 1;
-	index = nb_inside + total_exit;
-	floor = initial_floor;
-	while (nb_inside)
-	{
-		while (i < nb_paths)
-		{
-			name = get_node_in_circuit(cir[i], floor);
-			printf("L%d-%s ", index, name);
-			if (ft_strcmp(name, (lem->end)->name) == 0)
-			{
-				nb_exit++;
-				total_exit++;
-			}
-			i++;
-			nb_inside--;
-			index--;
-		}
-		i = 0;
-		floor++;
-	}
-	return (nb_exit);
-}
-
-void		send_ants(t_lemin *lem, t_list **cir, t_list **last_cir, int32_t flow_var[2])
-{
-	uint32_t 	new_enter;
-	uint32_t 	new_exit;
-	uint32_t	max_round;
-
-	new_exit = 0;
-	max_round = lem->nb_ants / flow_var[0];
-	while (LM_TRUE)
-	{
-		if (max_round)
-		{
-			new_enter = flow_var[0];
-			max_round--;
-		}
-		else if (flow_var[1])
-			new_enter = flow_var[1];
-		else
-			new_enter = 0;
-		new_exit = print_anthill(lem, cir, nb_inside, new_enter, flow_var[2]);
-		printf("\n");
-		if (nb_ants_inside(new_enter, new_exit) == 0)
-			break ;
-	}
-}
 
 
 
+/*
+** cir_nb[0] represents the number of circuits in cir_one,
+** it's equal to nb of flow returned by fulkerson_algo().
+** cir_nb[1] represents the number of circuits in cir_two.
+** if lem->nb_ants % max_flow == 0, then cir_two is empty.
+*/
 
 void		solver(t_lemin *lem)
 {
-	int32_t			flow_var[2];
-	t_list			**max_cir;
-	t_list			**last_cir;
+	int32_t			cir_nb[2];
+	t_list			**cir_one;
+	t_list			**cir_two;
 
-	last_cir = NULL;
-	flow_var[0] = fulkerson_algo(lem, lem->nb_ants);
-	flow_var[1] = 0;
-	// printf("fulkerson_algo done, flow_var[0]=%d\n", flow_var[0]);
+	cir_two = NULL;
+	cir_nb[0] = fulkerson_algo(lem, lem->nb_ants);
+	cir_nb[1] = 0;
+	// printf("fulkerson_algo done, cir_nb[0]=%d\n", cir_nb[0]);
 	// print_tab(lem->tab, HASHCODE);
-	max_cir = retrace_circuits_from_graph(lem, flow_var[0]);
-	// printf("after retrac flow_var[0]\n");
+	cir_one = retrace_circuits_from_graph(lem, cir_nb[0]);
+	// printf("after retrac cir_nb[0]\n");
 	// print_tab(lem->tab, HASHCODE);
 
-	if (lem->nb_ants > flow_var[0])
+	if (lem->nb_ants % cir_nb[0] != 0)
 	{
-		flow_var[1] = lem->nb_ants % flow_var[0];
-		flow_var[1] = fulkerson_algo(lem, flow_var[1]);
-		// printf("flow_var[1]%d\n", flow_var[1]);
+		printf("circuit two lauched\n");
+		cir_nb[1] = lem->nb_ants % cir_nb[0];
+		fulkerson_algo(lem, cir_nb[1]);
+		// printf("cir_nb[1]%d\n", cir_nb[1]);
 		// print_tab(lem->tab, HASHCODE);
-		last_cir = retrace_circuits_from_graph(lem, flow_var[1]);
-		// printf("after retrac flow_var[1]\n");
+		cir_two = retrace_circuits_from_graph(lem, cir_nb[1]);
+		// printf("after retrac cir_nb[1]\n");
 		// print_tab(lem->tab, HASHCODE);
 	}
-	send_ants(lem, max_cir, last_cir, flow_var);
+	send_ants(lem, cir_one, cir_two, cir_nb);
 }
 
 

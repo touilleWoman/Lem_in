@@ -23,7 +23,6 @@ typedef	struct	s_circuits
 
 typedef	struct	s_anthill
 {
-	uint32_t	new_enter;
 	uint32_t	total_exit;
 	uint32_t	total_enter;
 	uint32_t	nb_inside;
@@ -54,3 +53,5 @@ void			debug_print_address_lst(t_list **alst);
 void		debug_print_struct(t_anthill *h);
 
 # endif
+
+

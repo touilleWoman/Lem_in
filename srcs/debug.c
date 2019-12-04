@@ -36,5 +36,5 @@ void		debug_print_circuits(t_circuits **cir_tab, uint32_t tab_len)
 
 void		debug_print_struct(t_anthill *h)
 {
-	printf("new_enter=[%d], total_exit=[%d], total_enter=[%d], nb_inside[%d]\n", h->new_enter, h->total_exit, h->total_enter, h->nb_inside );
+	printf("total_exit=[%d], total_enter=[%d], nb_inside[%d]\n", h->total_exit, h->total_enter, h->nb_inside );
 }

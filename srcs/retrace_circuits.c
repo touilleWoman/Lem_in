@@ -27,22 +27,7 @@ char			*get_occupied_node(t_node *enter)
 	return (NULL);
 }
 
-char		*get_node_in_circuit(t_list *cir, uint32_t floor)
-{
-	t_node *node;
 
-	while (cir && floor != 0)
-	{
-		cir = cir->next;
-		floor--;
-	}
-	if (cir)
-	{
-		node = *((t_node**)(cir->content));
-		return (node->name);
-	}
-	return (NULL);
-}
 
 t_circuits		**init_cir_tab(uint32_t tab_len)
 {
@@ -66,6 +51,23 @@ t_circuits		**init_cir_tab(uint32_t tab_len)
 		i++;
 	}
 	return (cir_tab);
+}
+
+char		*get_node_in_circuit(t_list *cir, uint32_t floor)
+{
+	t_node *node;
+
+	while (cir && floor != 0)
+	{
+		cir = cir->next;
+		floor--;
+	}
+	if (cir)
+	{
+		node = *((t_node**)(cir->content));
+		return (node->name);
+	}
+	return (NULL);
 }
 
 /*

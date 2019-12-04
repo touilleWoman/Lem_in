@@ -37,7 +37,7 @@ void			del_top_elem(t_list **alst);
 void			del_address_lst(t_list *lst);
 uint8_t			not_in_address_lst(t_list *lst, t_node const *address);
 char			*get_node_in_circuit(t_list *cir, uint32_t floor);
-void			print_ants(t_lemin *lem, t_list **cir, int32_t cir_nb);
+void			print_ants(t_lemin *lem, t_circuits **cir_tab, int32_t tab_len);
 
 uint32_t		fulkerson_algo(t_lemin *lem, uint32_t wanted_flow);
 int8_t			flow_plus_modif(t_node *enter, t_node *exit, int8_t modif);
@@ -51,5 +51,6 @@ void		debug_print_circuits(t_circuits **cir_tab, uint32_t tab_len);
 
 void			debug_print_address_lst(t_list **alst);
 
+void		debug_print_struct(t_anthill *h);
 
 # endif

@@ -12,20 +12,12 @@
 
 #include "solver.h"
 
-
-
 void		print_line(uint32_t ant_index, char *node_name)
 {
 	printf("L%d-%s ", ant_index, node_name);
 }
 
-void		debug_print_struct(t_anthill *h)
-{
-	printf("new_enter=[%d], total_exit=[%d], total_enter=[%d], nb_inside[%d]\n", h->new_enter, h->total_exit, h->total_enter, h->nb_inside );
-}
-
-
-void		print_anthill_one(t_lemin *lem, t_list **cir, int32_t cir_nb, t_anthill *h)
+void		print_anthill(t_lemin *lem, t_circuits **cir_tab, int32_t tab_len, t_anthill *h)
 {
 	uint32_t 		ant_index;
 	char			*node_name;
@@ -37,13 +29,13 @@ void		print_anthill_one(t_lemin *lem, t_list **cir, int32_t cir_nb, t_anthill *h
 	print_nb = h->nb_inside;
 	ant_index = h->max_ant_index;
 	floor = h->start_floor;
-	debug_print_struct(h);
+	// debug_print_struct(h);
 
 	while (print_nb)
 	{
-		while (i < cir_nb)
+		while (i < tab_len)
 		{
-			node_name = get_node_in_circuit(cir[i], floor);
+			node_name = get_node_in_circuit(cir_tab[i]->addr, floor);
 			if (node_name == NULL)
 				return ;
 			print_line(ant_index, node_name);
@@ -55,7 +47,7 @@ void		print_anthill_one(t_lemin *lem, t_list **cir, int32_t cir_nb, t_anthill *h
 			i++;
 			ant_index--;
 			print_nb--;
-			printf("i:%d\n",i);
+			// printf("i:%d\n",i);
 
 		}
 		i = 0;
@@ -109,28 +101,28 @@ void		init_anthill(t_anthill *h)
 	h->activated = LM_FALSE;
 }
 
-void		print_ants(t_lemin *lem, t_list **cir, int32_t cir_nb)
+void		print_ants(t_lemin *lem, t_circuits **cir_tab, int32_t tab_len)
 {
 	t_anthill	h;
 
 	printf("\nTotal ants[%d]\n\n", lem->nb_ants);
 	init_anthill(&h);
 	h.activated = LM_TRUE;
-	int32_t	n = 0;
+	// int32_t	n = 0;
 	while (h.activated)
 	{
-		h.new_enter = send_ants_cir_one(lem, cir_nb);
+		h.new_enter = send_ants_cir_one(lem, tab_len);
 		// debug_print_struct(&h);
 		update_anthill_data(&h);
 		// debug_print_struct(&h);
 
-		print_anthill_one(lem, cir, cir_nb, &h);
+		print_anthill(lem, cir_tab, tab_len, &h);
 		printf("\n");
-		n++;
-		if (n> 5 )
-		{
-			return ;
-		}
+		// n++;
+		// if (n> 5 )
+		// {
+		// 	return ;
+		// }
 
 	}
 }

@@ -43,6 +43,6 @@ void		solver(t_lemin *lem)
 	tab_len = fulkerson_algo(lem, lem->nb_ants);
 	cir_tab = retrace_circuits(lem, tab_len);
 	debug_print_circuits(cir_tab, tab_len);
-	// print_ants(lem, cir, tab_len);
+	print_ants(lem, cir_tab, tab_len);
 	// free_circuits(cir_tab, tab_len);
 }

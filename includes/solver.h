@@ -26,17 +26,20 @@ typedef	struct	s_anthill
 	uint8_t		activated;
 }				t_anthill;
 
-void		debug_print_address_lst(t_list **alst);
-t_list		*address_list_new(t_node ** const new);
-void		del_top_elem(t_list **alst);
-void		del_address_lst(t_list *lst);
-uint8_t		not_in_address_lst(t_list *lst, t_node const *address);
-char		*get_node_in_circuit(t_list *cir, uint32_t floor);
-void		print_ants(t_lemin *lem, t_list **cir_one, t_list **cir_two, int32_t cir_nb[2]);
+t_list			*address_list_new(t_node ** const new);
+void			del_top_elem(t_list **alst);
+void			del_address_lst(t_list *lst);
+uint8_t			not_in_address_lst(t_list *lst, t_node const *address);
+char			*get_node_in_circuit(t_list *cir, uint32_t floor);
+void			print_ants(t_lemin *lem, t_list **cir_one, t_list **cir_two, int32_t cir_nb[2]);
+uint32_t		fulkerson_algo(t_lemin *lem, uint32_t wanted_flow);
+int8_t			flow_plus_modif(t_node *enter, t_node *exit, int8_t modif);
+void			free_circuits(t_list **circuits, uint32_t cir_nb);
 
-void		debug_print_circuits(t_list **circuits, int nb_paths);
 
-
+//supprimer functions debug à la fin
+void			debug_print_circuits(t_list **circuits, int nb_paths);
+void			debug_print_address_lst(t_list **alst);
 
 
 # endif

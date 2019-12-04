@@ -46,11 +46,6 @@ uint8_t		not_in_address_lst(t_list *lst, t_node const *address)
 	return (LM_TRUE);
 }
 
-// void		*address_list_add_bot(t_list **alist, t_node ** const new)
-// {
-// 	if (not_in_address_lst(*alst, *new))
-// 		ft_lstadd_bot(&visited, address_list_new(current));
-// }
 
 void		del_top_elem(t_list **alst)
 {
@@ -61,7 +56,9 @@ void		del_top_elem(t_list **alst)
 		cp = *alst;
 		*alst = (*alst)->next;
 		free(cp->content);
+		cp->content = NULL;
 		free(cp);
+		cp = NULL;
 	}
 }
 
@@ -73,8 +70,22 @@ void		del_address_lst(t_list *lst)
 	{
 		keep = lst->next;
 		free(lst->content);
+		lst->content = NULL;
 		free(lst);
 		lst = keep;
 	}
 }
 
+void		free_circuits(t_list **circuits, uint32_t cir_nb)
+{
+	if (circuits)
+	{
+		while(cir_nb)
+		{
+			del_address_lst(circuits[cir_nb - 1]);
+			cir_nb--;
+		}
+		free(circuits);
+		circuits = NULL;
+	}
+}

@@ -12,95 +12,6 @@
 
 #include "solver.h"
 
-void		iter_adja_of_current(t_node *current, t_list **visited, t_list **open, t_lemin *lem)
-{
-	t_node		*adjacen_node;
-	t_path		*p;
-
-	p = current->path_lst;
-	while (p)
-	{
-		adjacen_node = get_node_in_hash(lem, p->name);
-		if (p->flow > 0 && not_in_address_lst(*visited, adjacen_node))
-		{
-			ft_lstadd_bot(visited, address_list_new(&adjacen_node));
-			ft_lstadd_bot(open, address_list_new(&adjacen_node));
-			adjacen_node->parent_name = (current->name);
-		}
-		p = p->next;
-	}
-}
-
-t_node		**get_top_elem(t_list *lst)
-{
-	t_node	**ret;
-
-	ret = NULL;
-	if (lst != NULL)
-	{
-		ret = (t_node**)(lst->content);
-	}
-	return (ret);
-}
-
-/*
-** here, t_list store addree of pointer of node in lst->content
-** "open" are nodes to be evaluate, elements are always added to the end,
-** and taken from the top to be evaluated. Delete top elem after evaluation.
-** "visited" are nodes already visited, if inside, we don't evaluate this node
-*/
-
-uint8_t		breadth_first_search(t_lemin *lem)
-{
-	t_list	*open;
-	t_list	*visited;
-	t_node	**current;
-
-	visited = NULL;
-	open = address_list_new(&(lem->start));
-	while (open != NULL)
-	{
-		current = get_top_elem(open);
-		// printf("debug open start\n");
-		// debug_print_address_lst(&open);
-		// printf("debug end\n");
-		// printf("debug visited start\n");
-		// debug_print_address_lst(&visited);
-		// printf("debug end\n");
-		if (not_in_address_lst(visited, *current))
-			ft_lstadd_bot(&visited, address_list_new(current));
-		if (*current == lem->end)
-		{
-			del_address_lst(visited);
-			del_address_lst(open);
-			return (LM_TRUE);
-		}
-		iter_adja_of_current(*current, &visited, &open, lem);
-		del_top_elem(&open);
-	}
-	del_address_lst(visited);
-	del_address_lst(open);
-	return (LM_FALSE);
-}
-
-int8_t			flow_plus_modif(t_node *enter, t_node *exit, int8_t modif)
-{
-	t_path	*p;
-
-	p = enter->path_lst;
-	while(p)
-	{
-		if (ft_strcmp(p->name, exit->name) == 0)
-		{
-			// printf("flow of pathname[%s] changed from [%d] to [%d]\n", p->name, p->flow, modif);
-			p->flow += modif;
-			return (LM_SUCCESS);
-		}
-		p = p->next;
-	}
-	return (LM_ERROR);
-}
-
 char			*get_occupied_node(t_node *enter)
 {
 	t_path		*p;
@@ -119,39 +30,8 @@ char			*get_occupied_node(t_node *enter)
 }
 
 /*
-** if wanted_flow == 0, then get max_flow, else, stop when arrived wanted_flow
-*/
-uint32_t		fulkerson_algo(t_lemin *lem, uint32_t wanted_flow)
-{
-	uint32_t	max_flow;
-	t_node		*parent;
-	t_node		*child;
-
-	max_flow = 0;
-	while (breadth_first_search(lem))
-	{
-		max_flow++;
-		child = lem->end;
-		while (child != lem->start)
-		{
-			// printf("parent name%s\n", (child->parent_name));
-			parent = get_node_in_hash(lem, child->parent_name);
-			flow_plus_modif(parent, child, -1);
-			flow_plus_modif(child, parent, 1);
-			child = parent;
-		}
-		printf("BFS lauched, iter_flow = [%d]\n", max_flow);
-		if (wanted_flow > 0)
-		{
-			if (max_flow == wanted_flow)
-				return (wanted_flow);
-		}
-	}
-	return (max_flow);
-}
-
-/*
-** circuits est tableau de circuits trouvé, tab len = cir_nb
+** circuits are array of circuits found, array len = cir_nb
+** value stored in array is address of poiter of t_node
 */
 
 t_list		**retrace_circuits_from_graph(t_lemin *lem, uint32_t cir_nb)
@@ -229,6 +109,7 @@ char		*get_node_in_circuit(t_list *cir, uint32_t floor)
 }
 
 
+
 /*
 ** cir_nb[0] represents the number of circuits in cir_one,
 ** it's equal to nb of flow returned by fulkerson_algo().
@@ -255,6 +136,9 @@ void		solver(t_lemin *lem)
 	// debug_print_circuits(cir_one, cir_nb[0]);
 	// debug_print_circuits(cir_two, cir_nb[1]);
 	print_ants(lem, cir_one, cir_two, cir_nb);
+	free_circuits(cir_one, cir_nb[0]);
+	free_circuits(cir_two, cir_nb[1]);
+
 }
 
 

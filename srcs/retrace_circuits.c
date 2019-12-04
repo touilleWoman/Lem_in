@@ -12,26 +12,6 @@
 
 #include "solver.h"
 
-void		debug_print_circuits(t_list **circuits, int nb_paths)
-{
-	int		i;
-	t_node	*node;
-	t_list	*cp;
-
-	i = 0;
-	while (i < nb_paths)
-	{
-		printf("circuit[%d]:\n", i);
-		cp = circuits[i];
-		while (cp)
-		{
-			node = *(t_node**)(cp->content);
-			printf("%s\n", node->name);
-			cp = cp->next;
-		}
-		i++;
-	}
-}
 
 char			*get_occupied_node(t_node *enter)
 {
@@ -64,47 +44,76 @@ char		*get_node_in_circuit(t_list *cir, uint32_t floor)
 	return (NULL);
 }
 
+t_circuits		**init_cir_tab(uint32_t tab_len)
+{
+	t_circuits		**cir_tab;
+	uint32_t		i;
+
+	i = 0;
+	cir_tab = (t_circuits**)malloc(sizeof(t_circuits*) * tab_len);
+	if (!cir_tab)
+		return (NULL);
+	while (i < tab_len)
+	{
+		cir_tab[i] = (t_circuits*)malloc(sizeof(t_circuits));
+		if (!cir_tab[i])
+		{
+			free_cir_tab(cir_tab, tab_len);
+			return (NULL);
+		}
+		cir_tab[i]->addr = NULL;
+		cir_tab[i]->nb_floor = 0;
+		i++;
+	}
+	return (cir_tab);
+}
+
 /*
-** circuits are array of circuits found, array len = cir_nb
+** circuits are array of circuits found, array len = tab_len
 ** value stored in array is address of poiter of t_node
 */
 
-t_list		**retrace_circuits(t_lemin *lem, uint32_t cir_nb)
+t_circuits		**retrace_circuits(t_lemin *lem, uint32_t tab_len)
 {
-	t_list			**circuits;
+	t_circuits		**cir_tab;
 	uint32_t		i;
 	t_node			*child;
 	t_node			*parent;
 	char			*parent_name;
+	uint32_t		nb_floor;
 
 	i = 0;
-	circuits = (t_list**)malloc(sizeof(t_list*) * cir_nb);
-	if (!circuits)
+	nb_floor = 0;
+	cir_tab = init_cir_tab(tab_len);
+	if (!cir_tab)
 		return (NULL);
-	ft_bzero(circuits, sizeof(t_list*) * cir_nb);
-	while (i < cir_nb)
+	while (i < tab_len)
 	{
 		child = lem->end;
-		circuits[i] = address_list_new(&child);
-		if (!circuits[i])
+		cir_tab[i]->addr = address_list_new(&child);
+		if (!cir_tab[i])
 		{
-			free_circuits(circuits, cir_nb);
+			free_cir_tab(cir_tab, tab_len);
 			return (NULL);
 		}
 		while (child != lem->start)
 		{
-			if ((parent_name = get_occupied_node(child)) == NULL)
-			{
-				free_circuits(circuits, cir_nb);
-				return (NULL);
-			}
+			parent_name = get_occupied_node(child);
+			// if ((parent_name = get_occupied_node(child)) == NULL)
+			// {
+			// 	free_cir_tab(cir_tab, tab_len);
+			// 	return (NULL);
+			// }
 			parent = get_node_in_hash(lem, parent_name);
-			ft_lstadd_top(&(circuits[i]), address_list_new(&parent));
+			ft_lstadd_top(&(cir_tab[i]->addr), address_list_new(&parent));
 			flow_plus_modif(child, parent, -1);
 			flow_plus_modif(parent, child, 1);
 			child = parent;
+			nb_floor++;
 		}
+		cir_tab[i]->nb_floor = nb_floor;
+		nb_floor = 0;
 		i++;
 	}
-	return (circuits);
+	return (cir_tab);
 }

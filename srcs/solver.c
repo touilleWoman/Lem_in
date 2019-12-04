@@ -37,11 +37,12 @@ int8_t			flow_plus_modif(t_node *enter, t_node *exit, int8_t modif)
 
 void		solver(t_lemin *lem)
 {
-	int32_t			cir_nb;
-	t_list			**cir;
+	int32_t			tab_len;
+	t_circuits		**cir_tab;
 
-	cir_nb = fulkerson_algo(lem, lem->nb_ants);
-	cir = retrace_circuits(lem, cir_nb);
-	print_ants(lem, cir, cir_nb);
-	free_circuits(cir, cir_nb);
+	tab_len = fulkerson_algo(lem, lem->nb_ants);
+	cir_tab = retrace_circuits(lem, tab_len);
+	debug_print_circuits(cir_tab, tab_len);
+	// print_ants(lem, cir, tab_len);
+	// free_circuits(cir_tab, tab_len);
 }

@@ -15,6 +15,12 @@
 
 # include "lem_in.h"
 
+typedef	struct	s_circuits
+{
+	uint32_t	nb_floor;
+	t_list		*addr;
+}				t_circuits;
+
 typedef	struct	s_anthill
 {
 	uint32_t	new_enter;
@@ -35,12 +41,14 @@ void			print_ants(t_lemin *lem, t_list **cir, int32_t cir_nb);
 
 uint32_t		fulkerson_algo(t_lemin *lem, uint32_t wanted_flow);
 int8_t			flow_plus_modif(t_node *enter, t_node *exit, int8_t modif);
-t_list			**retrace_circuits(t_lemin *lem, uint32_t cir_nb);
-void			free_circuits(t_list **circuits, uint32_t cir_nb);
+t_circuits		**retrace_circuits(t_lemin *lem, uint32_t cir_nb);
+
+void			free_cir_tab(t_circuits **cir_tab, uint32_t tab_len);
 
 
 //supprimer functions debug à la fin
-void			debug_print_circuits(t_list **circuits, int nb_paths);
+void		debug_print_circuits(t_circuits **cir_tab, uint32_t tab_len);
+
 void			debug_print_address_lst(t_list **alst);
 
 

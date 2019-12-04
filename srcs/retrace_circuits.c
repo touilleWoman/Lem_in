@@ -105,7 +105,7 @@ t_circuits		**retrace_circuits(t_lemin *lem, uint32_t tab_len)
 			// {
 			// 	free_cir_tab(cir_tab, tab_len);
 			// 	return (NULL);
-			// }
+			// } // à recrire
 			parent = get_node_in_hash(lem, parent_name);
 			ft_lstadd_top(&(cir_tab[i]->addr), address_list_new(&parent));
 			flow_plus_modif(child, parent, -1);

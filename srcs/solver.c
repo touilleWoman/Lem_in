@@ -21,7 +21,6 @@ int8_t			flow_plus_modif(t_node *enter, t_node *exit, int8_t modif)
 	{
 		if (ft_strcmp(p->name, exit->name) == 0)
 		{
-			// printf("flow of pathname[%s] changed from [%d] to [%d]\n", p->name, p->flow, modif);
 			p->flow += modif;
 			return (LM_SUCCESS);
 		}
@@ -44,5 +43,5 @@ void		solver(t_lemin *lem)
 	cir_tab = retrace_circuits(lem, tab_len);
 	debug_print_circuits(cir_tab, tab_len);
 	print_ants(lem, cir_tab, tab_len);
-	// free_circuits(cir_tab, tab_len);
+	// free_circuits(cir_tab, tab_len); //à faire
 }

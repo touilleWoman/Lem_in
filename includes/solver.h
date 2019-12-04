@@ -41,16 +41,21 @@ void			print_ants(t_lemin *lem, t_circuits **cir_tab, int32_t tab_len);
 uint32_t		fulkerson_algo(t_lemin *lem, uint32_t wanted_flow);
 int8_t			flow_plus_modif(t_node *enter, t_node *exit, int8_t modif);
 t_circuits		**retrace_circuits(t_lemin *lem, uint32_t cir_nb);
+void			print_anthill(t_lemin *lem, t_circuits **cir_tab,
+							int32_t tab_len, t_anthill *h);
+void			print_anthill_two(t_lemin *lem, t_circuits **cir_tab,
+							int32_t tab_len, t_anthill *h2);
 
 void			free_cir_tab(t_circuits **cir_tab, uint32_t tab_len);
+void			print_line(uint32_t ant_index, char *node_name);
+void			init_anthill(t_anthill *h);
+
 
 
 //supprimer functions debug à la fin
-void		debug_print_circuits(t_circuits **cir_tab, uint32_t tab_len);
-
+void			debug_print_circuits(t_circuits **cir_tab, uint32_t tab_len);
 void			debug_print_address_lst(t_list **alst);
-
-void		debug_print_struct(t_anthill *h);
+void			debug_print_struct(t_anthill *h);
 
 # endif
 

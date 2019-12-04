@@ -42,7 +42,8 @@ static t_node		**get_top_elem(t_list *lst)
 	return (ret);
 }
 
-static void		iter_adja_of_current(t_node *current, t_list **visited, t_list **open, t_lemin *lem)
+static void		iter_adja_of_current(t_node *current, t_list **visited,
+									t_list **open, t_lemin *lem)
 {
 	t_node		*adjacen_node;
 	t_path		*p;
@@ -51,6 +52,8 @@ static void		iter_adja_of_current(t_node *current, t_list **visited, t_list **op
 	while (p)
 	{
 		adjacen_node = get_node_in_hash(lem, p->name);
+		if (!adjacen_node)
+			return ;
 		if (p->flow > 0 && not_in_address_lst(*visited, adjacen_node))
 		{
 			ft_lstadd_bot(visited, address_list_new(&adjacen_node));
@@ -62,10 +65,13 @@ static void		iter_adja_of_current(t_node *current, t_list **visited, t_list **op
 }
 
 /*
-** here, t_list store addree of pointer of node in lst->content
+** In this function, t_list stores, in lst->conente,
+** the address of pointer of node.
 ** "open" are nodes to be evaluate, elements are always added to the end,
-** and taken from the top to be evaluated. Delete top elem after evaluation.
-** "visited" are nodes already visited, if inside, we don't evaluate this node
+** and taken from the top to be evaluated,
+** then delete top elem after evaluation.
+** "visited" are nodes already visited,
+** if inside, we don't evaluate this node.
 */
 
 uint8_t		breadth_first_search(t_lemin *lem)
@@ -76,9 +82,11 @@ uint8_t		breadth_first_search(t_lemin *lem)
 
 	visited = NULL;
 	open = address_list_new(&(lem->start));
-	while (open != NULL)
+	while (open)
 	{
 		current = get_top_elem(open);
+		if (!current)
+			break ;
 		if (not_in_address_lst(visited, *current))
 			ft_lstadd_bot(&visited, address_list_new(current));
 		if (*current == lem->end)
@@ -96,8 +104,13 @@ uint8_t		breadth_first_search(t_lemin *lem)
 }
 
 /*
-** if wanted_flow == 0, then get max_flow, else, stop when arrived wanted_flow
+** wanted_flow is the maximum flow that we want,
+** it will limite max_flow returned
+** if lem->nb_ants < max_flow, then the flow returned is wanted_flow,
+** else, the flow returned is the maximum flow that anthill can provide.
+** but if wanted_flow == 0, it will return the actual maximum flow
 */
+
 uint32_t		fulkerson_algo(t_lemin *lem, uint32_t wanted_flow)
 {
 	uint32_t	max_flow;
@@ -111,18 +124,14 @@ uint32_t		fulkerson_algo(t_lemin *lem, uint32_t wanted_flow)
 		child = lem->end;
 		while (child != lem->start)
 		{
-			// printf("parent name%s\n", (child->parent_name));
 			parent = get_node_in_hash(lem, child->parent_name);
 			flow_plus_modif(parent, child, -1);
 			flow_plus_modif(child, parent, 1);
 			child = parent;
 		}
-		printf("BFS lauched, iter_flow = [%d]\n", max_flow);
-		if (wanted_flow > 0)
-		{
-			if (max_flow == wanted_flow)
-				return (wanted_flow);
-		}
+		// printf("BFS lauched, iter_flow = [%d]\n", max_flow);
+		if (wanted_flow > 0 && max_flow == wanted_flow)
+			return (wanted_flow);
 	}
 	return (max_flow);
 }

@@ -133,20 +133,6 @@ static int32_t	send_ants_cir_one(t_lemin *lem, int32_t cir_nb)
 	return (sent);
 }
 
-static int32_t	send_ants_cir_two(int32_t cir_nb)
-{
-	int32_t			sent;
-	static	int32_t	cir_two_round = 1;
-
-	if (cir_two_round)
-	{
-		sent = cir_nb;
-		cir_two_round--;
-	}
-	else
-		sent = 0;
-	return (sent);
-}
 
 void		init_anthill(t_anthill *h)
 {
@@ -157,31 +143,18 @@ void		init_anthill(t_anthill *h)
 	h->activated = LM_FALSE;
 }
 
-void		print_ants(t_lemin *lem, t_list **cir_one, t_list **cir_two, int32_t cir_nb[2])
+void		print_ants(t_lemin *lem, t_list **cir, int32_t cir_nb)
 {
 	t_anthill	h;
-	t_anthill	h2;
 
 	printf("\nTotal ants[%d]\n\n", lem->nb_ants);
 	init_anthill(&h);
-	init_anthill(&h2);
 	h.activated = LM_TRUE;
-	while (h.activated || h2.activated)
+	while (h.activated)
 	{
-		if (h.activated)
-		{
-			h.new_enter = send_ants_cir_one(lem, cir_nb[0]);
-			update_anthill_data(&h);
-			print_anthill_one(lem, cir_one, cir_nb[0], &h);
-		}
-		if (h.new_enter == 0 && cir_nb[1])
-			h2.activated = LM_TRUE;
-		if (h2.activated)
-		{
-			h2.new_enter = send_ants_cir_two(cir_nb[1]);
-			update_anthill_two_data(&h2, &h);
-			print_anthill_two(lem, cir_two, cir_nb[1], &h2);
-		}
+		h.new_enter = send_ants_cir_one(lem, cir_nb);
+		update_anthill_data(&h);
+		print_anthill_one(lem, cir, cir_nb, &h);
 		printf("\n");
 	}
 }

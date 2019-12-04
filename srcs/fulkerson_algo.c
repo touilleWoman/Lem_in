@@ -12,24 +12,6 @@
 
 #include "solver.h"
 
-int8_t			flow_plus_modif(t_node *enter, t_node *exit, int8_t modif)
-{
-	t_path	*p;
-
-	p = enter->path_lst;
-	while(p)
-	{
-		if (ft_strcmp(p->name, exit->name) == 0)
-		{
-			// printf("flow of pathname[%s] changed from [%d] to [%d]\n", p->name, p->flow, modif);
-			p->flow += modif;
-			return (LM_SUCCESS);
-		}
-		p = p->next;
-	}
-	return (LM_ERROR);
-}
-
 static t_node		**get_top_elem(t_list *lst)
 {
 	t_node	**ret;
@@ -42,7 +24,7 @@ static t_node		**get_top_elem(t_list *lst)
 	return (ret);
 }
 
-static void		iter_adja_of_current(t_node *current, t_list **visited,
+static uint8_t		iter_adja_of_current(t_node *current, t_list **visited,
 									t_list **open, t_lemin *lem)
 {
 	t_node		*adjacen_node;
@@ -53,7 +35,7 @@ static void		iter_adja_of_current(t_node *current, t_list **visited,
 	{
 		adjacen_node = get_node_in_hash(lem, p->name);
 		if (!adjacen_node)
-			return ;
+			return (LM_FALSE) ;
 		if (p->flow > 0 && not_in_address_lst(*visited, adjacen_node))
 		{
 			ft_lstadd_bot(visited, address_list_new(&adjacen_node));
@@ -62,7 +44,15 @@ static void		iter_adja_of_current(t_node *current, t_list **visited,
 		}
 		p = p->next;
 	}
+	return (LM_TRUE);
 }
+
+static void			free_open_and_visited(t_list *open, t_list *visited)
+{
+	del_address_lst(visited);
+	del_address_lst(open);
+}
+
 
 /*
 ** In this function, t_list stores, in lst->conente,
@@ -74,7 +64,7 @@ static void		iter_adja_of_current(t_node *current, t_list **visited,
 ** if inside, we don't evaluate this node.
 */
 
-uint8_t		breadth_first_search(t_lemin *lem)
+static uint8_t		breadth_first_search(t_lemin *lem)
 {
 	t_list	*open;
 	t_list	*visited;
@@ -91,15 +81,14 @@ uint8_t		breadth_first_search(t_lemin *lem)
 			ft_lstadd_bot(&visited, address_list_new(current));
 		if (*current == lem->end)
 		{
-			del_address_lst(visited);
-			del_address_lst(open);
+			free_open_and_visited(open, visited);
 			return (LM_TRUE);
 		}
-		iter_adja_of_current(*current, &visited, &open, lem);
+		if (iter_adja_of_current(*current, &visited, &open, lem) == LM_FALSE)
+			break ;
 		del_top_elem(&open);
 	}
-	del_address_lst(visited);
-	del_address_lst(open);
+	free_open_and_visited(open, visited);
 	return (LM_FALSE);
 }
 

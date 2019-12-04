@@ -52,6 +52,7 @@ SRC				+=	solver.c 			\
 					lst_address.c		\
 					print_ants.c		\
 					fulkerson_algo.c	\
+					retrace_circuits.c	\
 
 OBJ 			=	$(addprefix $(OBJ_PATH)/, $(SRC:%.c=%.o))
 

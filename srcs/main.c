@@ -29,7 +29,7 @@ int				main()
 			solver(&lem);
 		}
 		else
-			ft_putstr("An error occured\n");
+			ft_putendl_fd("An error occured\n", 2);
 		clear_hashtab(&lem);
 	}
 	return (0);

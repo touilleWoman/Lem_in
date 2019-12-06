@@ -31,7 +31,8 @@ t_node		**get_node_in_circuit(t_list *cir, uint32_t floor)
 {
 	t_node **node;
 
-	while (cir && floor != 0)
+	node = NULL;
+	while (cir && (floor != 0))
 	{
 		cir = cir->next;
 		floor--;
@@ -44,6 +45,7 @@ t_node		**get_node_in_circuit(t_list *cir, uint32_t floor)
 	return (NULL);
 }
 
+
 /*
 ** h->send_size == tab_len of cir_tab
 */
@@ -55,14 +57,18 @@ static void		print_one_floor_in_cir(uint32_t floor, t_circuits **cir_tab,
 	t_node			**node;
 
 	i = 0;
+	node = NULL;
 	while (i < h->send_size && h->print_nb > 0)
 	{
 		node = get_node_in_circuit(cir_tab[i]->addr, floor);
-		print_line(h->max_ant_index, (*node)->name);
-		check_if_exit(lem->end, node, h);
+		if (node)
+		{
+			print_line(h->max_ant_index, (*node)->name);
+			check_if_exit(lem->end, node, h);
+			h->max_ant_index--;
+			h->print_nb--;
+		}
 		i++;
-		h->max_ant_index--;
-		h->print_nb--;
 	}
 }
 

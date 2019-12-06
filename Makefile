@@ -75,7 +75,7 @@ all				:	libs $(NAME)
 
 $(NAME)			:	$(OBJ)
 					@echo "${vertfonce}Compiling ...${neutre}\c"
-					@$(CC) $(CFLAG) -o $(NAME) $(OBJ) $(LFLAG) $(INCLUDES) -g -ggdb #-fsanitize=address
+					@$(CC) $(CFLAG) -o $(NAME) $(OBJ) $(LFLAG) $(INCLUDES) #-g -fsanitize=address
 					@echo "${rose}DONE${neutre}"
 
 $(OBJ_PATH)/%.o	:	%.c $(HEADERS)

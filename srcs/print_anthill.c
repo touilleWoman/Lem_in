@@ -24,8 +24,13 @@ void		init_anthill(t_anthill *h)
 
 void		print_line(uint32_t ant_index, char *node_name)
 {
-	printf("L%d-%s ", ant_index, node_name);
+	ft_putchar('L');
+	ft_putnbr(ant_index);
+	ft_putchar('-');
+	ft_putstr(node_name);
+	ft_putchar(' ');
 }
+
 void		print_anthill(t_lemin *lem, t_circuits **cir_tab,
 							int32_t tab_len, t_anthill *h)
 {

@@ -89,8 +89,9 @@ void		free_cir_tab(t_circuits **cir_tab, uint32_t tab_len)
 			{
 				del_address_lst(cir_tab[i]->addr);
 				free(cir_tab[i]);
-				cir_tab[i] = 0;
+				cir_tab[i] = NULL;
 			}
+			i++;
 
 		}
 		free(cir_tab);

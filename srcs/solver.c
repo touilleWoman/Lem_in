@@ -29,10 +29,29 @@ int8_t			flow_plus_modif(t_node *enter, t_node *exit, int8_t modif)
 	return (LM_ERROR);
 }
 
-/*
-** cir_nb represents the number of circuits in cir_one,
-** it's equal to nb of flow returned by fulkerson_algo().
-*/
+static t_circuits		**init_cir_tab(uint32_t tab_len)
+{
+	t_circuits		**cir_tab;
+	uint32_t		i;
+
+	i = 0;
+	cir_tab = (t_circuits**)malloc(sizeof(t_circuits*) * tab_len);
+	if (!cir_tab)
+		return (NULL);
+	while (i < tab_len)
+	{
+		cir_tab[i] = (t_circuits*)malloc(sizeof(t_circuits));
+		if (!cir_tab[i])
+		{
+			free_cir_tab(cir_tab, tab_len);
+			return (NULL);
+		}
+		cir_tab[i]->addr = NULL;
+		cir_tab[i]->nb_floor = 0;
+		i++;
+	}
+	return (cir_tab);
+}
 
 void		solver(t_lemin *lem)
 {
@@ -40,8 +59,13 @@ void		solver(t_lemin *lem)
 	t_circuits		**cir_tab;
 
 	tab_len = fulkerson_algo(lem, lem->nb_ants);
-	cir_tab = retrace_circuits(lem, tab_len);
-	debug_print_circuits(cir_tab, tab_len);
-	print_ants(lem, cir_tab, tab_len);
-	// free_circuits(cir_tab, tab_len); //à faire
+	cir_tab = init_cir_tab(tab_len);
+	if (!cir_tab)
+		return ;
+	if (retrace_circuits(lem, tab_len, cir_tab))
+	{
+		debug_print_circuits(cir_tab, tab_len);
+		print_ants(lem, cir_tab, tab_len);
+	}
+	free_cir_tab(cir_tab, tab_len);
 }

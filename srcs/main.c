@@ -25,7 +25,7 @@ int				main()
 		{
 			print_tab(lem.tab, HASHCODE);// A DELETE
 			/* print_info_inout(&lem);// A DELETE */
-			ft_putstr("start solver\n");
+			// ft_putstr("start solver\n");
 			solver(&lem);
 		}
 		else

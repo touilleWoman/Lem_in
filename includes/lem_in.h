@@ -145,4 +145,5 @@ void			print_info_inout(t_lemin *lem);
 void		solver(t_lemin *lem);
 
 
+
 #endif

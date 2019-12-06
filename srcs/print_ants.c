@@ -93,6 +93,6 @@ void		print_ants(t_lemin *lem, t_circuits **cir_tab, int32_t tab_len)
 			h.activated = LM_FALSE;
 		if (h2.nb_inside == 0)
 			h2.activated = LM_FALSE;
-		printf("\n");
+		ft_putstr("\n");
 	}
 }

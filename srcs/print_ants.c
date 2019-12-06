@@ -12,30 +12,6 @@
 
 #include "solver.h"
 
-void		init_anthill_one(t_anthill *h, int32_t nb_ants, int32_t max_flow)
-{
-	h->unsent = nb_ants - (nb_ants % max_flow);
-	h->send_size = max_flow;
-	h->total_exit = 0;
-	h->total_enter = 0;
-	h->print_nb = 0;
-	h->start_floor = 1;
-	h->max_ant_index = 0;
-	h->activated = LM_TRUE;
-}
-
-void		init_anthill_two(t_anthill *h, int32_t nb_ants, int32_t max_flow)
-{
-	h->unsent = nb_ants % max_flow;
-	h->send_size = nb_ants % max_flow;
-	h->total_exit = 0;
-	h->total_enter = 0;
-	h->print_nb = 0;
-	h->start_floor = 1;
-	h->max_ant_index = 0;
-	h->activated = LM_FALSE;
-}
-
 static int32_t	send_ants(t_anthill *h)
 {
 	int32_t		send;
@@ -76,6 +52,13 @@ void		prepare_print_two_data(t_anthill *h2, uint32_t send2, t_anthill *h)
 	h2->print_nb = h2->total_enter - h2->total_exit;
 	h2->max_ant_index = h2->total_enter + h->max_ant_index;
 }
+
+/*
+** in init anthill, h1 is activated, h2 not.
+** In loop, h2 will be activated when h1 finish sending.
+** Note that send2 has a non-zero value only once,
+** that is when send1 becomes zero for the first time.
+*/
 
 void		print_ants(t_lemin *lem, t_circuits **cir_tab, int32_t tab_len)
 {

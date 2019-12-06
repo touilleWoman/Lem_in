@@ -53,9 +53,10 @@ SRC				+=	solver.c 			\
 					print_ants.c		\
 					fulkerson_algo.c	\
 					retrace_circuits.c	\
-					print_anthill.c	\
+					print_anthill.c		\
 					print_anthill_two.c	\
-					debug.c	\
+					init_anthill.c		\
+					debug.c	 #à supprimer
 
 OBJ 			=	$(addprefix $(OBJ_PATH)/, $(SRC:%.c=%.o))
 
@@ -74,7 +75,7 @@ all				:	libs $(NAME)
 
 $(NAME)			:	$(OBJ)
 					@echo "${vertfonce}Compiling ...${neutre}\c"
-					@$(CC) $(CFLAG) -o $(NAME) $(OBJ) $(LFLAG) $(INCLUDES) -g -fsanitize=address
+					@$(CC) $(CFLAG) -o $(NAME) $(OBJ) $(LFLAG) $(INCLUDES) -g -ggdb #-fsanitize=address
 					@echo "${rose}DONE${neutre}"
 
 $(OBJ_PATH)/%.o	:	%.c $(HEADERS)

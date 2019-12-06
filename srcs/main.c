@@ -23,7 +23,7 @@ int				main()
 		ft_bzero(lem.tab, sizeof(t_node*) * HASHCODE);
 		if (get_info(&lem) == LM_SUCCESS)
 		{
-			print_tab(lem.tab, HASHCODE);// A DELETE
+			// print_tab(lem.tab, HASHCODE);// A DELETE
 			/* print_info_inout(&lem);// A DELETE */
 			// ft_putstr("start solver\n");
 			solver(&lem);

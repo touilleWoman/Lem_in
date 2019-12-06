@@ -12,7 +12,6 @@
 
 #include "solver.h"
 
-
 void		init_anthill_one(t_anthill *h, int32_t nb_ants, int32_t max_flow)
 {
 	h->unsent = nb_ants - (nb_ants % max_flow);
@@ -22,7 +21,7 @@ void		init_anthill_one(t_anthill *h, int32_t nb_ants, int32_t max_flow)
 	h->print_nb = 0;
 	h->start_floor = 1;
 	h->max_ant_index = 0;
-	h->activated = LM_FALSE;
+	h->activated = LM_TRUE;
 }
 
 void		init_anthill_two(t_anthill *h, int32_t nb_ants, int32_t max_flow)
@@ -55,18 +54,19 @@ static int32_t	send_ants(t_anthill *h)
 ** max_ant_index and print_nb will decrease at each turn in print_one_floor
 */
 
-void		update_anthill_one_data(t_anthill *h, uint32_t send1)
+void		prepare_print_one_data(t_anthill *h, uint32_t send1)
 {
 	if (h->activated == LM_FALSE)
 		return ;
 	if (send1 == 0)
 		h->start_floor++;
 	h->total_enter += send1;
-	h->max_ant_index = h->total_enter;
 	h->print_nb = h->total_enter - h->total_exit;
+	h->max_ant_index = h->total_enter;
+
 }
 
-void		update_anthill_two_data(t_anthill *h2, uint32_t send2, t_anthill *h)
+void		prepare_print_two_data(t_anthill *h2, uint32_t send2, t_anthill *h)
 {
 	if (h2->activated == LM_FALSE)
 		return ;
@@ -84,10 +84,8 @@ void		print_ants(t_lemin *lem, t_circuits **cir_tab, int32_t tab_len)
 	int32_t		send1;
 	int32_t		send2;
 
-	printf("\nTotal ants[%d]\n\n", lem->nb_ants);
 	init_anthill_one(&h1, lem->nb_ants, tab_len);
 	init_anthill_two(&h2, lem->nb_ants, tab_len);
-	h1.activated = LM_TRUE;
 	send2 = 0;
 	while (h1.activated || h2.activated)
 	{
@@ -96,13 +94,13 @@ void		print_ants(t_lemin *lem, t_circuits **cir_tab, int32_t tab_len)
 			send2 = send_ants(&h2);
 		if (send2 > 0)
 			h2.activated = LM_TRUE;
-		update_anthill_one_data(&h1, send1);
-		update_anthill_two_data(&h2, send2, &h1);
+		prepare_print_one_data(&h1, send1);
+		prepare_print_two_data(&h2, send2, &h1);
 		print_anthill_two(lem, cir_tab, tab_len, &h2);
 		print_anthill_one(lem, cir_tab, &h1);
-		if (h1.total_enter - h1.total_exit ==  0)
+		if (h1.total_enter - h1.total_exit == 0)
 			h1.activated = LM_FALSE;
-		if (h2.total_enter - h2.total_exit ==  0)
+		if (h2.total_enter - h2.total_exit == 0)
 			h2.activated = LM_FALSE;
 		ft_putchar('\n');
 	}

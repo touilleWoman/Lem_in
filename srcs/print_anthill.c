@@ -21,23 +21,11 @@ void		print_line(uint32_t ant_index, char *node_name)
 	ft_putchar(' ');
 }
 
-
-// char		*get_node_in_circuit(t_list *cir, uint32_t floor)
-// {
-// 	t_node *node;
-
-// 	while (cir && floor != 0)
-// 	{
-// 		cir = cir->next;
-// 		floor--;
-// 	}
-// 	if (cir)
-// 	{
-// 		node = *((t_node**)(cir->content));
-// 		return (node->name);
-// 	}
-// 	return (NULL);
-// }
+void		check_if_exit(t_node *end, t_node **node, t_anthill *h)
+{
+	if (end == *node)
+		h->total_exit++;
+}
 
 t_node		**get_node_in_circuit(t_list *cir, uint32_t floor)
 {
@@ -60,7 +48,7 @@ t_node		**get_node_in_circuit(t_list *cir, uint32_t floor)
 ** h->send_size == tab_len of cir_tab
 */
 
-uint8_t		print_one_floor_in_cir(uint32_t floor, t_circuits **cir_tab,
+static void		print_one_floor_in_cir(uint32_t floor, t_circuits **cir_tab,
 									t_anthill *h, t_lemin *lem)
 {
 	int32_t			i;
@@ -70,18 +58,12 @@ uint8_t		print_one_floor_in_cir(uint32_t floor, t_circuits **cir_tab,
 	while (i < h->send_size && h->print_nb > 0)
 	{
 		node = get_node_in_circuit(cir_tab[i]->addr, floor);
-		if (!node)
-		{
-			ft_putendl_fd("Error in print_one_floor_in_cir\n", 2);
-			return (LM_FALSE) ;
-		}
 		print_line(h->max_ant_index, (*node)->name);
 		check_if_exit(lem->end, node, h);
 		i++;
 		h->max_ant_index--;
 		h->print_nb--;
 	}
-	return (LM_TRUE);
 }
 
 void		print_anthill_one(t_lemin *lem, t_circuits **cir_tab, t_anthill *h)
@@ -93,9 +75,7 @@ void		print_anthill_one(t_lemin *lem, t_circuits **cir_tab, t_anthill *h)
 	floor = h->start_floor;
 	while (h->print_nb > 0)
 	{
-		if (print_one_floor_in_cir(floor, cir_tab, h, lem) == LM_FALSE)
-			break ;
+		print_one_floor_in_cir(floor, cir_tab, h, lem);
 		floor++;
 	}
 }
-

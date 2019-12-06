@@ -12,15 +12,7 @@
 
 #include "solver.h"
 
-void		init_anthill(t_anthill *h)
-{
-	h->total_exit = 0;
-	h->total_enter = 0;
-	h->nb_inside = 0;
-	h->start_floor = 1;
-	h->max_ant_index = 0;
-	h->activated = LM_FALSE;
-}
+
 
 void		print_line(uint32_t ant_index, char *node_name)
 {

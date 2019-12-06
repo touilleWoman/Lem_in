@@ -23,6 +23,8 @@ typedef	struct	s_circuits
 
 typedef	struct	s_anthill
 {
+	int32_t		unsent;
+	int32_t		send_size;
 	uint32_t	total_exit;
 	uint32_t	total_enter;
 	uint32_t	nb_inside;
@@ -49,7 +51,6 @@ void			print_anthill_two(t_lemin *lem, t_circuits **cir_tab,
 
 void			free_cir_tab(t_circuits **cir_tab, uint32_t tab_len);
 void			print_line(uint32_t ant_index, char *node_name);
-void			init_anthill(t_anthill *h);
 
 
 

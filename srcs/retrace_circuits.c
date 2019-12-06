@@ -12,22 +12,7 @@
 
 #include "solver.h"
 
-char		*get_node_in_circuit(t_list *cir, uint32_t floor)
-{
-	t_node *node;
 
-	while (cir && floor != 0)
-	{
-		cir = cir->next;
-		floor--;
-	}
-	if (cir)
-	{
-		node = *((t_node**)(cir->content));
-		return (node->name);
-	}
-	return (NULL);
-}
 
 char			*get_parent_name(t_node *enter)
 {

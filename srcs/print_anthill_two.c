@@ -65,14 +65,18 @@ int32_t			*fill_best_circuits(t_circuits **cir_tab, int32_t tab_len, int32_t bes
 	return (best_cir);
 }
 
+void		check_if_exit(t_node *end, t_node **node, t_anthill *h)
+{
+	if (end == *node)
+		h->total_exit++;
+}
+
 void		print_anthill_two(t_lemin *lem, t_circuits **cir_tab,
 							int32_t tab_len, t_anthill *h2)
 {
-	uint32_t 		ant_index;
-	char			*node_name;
+	t_node			**node;
 	int32_t			i;
 	uint32_t		floor;
-	uint32_t		print_nb;
 	int32_t			*best_cir;
 	int32_t			index;
 	int32_t			best_cir_len;
@@ -83,26 +87,20 @@ void		print_anthill_two(t_lemin *lem, t_circuits **cir_tab,
 	best_cir_len = lem->nb_ants % tab_len;
 	best_cir = fill_best_circuits(cir_tab, tab_len, best_cir_len); //à free plus tard
 	i = 0;
-	print_nb = h2->nb_inside;
-	ant_index = h2->max_ant_index;
 	floor = h2->start_floor;
-	while (print_nb > 0)
+	while (h2->print_nb > 0)
 	{
-		while (i < best_cir_len && print_nb > 0)
+		while (i < best_cir_len && h2->print_nb > 0)
 		{
 			index = best_cir[i];
-			node_name = get_node_in_circuit(cir_tab[index]->addr, floor);
-			if (!node_name)
+			node = get_node_in_circuit(cir_tab[index]->addr, floor);
+			if (!node)
 				printf("Error !can't get node name\n"); // à recrire
-			print_line(ant_index, node_name);
-			if (ft_strcmp(node_name, (lem->end)->name) == 0)
-			{
-				h2->total_exit++;
-				h2->nb_inside--;
-			}
+			print_line(h2->max_ant_index, (*node)->name);
+			check_if_exit(lem->end, node, h2);
 			i++;
-			ant_index--;
-			print_nb--;
+			h2->max_ant_index--;
+			h2->print_nb--;
 		}
 		i = 0;
 		floor++;

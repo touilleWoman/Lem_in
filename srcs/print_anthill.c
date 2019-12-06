@@ -12,8 +12,6 @@
 
 #include "solver.h"
 
-
-
 void		print_line(uint32_t ant_index, char *node_name)
 {
 	ft_putchar('L');
@@ -23,41 +21,80 @@ void		print_line(uint32_t ant_index, char *node_name)
 	ft_putchar(' ');
 }
 
-void		print_anthill(t_lemin *lem, t_circuits **cir_tab,
-							int32_t tab_len, t_anthill *h)
+
+// char		*get_node_in_circuit(t_list *cir, uint32_t floor)
+// {
+// 	t_node *node;
+
+// 	while (cir && floor != 0)
+// 	{
+// 		cir = cir->next;
+// 		floor--;
+// 	}
+// 	if (cir)
+// 	{
+// 		node = *((t_node**)(cir->content));
+// 		return (node->name);
+// 	}
+// 	return (NULL);
+// }
+
+t_node		**get_node_in_circuit(t_list *cir, uint32_t floor)
 {
-	uint32_t 		ant_index;
-	char			*node_name;
+	t_node **node;
+
+	while (cir && floor != 0)
+	{
+		cir = cir->next;
+		floor--;
+	}
+	if (cir)
+	{
+		node = ((t_node**)(cir->content));
+		return (node);
+	}
+	return (NULL);
+}
+
+/*
+** h->send_size == tab_len of cir_tab
+*/
+
+uint8_t		print_one_floor_in_cir(uint32_t floor, t_circuits **cir_tab,
+									t_anthill *h, t_lemin *lem)
+{
 	int32_t			i;
+	t_node			**node;
+
+	i = 0;
+	while (i < h->send_size && h->print_nb > 0)
+	{
+		node = get_node_in_circuit(cir_tab[i]->addr, floor);
+		if (!node)
+		{
+			ft_putendl_fd("Error in print_one_floor_in_cir\n", 2);
+			return (LM_FALSE) ;
+		}
+		print_line(h->max_ant_index, (*node)->name);
+		check_if_exit(lem->end, node, h);
+		i++;
+		h->max_ant_index--;
+		h->print_nb--;
+	}
+	return (LM_TRUE);
+}
+
+void		print_anthill_one(t_lemin *lem, t_circuits **cir_tab, t_anthill *h)
+{
 	uint32_t		floor;
-	uint32_t		print_nb;
 
 	if (h->activated == LM_FALSE)
 		return ;
-	i = 0;
-	print_nb = h->nb_inside;
-	ant_index = h->max_ant_index;
 	floor = h->start_floor;
-	while (print_nb > 0)
+	while (h->print_nb > 0)
 	{
-		while (i < tab_len && print_nb > 0)
-		{
-			node_name = get_node_in_circuit(cir_tab[i]->addr, floor);
-			if (!node_name)
-				printf("can't get node name\n");
-			// else
-			// 	printf("name:%s\n", node_name);
-			print_line(ant_index, node_name);
-			if (ft_strcmp(node_name, (lem->end)->name) == 0)
-			{
-				h->total_exit++;
-				h->nb_inside--;
-			}
-			i++;
-			ant_index--;
-			print_nb--;
-		}
-		i = 0;
+		if (print_one_floor_in_cir(floor, cir_tab, h, lem) == LM_FALSE)
+			break ;
 		floor++;
 	}
 }

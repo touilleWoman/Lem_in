@@ -28,8 +28,8 @@ int				main()
 			// ft_putstr("start solver\n");
 			solver(&lem);
 		}
-		else
-			ft_putendl_fd("An error occured\n", 2);
+		// else
+		// 	ft_putendl_fd("An error occured\n", 2);
 		clear_hashtab(&lem);
 	}
 	return (0);

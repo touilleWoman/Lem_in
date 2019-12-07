@@ -89,6 +89,7 @@ static uint8_t		breadth_first_search(t_lemin *lem)
 		del_top_elem(&open);
 	}
 	free_open_and_visited(open, visited);
+	ft_putendl_fd("Map error, no way out\n", 2);
 	return (LM_FALSE);
 }
 

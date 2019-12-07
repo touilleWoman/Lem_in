@@ -24,7 +24,7 @@ int8_t					get_nb_ants(t_lemin *lem)
 		lem->nb_ants = ft_atoi(lem->line);
 		ft_memdel((void**)&(lem->line));
 	}
-	if (lem->nb_ants <= 0)
-		ft_putstr("Error ants number, can't be less than 1\n");
+	// if (lem->nb_ants <= 0)
+	// 	ft_putstr("Error ants number, can't be less than 1\n");
 	return ((lem->nb_ants > 0) ? LM_SUCCESS : LM_ERROR);
 }

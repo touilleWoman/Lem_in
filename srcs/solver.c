@@ -59,6 +59,8 @@ void		solver(t_lemin *lem)
 	t_circuits		**cir_tab;
 
 	tab_len = fulkerson_algo(lem, lem->nb_ants);
+	if (tab_len == 0)
+		return ;
 	cir_tab = init_cir_tab(tab_len);
 	if (!cir_tab)
 		return ;

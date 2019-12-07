@@ -66,7 +66,7 @@ void		solver(t_lemin *lem)
 		return ;
 	if (retrace_circuits(lem, tab_len, cir_tab))
 	{
-		debug_print_circuits(cir_tab, tab_len);
+		// debug_print_circuits(cir_tab, tab_len);
 		print_ants(lem, cir_tab, tab_len);
 	}
 	free_cir_tab(cir_tab, tab_len);

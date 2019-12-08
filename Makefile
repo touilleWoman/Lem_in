@@ -6,7 +6,7 @@
 #    By: naali <naali@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/17 16:13:53 by naali             #+#    #+#              #
-#    Updated: 2019/11/30 21:21:41 by nabih            ###   ########.fr        #
+#    Updated: 2019/12/08 06:23:30 by nabih            ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -19,6 +19,8 @@ NAME			=	lem-in
 CC				=	gcc
 
 CFLAG 			=	-Wall -Wextra -Werror
+
+CFLAG			+=	-g -fsanitize=address
 
 INC_FLAG		=	-I
 
@@ -75,7 +77,7 @@ all				:	libs $(NAME)
 
 $(NAME)			:	$(OBJ)
 					@echo "${vertfonce}Compiling ...${neutre}\c"
-					@$(CC) $(CFLAG) -o $(NAME) $(OBJ) $(LFLAG) $(INCLUDES) -g -ggdb #-fsanitize=address
+					@$(CC) $(CFLAG) -o $(NAME) $(OBJ) $(LFLAG) $(INCLUDES)
 					@echo "${rose}DONE${neutre}"
 
 $(OBJ_PATH)/%.o	:	%.c $(HEADERS)

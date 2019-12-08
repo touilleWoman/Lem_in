@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 16:48:42 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/30 21:20:48 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/08 00:07:45 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ int				main()
 {
 	t_lemin		lem;
 
+	lem.line = NULL;
+	ft_bzero(lem.tab, sizeof(t_node*) * HASHCODE);
 	if (HASHCODE > 100 && HASHCODE < 50000)
 	{
-		lem.line = NULL;
-		ft_bzero(lem.tab, sizeof(t_node*) * HASHCODE);
 		if (get_info(&lem) == LM_SUCCESS)
 		{
 			// print_tab(lem.tab, HASHCODE);// A DELETE

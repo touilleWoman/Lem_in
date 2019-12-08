@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 20:00:17 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/23 04:39:43 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/08 06:18:53 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int32_t				hash_name(char *name)
 		mult = 1;
 		while (name[i] != '\0')
 		{
-			if (ft_isalnum(name[i]) != 1)
+			if (ft_isalnum(name[i]) != 1 && name[i] != '_')
 				return (LM_ERROR);
 			ret += name[i] * mult;
 			mult++;

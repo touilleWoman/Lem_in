@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 19:06:30 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/04 19:06:32 by jleblond         ###   ########.fr       */
+/*   Updated: 2019/12/08 06:24:26 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void		print_line(uint32_t ant_index, char *node_name)
 
 void		check_if_exit(t_node *end, t_node **node, t_anthill *h)
 {
-	if (end == *node)
+	if (node != NULL && end == *node)
 		h->total_exit++;
 }
 

@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:48:44 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/30 20:22:46 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/08 06:07:51 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int8_t			check_line(char *line)
 			{
 				if (line[i] == '-' && i > 0)
 					nb_dash++;
-				else if (ft_isalnum(line[i]) != 1)
+				else if (ft_isalnum(line[i]) != 1 && line[i] != '_')
 					return (LM_ERROR);
 				if (nb_dash > 1)
 					return (LM_ERROR);

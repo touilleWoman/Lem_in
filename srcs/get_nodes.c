@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 15:03:12 by nabih             #+#    #+#             */
-/*   Updated: 2019/12/08 06:06:54 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/08 06:39:25 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,7 @@ static int8_t			create_n_add(t_lemin *lem)
 		lem->isend = 0;
 	}
 	else
-		return (LM_IGNORE);
-//		return (LM_ERROR);
+		return (LM_ERROR);
 	return (LM_SUCCESS);
 }
 
@@ -117,10 +116,9 @@ int8_t					get_node(t_lemin *lem)
 	{
 		if (ret != LM_IGNORE)
 		{
-			if ((ret = create_n_add(lem)) == LM_ERROR)
+			if (create_n_add(lem) != LM_SUCCESS)
 				return (LM_ERROR);
-			if (ret == LM_SUCCESS)
-				lem->nb_nodes += 1;
+			lem->nb_nodes += 1;
 		}
 		ft_memdel((void**)&(lem->line));
 	}

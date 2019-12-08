@@ -6,7 +6,7 @@
 #    By: naali <naali@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/17 16:13:53 by naali             #+#    #+#              #
-#    Updated: 2019/12/08 06:23:30 by nabih            ###   ########.fr        #
+#    Updated: 2019/12/08 06:43:17 by nabih            ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -58,7 +58,7 @@ SRC				+=	solver.c 			\
 					print_anthill.c		\
 					print_anthill_two.c	\
 					init_anthill.c		\
-					debug.c	 #à supprimer
+#					debug.c	 #à supprimer
 
 OBJ 			=	$(addprefix $(OBJ_PATH)/, $(SRC:%.c=%.o))
 

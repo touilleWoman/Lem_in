@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 19:06:30 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/08 06:24:26 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/08 06:28:35 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,13 @@ void		print_line(uint32_t ant_index, char *node_name)
 	ft_putchar(' ');
 }
 
+/*
+*/
 void		check_if_exit(t_node *end, t_node **node, t_anthill *h)
 {
-	if (node != NULL && end == *node)
-		h->total_exit++;
+	if (end != NULL && h != NULL)
+		if (node != NULL && end == *node)
+			h->total_exit++;
 }
 
 t_node		**get_node_in_circuit(t_list *cir, uint32_t floor)

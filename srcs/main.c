@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 16:48:42 by nabih             #+#    #+#             */
-/*   Updated: 2019/12/08 00:07:45 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/08 08:05:13 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ int				main()
 	{
 		if (get_info(&lem) == LM_SUCCESS)
 		{
-			// print_tab(lem.tab, HASHCODE);// A DELETE
+//			print_tab(lem.tab, HASHCODE);// A DELETE
 			/* print_info_inout(&lem);// A DELETE */
 			// ft_putstr("start solver\n");
+			printf("Get Infos DONE\n");
 			solver(&lem);
 		}
 		// else

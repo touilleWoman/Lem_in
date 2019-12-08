@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 17:03:23 by nabih             #+#    #+#             */
-/*   Updated: 2019/12/08 00:06:51 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/08 08:04:48 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define LM_IGNORE 0
 # define LM_STOP 2
 
-# define HASHCODE 1000
+# define HASHCODE 10000
 
 typedef struct	s_path	t_path;
 typedef struct	s_node	t_node;

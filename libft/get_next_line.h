@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 18:53:57 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/13 16:33:45 by naali            ###   ########.fr       */
+/*   Updated: 2019/12/08 07:06:08 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-# define BUFF_SIZE 10
+# define BUFF_SIZE 1000
 
 int				get_next_line(int const fd, char **line);
 

@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 15:03:12 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/30 21:15:59 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/08 06:39:25 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int8_t			check_line(t_lemin *lem, char *line)
 					line[i] = '\0';
 					return (LM_SUCCESS);
 				}
-				else if (ft_isalnum(line[i]) != 1)
+				else if (ft_isalnum(line[i]) != 1 && line[i] != '_')
 					return (LM_ERROR);
 				i++;
 			}

@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 13:08:09 by naali             #+#    #+#             */
-/*   Updated: 2019/11/24 22:12:13 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/08 08:01:59 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,6 @@ void			ft_lstadd_top(t_list **alst, t_list *new);
 char			**ft_tabcpy(char **dst, const char **src, unsigned int max);
 void			ft_swap(int *val1, int *val2);
 void			ft_swap_ptr(void **ptr1, void **ptr2);
+unsigned int	ft_square_rec(unsigned int nb, unsigned int pow);
 
 #endif

@@ -6,26 +6,26 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 12:55:27 by jleblond          #+#    #+#             */
-/*   Updated: 2019/11/30 12:55:30 by jleblond         ###   ########.fr       */
+/*   Updated: 2019/12/08 10:24:26 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solver.h"
 
-void		debug_print_address_lst(t_list **alst)
-{
-	t_list *cp;
-	t_node **node;
+/* void		debug_print_address_lst(t_list **alst) */
+/* { */
+/* 	t_list *cp; */
+/* 	t_node **node; */
 
-	cp = *alst;
-	while (cp)
-	{
-		node = (t_node**)(cp->content);
-		printf("[%s]", (*node)->name);
-		cp = cp->next;
-	}
-	printf("\n");
-}
+/* 	cp = *alst; */
+/* 	while (cp) */
+/* 	{ */
+/* 		node = (t_node**)(cp->content); */
+/* 		printf("[%s]", (*node)->name); */
+/* 		cp = cp->next; */
+/* 	} */
+/* 	printf("\n"); */
+/* } */
 
 t_list		*address_list_new(t_node ** const new)
 {

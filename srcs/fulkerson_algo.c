@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:45:10 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/08 08:07:12 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/08 10:26:12 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static uint8_t		iter_adja_of_current(t_node *current, t_list **visited,
 	{
 		adjacen_node = get_node_in_hash(lem, p->name);
 		if (!adjacen_node)
-			return (LM_FALSE) ;
+			return (LM_FALSE);
 		if (p->flow > 0 && not_in_address_lst(*visited, adjacen_node))
 		{
 			ft_lstadd_bot(visited, address_list_new(&adjacen_node));
@@ -63,7 +63,6 @@ static void			free_open_and_visited(t_list *open, t_list *visited)
 ** "visited" are nodes already visited,
 ** if inside, we don't evaluate this node.
 */
-
 static uint8_t		breadth_first_search(t_lemin *lem)
 {
 	t_list	*open;
@@ -72,21 +71,18 @@ static uint8_t		breadth_first_search(t_lemin *lem)
 
 	visited = NULL;
 	open = address_list_new(&(lem->start));
-	while (open)
+	while (open && (current = get_top_elem(open)))
 	{
-		current = get_top_elem(open);
-		if (!current)
-			break ;
-		if (not_in_address_lst(visited, *current))
-			ft_lstadd_bot(&visited, address_list_new(current));
-		if (*current == lem->end)
-		{
-			free_open_and_visited(open, visited);
-			return (LM_TRUE);
-		}
-		if (iter_adja_of_current(*current, &visited, &open, lem) == LM_FALSE)
-			break ;
-		del_top_elem(&open);
+			if (not_in_address_lst(visited, *current))
+				ft_lstadd_bot(&visited, address_list_new(current));
+			if (*current == lem->end)
+			{
+				free_open_and_visited(open, visited);
+				return (LM_TRUE);
+			}
+			if (iter_adja_of_current(*current, &visited, &open, lem) == LM_FALSE)
+				break ;
+			del_top_elem(&open);
 	}
 	free_open_and_visited(open, visited);
 	return (LM_FALSE);

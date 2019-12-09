@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 17:25:51 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/08 08:07:24 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/09 06:25:54 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,25 @@ static t_circuits		**init_cir_tab(uint32_t tab_len)
 	return (cir_tab);
 }
 
+static void				sort_path(t_circuits **c, uint32_t len)
+{
+	uint32_t		i;
+	uint32_t		j;
+
+	i = 0;
+	while (i < len)
+	{
+		j = i + 1;
+		while (j < len)
+		{
+			if (c[i]->nb_floor > c[j]->nb_floor)
+				ft_swap_ptr((void*)&(c[i]), (void**)&(c[j]));
+			j++;
+		}
+		i++;
+	}
+}
+
 void					solver(t_lemin *lem)
 {
 	int32_t			tab_len;
@@ -58,11 +77,14 @@ void					solver(t_lemin *lem)
 
 	if ((tab_len = fulkerson_algo(lem, lem->nb_ants)) == 0)
 		return ;
+	/* printf("%d\n", tab_len); */
+	/* exit(0); */
 	if ((cir_tab = init_cir_tab(tab_len)) == NULL)
 		return ;
 	if (retrace_circuits(lem, tab_len, cir_tab))
 	{
-		// debug_print_circuits(cir_tab, tab_len);
+		sort_path(cir_tab, tab_len);
+//		debug_print_circuits(cir_tab, tab_len);
 		print_ants(lem, cir_tab, tab_len);
 	}
 	free_cir_tab(cir_tab, tab_len);

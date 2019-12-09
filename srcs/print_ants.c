@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:45:26 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/03 12:45:29 by jleblond         ###   ########.fr       */
+/*   Updated: 2019/12/09 07:21:22 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static int32_t	send_ants(t_anthill *h)
 /*
 ** max_ant_index and print_nb will decrease at each turn in print_one_floor
 */
-
 void		prepare_print_one_data(t_anthill *h, uint32_t send1)
 {
 	if (h->activated == LM_FALSE)
@@ -59,6 +58,7 @@ void		prepare_print_two_data(t_anthill *h2, uint32_t send2, t_anthill *h)
 ** Note that send2 has a non-zero value only once,
 ** that is when send1 becomes zero for the first time.
 */
+uint32_t				how_many_path(t_circuits **c, uint32_t len, uint32_t ants);// Dans debug
 
 void		print_ants(t_lemin *lem, t_circuits **cir_tab, int32_t tab_len)
 {
@@ -66,9 +66,11 @@ void		print_ants(t_lemin *lem, t_circuits **cir_tab, int32_t tab_len)
 	t_anthill	h2;
 	int32_t		send1;
 	int32_t		send2;
+	uint32_t	n_use;//
 
-	init_anthill_one(&h1, lem->nb_ants, tab_len);
-	init_anthill_two(&h2, lem->nb_ants, tab_len);
+	n_use = how_many_path(cir_tab, tab_len, lem->nb_ants);//
+	init_anthill_one(&h1, lem->nb_ants, tab_len - n_use);//
+	init_anthill_two(&h2, lem->nb_ants, tab_len - n_use);//
 	send2 = 0;
 	while (h1.activated || h2.activated)
 	{
@@ -79,12 +81,13 @@ void		print_ants(t_lemin *lem, t_circuits **cir_tab, int32_t tab_len)
 			h2.activated = LM_TRUE;
 		prepare_print_one_data(&h1, send1);
 		prepare_print_two_data(&h2, send2, &h1);
-		print_anthill_two(lem, cir_tab, tab_len, &h2);
+		print_anthill_two(lem, cir_tab, tab_len - n_use, &h2);//
 		print_anthill_one(lem, cir_tab, &h1);
 		if (h1.total_enter - h1.total_exit == 0)
 			h1.activated = LM_FALSE;
 		if (h2.total_enter - h2.total_exit == 0)
 			h2.activated = LM_FALSE;
+		n_use = how_many_path(cir_tab, tab_len, lem->nb_ants - (h1.total_exit + h2.total_exit));//
 		ft_putchar('\n');
 	}
 }

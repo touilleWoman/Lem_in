@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 19:06:30 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/08 06:28:35 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/08 20:54:55 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ void		print_line(uint32_t ant_index, char *node_name)
 */
 void		check_if_exit(t_node *end, t_node **node, t_anthill *h)
 {
-	if (end != NULL && h != NULL)
-		if (node != NULL && end == *node)
-			h->total_exit++;
+	if (h != NULL && node != NULL && end == *node)
+		h->total_exit++;
 }
 
 t_node		**get_node_in_circuit(t_list *cir, uint32_t floor)
@@ -52,7 +51,6 @@ t_node		**get_node_in_circuit(t_list *cir, uint32_t floor)
 /*
 ** h->send_size == tab_len of cir_tab
 */
-
 static void		print_one_floor_in_cir(uint32_t floor, t_circuits **cir_tab,
 									t_anthill *h, t_lemin *lem)
 {

@@ -6,7 +6,7 @@
 #    By: naali <naali@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/17 16:13:53 by naali             #+#    #+#              #
-#    Updated: 2019/12/08 07:06:45 by nabih            ###   ########.fr        #
+#    Updated: 2019/12/09 06:17:27 by nabih            ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -20,7 +20,7 @@ CC				=	gcc
 
 CFLAG 			=	-Wall -Wextra -Werror
 
-#CFLAG			+=	-g -fsanitize=address
+CFLAG			+=	-g -fsanitize=address
 
 INC_FLAG		=	-I
 
@@ -58,7 +58,7 @@ SRC				+=	solver.c 			\
 					print_anthill.c		\
 					print_anthill_two.c	\
 					init_anthill.c		\
-#					debug.c	 #à supprimer
+					debug.c	 #à supprimer
 
 OBJ 			=	$(addprefix $(OBJ_PATH)/, $(SRC:%.c=%.o))
 

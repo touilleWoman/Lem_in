@@ -14,6 +14,8 @@
 # define SOLVER_H
 
 # include "lem_in.h"
+// a supprimer 
+# include <time.h>
 
 typedef	struct	s_circuits
 {

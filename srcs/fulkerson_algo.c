@@ -29,9 +29,6 @@ static uint8_t		iter_adja_of_current(t_node *current, t_list **visited,
 {
 	t_node		*adjacen_node;
 	t_path		*p;
-	// clock_t	start_t, finish_t;
-	// static clock_t total1, total2;
-
 
 	p = current->path_lst;
 	while (p)
@@ -39,26 +36,14 @@ static uint8_t		iter_adja_of_current(t_node *current, t_list **visited,
 		adjacen_node = p->addr;
 		if (!adjacen_node)
 			return (LM_FALSE) ;
-		// start_t = clock();
-
 		if (p->flow > 0 && not_in_address_lst(*visited, adjacen_node))
 		{
-			// finish_t = clock() - start_t;
-			// total1 += finish_t;
-
-			// start_t = clock();
-
 			ft_lstadd_top(visited, address_list_new(&adjacen_node));
-			// finish_t = clock() - start_t;
-			// total2 += finish_t;
 			ft_lstadd_bot(open, address_list_new(&adjacen_node));
 			adjacen_node->parent_addr = current;
 		}
 		p = p->next;
 	}
-	// printf("not_in_address_lst in adj%f\n", (double)total1 / CLOCKS_PER_SEC);
-	// printf("lst add in adj%f\n", (double)total2 / CLOCKS_PER_SEC);
-
 	return (LM_TRUE);
 }
 
@@ -121,9 +106,6 @@ uint32_t		fulkerson_algo(t_lemin *lem, uint32_t wanted_flow)
 	t_node		*parent;
 	t_node		*child;
 
-	// clock_t	start_t, finish_t;
-
-
 	max_flow = 0;
 	while (breadth_first_search(lem))
 	{
@@ -132,19 +114,11 @@ uint32_t		fulkerson_algo(t_lemin *lem, uint32_t wanted_flow)
 
 		while (child != lem->start)
 		{
-			// start_t = clock();
-
 			parent = child->parent_addr;
-
-			// finish_t = clock() - start_t;
-			// printf("get node time%f\n", (double)finish_t / CLOCKS_PER_SEC);
-
-
 			flow_plus_modif(parent, child, -1);
 			flow_plus_modif(child, parent, 1);
 			child = parent;
 		}
-		// printf("BFS lauched, iter_flow = [%d]\n", max_flow);
 		if (wanted_flow > 0 && max_flow == wanted_flow)
 			return (wanted_flow);
 	}

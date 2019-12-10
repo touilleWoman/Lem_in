@@ -36,7 +36,7 @@ static void				update_id_path(t_path **start)
 /*
 ** Cree un nouveau noeud
 */
-t_path					*new_path(uint32_t unid, char *name, t_node *node)
+t_path					*new_path(char *name, t_node *node)
 {
 	t_path			*path;
 	static uint32_t	id = 0;
@@ -47,23 +47,11 @@ t_path					*new_path(uint32_t unid, char *name, t_node *node)
 	path->id = id;
 	path->flow = 1;
 	path->name = ft_strdup(name);
-	path->unid = unid;
 	path->addr = node;
 	path->next = NULL;
 	return (path);
 }
 
-// t_path					*copy_path(const t_path *pth)
-// {
-// 	t_path			*path;
-
-// 	if ((path = malloc(sizeof(t_path))) == NULL)
-// 		return (NULL);
-// 	ft_memcpy((void*)path, (void*)(pth), sizeof(t_path));
-// 	path->name[0] = ft_strdup(path->name[0]);
-// 	path->name[1] = ft_strdup(path->name[1]);
-// 	return (path);
-// }
 
 /*
 ** Place un noeud

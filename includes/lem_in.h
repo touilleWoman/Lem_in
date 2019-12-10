@@ -44,7 +44,6 @@ struct					s_path//	Liste des chemins d'un seul noeud!!!
 	uint32_t		id;//			Static incrementer a la creation - modif de creation...
 	uint8_t			flow;//			La capacité résiduelle de flot, valeur peut etre 0, 1, ou 2
 	char			*name;//		Stockage de nom de noeud relier
-	uint32_t		unid;//			unid de node lié à node en question
 	t_node			*addr;//		address de node lié à node en question
 	t_path			*next;//		pointe sur le chemin suivant du meme noeud
 };
@@ -54,15 +53,9 @@ struct					s_path//	Liste des chemins d'un seul noeud!!!
 struct					s_node//	Liste des noeuds a visiter ou deja visite
 {
 	uint32_t		id;//			Indice dans le tableau de HASH
-	uint32_t		unid;//			INDICE UNIQUE
 	char			*name;//		Nom du noeud
-	// char			*parent_name;// pointe sur char* name de son node parent,
-									// pas de nouveau malloc, pas besoin de free
-	t_node			*parent_addr;
-	uint32_t		dist;//			dist == nombre de deplacement depuis start
+	t_node			*parent_addr;//	address du node parent
 	uint32_t		nb_paths;//		Nombre de chemin (Entrant ou sortant peu importe)
-	uint8_t			start;//		Booleen Vrai ou Faux
-	uint8_t			end;//			Booleen Vrai ou Faux
 	t_path			*path_lst;//	Pointe sur 1er chemin de la liste des chemins connecter au noeud
 	t_node			*next;//		Pointe sur le noeud suivant
 };
@@ -70,7 +63,6 @@ struct					s_node//	Liste des noeuds a visiter ou deja visite
 typedef struct			s_lemin
 {
 	t_node			*tab[HASHCODE];
-//	t_path			*pth[HASHCODE];
 	char			*line;
 	t_node			*start;
 	t_node			*end;
@@ -86,11 +78,7 @@ typedef struct			s_lemin
 ** Fonctions de Gestion
 **   DES LISTES PATH
 */
-// t_path					*new_path(uint32_t unid, char *name);
-t_path					*new_path(uint32_t unid, char *name, t_node *node);
-
-
-// t_path					*copy_path(const t_path *pth);
+t_path					*new_path(char *name, t_node *node);
 void					pushback_path(t_path **start, t_path *node);
 void					pushfront_path(t_path **start, t_path *node);
 void					pushafter_path(t_path **start, uint32_t id,\
@@ -109,7 +97,7 @@ void					send_path_away(t_path **src, t_path **dst, uint32_t id);
 ** Fonctions de Gestion
 **   DES LISTES NODE
 */
-t_node					*new_node(char *name, uint8_t start, uint8_t end);
+t_node					*new_node(char *name);
 void					pushback_node(t_node **start, t_node *node);
 void					pushfront_node(t_node **start, t_node *node);
 void					pushafter_node(t_node **start, char *name,\

@@ -61,7 +61,6 @@ void					solver(t_lemin *lem)
 	// start_t = clock();
 	if ((tab_len = fulkerson_algo(lem, lem->nb_ants)) == 0)
 		return ;
-	cir_tab = init_cir_tab(tab_len);
 	if ((cir_tab = init_cir_tab(tab_len)) == NULL)
 		return ;
 	// finish_t = clock() - start_t;

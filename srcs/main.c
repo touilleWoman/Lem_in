@@ -13,13 +13,13 @@
 #include <lem_in.h>
 #include <get_info.h>
 
+//decommente pour voir le temps
 int				main()
 {
 	t_lemin		lem;
-	clock_t	start_t, parser_t;
 
-
-	start_t = clock();
+	// clock_t	start_t, parser_t;
+	// start_t = clock();
 
 	lem.line = NULL;
 	ft_bzero(lem.tab, sizeof(t_node*) * HASHCODE);
@@ -27,12 +27,11 @@ int				main()
 	{
 		if (get_info(&lem) == LM_SUCCESS)
 		{
-			parser_t = clock() - start_t;
-			printf("parser time%f\n", (double)parser_t / CLOCKS_PER_SEC);
+			// parser_t = clock() - start_t;
+			// printf("parser time%f\n", (double)parser_t / CLOCKS_PER_SEC);
 
 //			print_tab(lem.tab, HASHCODE);// A DELETE
 			/* print_info_inout(&lem);// A DELETE */
-			// ft_putstr("start solver\n");
 			printf("Get Infos DONE\n");
 			solver(&lem);
 		}
@@ -78,7 +77,7 @@ void			print_tab(t_node *(tab)[HASHCODE], uint32_t max)
 			tmp = tab[i];
 			while (tmp != NULL)
 			{
-				printf("|unid[%d]id[%d] ==> %s (nb_paths:%d)|", tmp->unid, i, tmp->name,
+				printf("|id[%d] ==> %s (nb_paths:%d)|", i, tmp->name,
 						 tmp->nb_paths);
 				printf("=PATH=>");
 				print_pth(&(tmp->path_lst));

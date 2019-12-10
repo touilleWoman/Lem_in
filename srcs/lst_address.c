@@ -46,7 +46,6 @@ uint8_t		not_in_address_lst(t_list *lst, t_node const *address)
 	return (LM_TRUE);
 }
 
-
 void		del_top_elem(t_list **alst)
 {
 	t_list	*cp;

@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 16:48:42 by nabih             #+#    #+#             */
-/*   Updated: 2019/12/10 21:15:47 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/10 21:18:56 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int				main()
 
 //			print_tab(lem.tab, HASHCODE);// A DELETE
 			/* print_info_inout(&lem);// A DELETE */
-			printf("Get Infos DONE\n");
+//			printf("Get Infos DONE\n");
 			solver(&lem);
 		}
 		// else

@@ -23,6 +23,9 @@
 # define	LEM_IN_H
 
 # include <includes.h>
+// a supprimer 
+# include <time.h>
+
 
 # define LM_TRUE 1
 # define LM_FALSE 0

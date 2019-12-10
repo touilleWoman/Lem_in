@@ -56,22 +56,26 @@ void					solver(t_lemin *lem)
 	int32_t			tab_len;
 	t_circuits		**cir_tab;
 
-	clock_t	start_t, finish_t;
+	clock_t	start_t, algo_t;
 
 	start_t = clock();
-	printf("start algo time%ld\n", start_t);
 	if ((tab_len = fulkerson_algo(lem, lem->nb_ants)) == 0)
 		return ;
 	cir_tab = init_cir_tab(tab_len);
 	if ((cir_tab = init_cir_tab(tab_len)) == NULL)
 		return ;
+	algo_t = clock() - start_t;
+	printf("fulkerson_algo time%f\n", (double)algo_t / CLOCKS_PER_SEC);
+	start_t = clock();
 	if (retrace_circuits(lem, tab_len, cir_tab))
 	{
-		finish_t = clock();
-		printf("finish algo time%ld\n", finish_t);
+		algo_t = clock() - start_t;
+		printf("retrace_circuits time%f\n", (double)algo_t / CLOCKS_PER_SEC);
+		algo_t = clock() - start_t;
 
 		// debug_print_circuits(cir_tab, tab_len);
-		print_ants(lem, cir_tab, tab_len);
+		// debug_print_circuits(cir_tab, tab_len);
+		// print_ants(lem, cir_tab, tab_len);
 	}
 	free_cir_tab(cir_tab, tab_len);
 }

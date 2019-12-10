@@ -16,6 +16,10 @@
 int				main()
 {
 	t_lemin		lem;
+	clock_t	start_t, parser_t;
+
+
+	start_t = clock();
 
 	lem.line = NULL;
 	ft_bzero(lem.tab, sizeof(t_node*) * HASHCODE);
@@ -23,6 +27,9 @@ int				main()
 	{
 		if (get_info(&lem) == LM_SUCCESS)
 		{
+			parser_t = clock() - start_t;
+			printf("parser time%f\n", (double)parser_t / CLOCKS_PER_SEC);
+
 //			print_tab(lem.tab, HASHCODE);// A DELETE
 			/* print_info_inout(&lem);// A DELETE */
 			// ft_putstr("start solver\n");

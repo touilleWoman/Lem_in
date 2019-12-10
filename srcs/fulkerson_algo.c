@@ -69,6 +69,8 @@ static uint8_t		breadth_first_search(t_lemin *lem)
 	t_list	*open;
 	t_list	*visited;
 	t_node	**current;
+	// clock_t	start_t, finish_t;
+
 
 	visited = NULL;
 	open = address_list_new(&(lem->start));
@@ -77,15 +79,24 @@ static uint8_t		breadth_first_search(t_lemin *lem)
 		current = get_top_elem(open);
 		if (!current)
 			break ;
+		// start_t = clock();
+
 		if (not_in_address_lst(visited, *current))
 			ft_lstadd_bot(&visited, address_list_new(current));
+		// finish_t = clock() - start_t;
+		// printf("not_in_address_lst%f\n", (double)finish_t / CLOCKS_PER_SEC);
 		if (*current == lem->end)
 		{
 			free_open_and_visited(open, visited);
 			return (LM_TRUE);
 		}
+		// start_t = clock();
 		if (iter_adja_of_current(*current, &visited, &open, lem) == LM_FALSE)
 			break ;
+		// finish_t = clock() - start_t;
+		// printf("iter adjacen_node%f\n", (double)finish_t / CLOCKS_PER_SEC);
+
+
 		del_top_elem(&open);
 	}
 	free_open_and_visited(open, visited);
@@ -106,14 +117,25 @@ uint32_t		fulkerson_algo(t_lemin *lem, uint32_t wanted_flow)
 	t_node		*parent;
 	t_node		*child;
 
+	// clock_t	start_t, finish_t;
+
+
 	max_flow = 0;
 	while (breadth_first_search(lem))
 	{
 		max_flow++;
 		child = lem->end;
+
 		while (child != lem->start)
 		{
+			// start_t = clock();
+
 			parent = get_node_in_hash(lem, child->parent_name);
+			
+			// finish_t = clock() - start_t;
+			// printf("get node time%f\n", (double)finish_t / CLOCKS_PER_SEC);
+
+
 			flow_plus_modif(parent, child, -1);
 			flow_plus_modif(child, parent, 1);
 			child = parent;

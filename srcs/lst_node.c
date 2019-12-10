@@ -32,7 +32,7 @@ t_node					*new_node(char *name, uint8_t start, uint8_t end)
 	node->id = id;
 	node->unid = unid;
 	node->name = ft_strdup(name);
-	node->parent_name = NULL;
+	node->parent_addr = NULL;
 	node->dist = 0;
 	node->nb_paths = 0;
 	node->start = start;

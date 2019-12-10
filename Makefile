@@ -58,7 +58,7 @@ SRC				+=	solver.c 			\
 					print_anthill.c		\
 					print_anthill_two.c	\
 					init_anthill.c		\
-#					debug.c	 #à supprimer
+					debug.c	 #à supprimer
 
 OBJ 			=	$(addprefix $(OBJ_PATH)/, $(SRC:%.c=%.o))
 

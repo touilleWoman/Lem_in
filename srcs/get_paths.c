@@ -95,8 +95,8 @@ static int8_t			add_path(t_lemin *lem)
 	if ((node1 = get_node_in_hash(lem, lem->line)) == NULL
 		|| (node2 = get_node_in_hash(lem, &(lem->line)[lem->dash + 1])) == NULL)
 		return (LM_ERROR);
-	if ((path1 = new_path(node1->unid, node1->name)) == NULL
-		|| (path2 = new_path(node2->unid, node2->name)) == NULL)
+	if ((path1 = new_path(node1->unid, node1->name, node1)) == NULL
+		|| (path2 = new_path(node2->unid, node2->name, node2)) == NULL)
 		return (LM_ERROR);
 	pushfront_path(&(node1->path_lst), path2);
 	pushfront_path(&(node2->path_lst), path1);

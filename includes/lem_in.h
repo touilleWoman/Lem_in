@@ -45,6 +45,7 @@ struct					s_path//	Liste des chemins d'un seul noeud!!!
 	uint8_t			flow;//			La capacité résiduelle de flot, valeur peut etre 0, 1, ou 2
 	char			*name;//		Stockage de nom de noeud relier
 	uint32_t		unid;//			unid de node lié à node en question
+	t_node			*addr;//		address de node lié à node en question
 	t_path			*next;//		pointe sur le chemin suivant du meme noeud
 };
 
@@ -55,8 +56,9 @@ struct					s_node//	Liste des noeuds a visiter ou deja visite
 	uint32_t		id;//			Indice dans le tableau de HASH
 	uint32_t		unid;//			INDICE UNIQUE
 	char			*name;//		Nom du noeud
-	char			*parent_name;// pointe sur char* name de son node parent,
+	// char			*parent_name;// pointe sur char* name de son node parent,
 									// pas de nouveau malloc, pas besoin de free
+	t_node			*parent_addr;
 	uint32_t		dist;//			dist == nombre de deplacement depuis start
 	uint32_t		nb_paths;//		Nombre de chemin (Entrant ou sortant peu importe)
 	uint8_t			start;//		Booleen Vrai ou Faux
@@ -84,8 +86,9 @@ typedef struct			s_lemin
 ** Fonctions de Gestion
 **   DES LISTES PATH
 */
-// t_path					*new_path(char *node1, char *node2);
-t_path					*new_path(uint32_t unid, char *name);
+// t_path					*new_path(uint32_t unid, char *name);
+t_path					*new_path(uint32_t unid, char *name, t_node *node);
+
 
 // t_path					*copy_path(const t_path *pth);
 void					pushback_path(t_path **start, t_path *node);

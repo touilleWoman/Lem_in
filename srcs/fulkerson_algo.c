@@ -25,25 +25,40 @@ static t_node		**get_top_elem(t_list *lst)
 }
 
 static uint8_t		iter_adja_of_current(t_node *current, t_list **visited,
-									t_list **open, t_lemin *lem)
+									t_list **open)
 {
 	t_node		*adjacen_node;
 	t_path		*p;
+	// clock_t	start_t, finish_t;
+	// static clock_t total1, total2;
+
 
 	p = current->path_lst;
 	while (p)
 	{
-		adjacen_node = get_node_in_hash(lem, p->name);
+		adjacen_node = p->addr;
 		if (!adjacen_node)
 			return (LM_FALSE) ;
+		// start_t = clock();
+
 		if (p->flow > 0 && not_in_address_lst(*visited, adjacen_node))
 		{
-			ft_lstadd_bot(visited, address_list_new(&adjacen_node));
+			// finish_t = clock() - start_t;
+			// total1 += finish_t;
+
+			// start_t = clock();
+
+			ft_lstadd_top(visited, address_list_new(&adjacen_node));
+			// finish_t = clock() - start_t;
+			// total2 += finish_t;
 			ft_lstadd_bot(open, address_list_new(&adjacen_node));
-			adjacen_node->parent_name = (current->name);
+			adjacen_node->parent_addr = current;
 		}
 		p = p->next;
 	}
+	// printf("not_in_address_lst in adj%f\n", (double)total1 / CLOCKS_PER_SEC);
+	// printf("lst add in adj%f\n", (double)total2 / CLOCKS_PER_SEC);
+
 	return (LM_TRUE);
 }
 
@@ -69,8 +84,6 @@ static uint8_t		breadth_first_search(t_lemin *lem)
 	t_list	*open;
 	t_list	*visited;
 	t_node	**current;
-	// clock_t	start_t, finish_t;
-
 
 	visited = NULL;
 	open = address_list_new(&(lem->start));
@@ -79,24 +92,15 @@ static uint8_t		breadth_first_search(t_lemin *lem)
 		current = get_top_elem(open);
 		if (!current)
 			break ;
-		// start_t = clock();
-
 		if (not_in_address_lst(visited, *current))
-			ft_lstadd_bot(&visited, address_list_new(current));
-		// finish_t = clock() - start_t;
-		// printf("not_in_address_lst%f\n", (double)finish_t / CLOCKS_PER_SEC);
+			ft_lstadd_top(&visited, address_list_new(current));
 		if (*current == lem->end)
 		{
 			free_open_and_visited(open, visited);
 			return (LM_TRUE);
 		}
-		// start_t = clock();
-		if (iter_adja_of_current(*current, &visited, &open, lem) == LM_FALSE)
+		if (iter_adja_of_current(*current, &visited, &open) == LM_FALSE)
 			break ;
-		// finish_t = clock() - start_t;
-		// printf("iter adjacen_node%f\n", (double)finish_t / CLOCKS_PER_SEC);
-
-
 		del_top_elem(&open);
 	}
 	free_open_and_visited(open, visited);
@@ -130,8 +134,8 @@ uint32_t		fulkerson_algo(t_lemin *lem, uint32_t wanted_flow)
 		{
 			// start_t = clock();
 
-			parent = get_node_in_hash(lem, child->parent_name);
-			
+			parent = child->parent_addr;
+
 			// finish_t = clock() - start_t;
 			// printf("get node time%f\n", (double)finish_t / CLOCKS_PER_SEC);
 

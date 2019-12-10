@@ -86,7 +86,7 @@ static int8_t			create_n_add(t_lemin *lem)
 	{
 		if (lem->isstart == 1 && lem->isend == 1)
 			return (LM_ERROR);
-		tmp = new_node(lem->line, lem->isstart, lem->isend);
+		tmp = new_node(lem->line);
 		add_node_in_tab(lem, tmp);
 		if (lem->isstart == 1)
 			lem->start = tmp;

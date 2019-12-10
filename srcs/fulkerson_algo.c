@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:45:10 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/08 10:26:12 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/10 21:17:39 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static t_node		**get_top_elem(t_list *lst)
 }
 
 static uint8_t		iter_adja_of_current(t_node *current, t_list **visited,
-									t_list **open, t_lemin *lem)
+									t_list **open)
 {
 	t_node		*adjacen_node;
 	t_path		*p;
@@ -33,14 +33,14 @@ static uint8_t		iter_adja_of_current(t_node *current, t_list **visited,
 	p = current->path_lst;
 	while (p)
 	{
-		adjacen_node = get_node_in_hash(lem, p->name);
+		adjacen_node = p->addr;
 		if (!adjacen_node)
 			return (LM_FALSE);
 		if (p->flow > 0 && not_in_address_lst(*visited, adjacen_node))
 		{
-			ft_lstadd_bot(visited, address_list_new(&adjacen_node));
+			ft_lstadd_top(visited, address_list_new(&adjacen_node));
 			ft_lstadd_bot(open, address_list_new(&adjacen_node));
-			adjacen_node->parent_name = (current->name);
+			adjacen_node->parent_addr = current;
 		}
 		p = p->next;
 	}
@@ -73,16 +73,19 @@ static uint8_t		breadth_first_search(t_lemin *lem)
 	open = address_list_new(&(lem->start));
 	while (open && (current = get_top_elem(open)))
 	{
-			if (not_in_address_lst(visited, *current))
-				ft_lstadd_bot(&visited, address_list_new(current));
-			if (*current == lem->end)
-			{
-				free_open_and_visited(open, visited);
-				return (LM_TRUE);
-			}
-			if (iter_adja_of_current(*current, &visited, &open, lem) == LM_FALSE)
-				break ;
-			del_top_elem(&open);
+		current = get_top_elem(open);
+		if (!current)
+			break ;
+		if (not_in_address_lst(visited, *current))
+			ft_lstadd_top(&visited, address_list_new(current));
+		if (*current == lem->end)
+		{
+			free_open_and_visited(open, visited);
+			return (LM_TRUE);
+		}
+		if (iter_adja_of_current(*current, &visited, &open) == LM_FALSE)
+			break ;
+		del_top_elem(&open);
 	}
 	free_open_and_visited(open, visited);
 	return (LM_FALSE);
@@ -107,14 +110,14 @@ uint32_t		fulkerson_algo(t_lemin *lem, uint32_t wanted_flow)
 	{
 		max_flow++;
 		child = lem->end;
+
 		while (child != lem->start)
 		{
-			parent = get_node_in_hash(lem, child->parent_name);
+			parent = child->parent_addr;
 			flow_plus_modif(parent, child, -1);
 			flow_plus_modif(child, parent, 1);
 			child = parent;
 		}
-		// printf("BFS lauched, iter_flow = [%d]\n", max_flow);
 		if (wanted_flow > 0 && max_flow == wanted_flow)
 			return (wanted_flow);
 	}

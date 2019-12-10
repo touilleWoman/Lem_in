@@ -15,10 +15,9 @@
 /*
 ** Cree un nouveau noeud
 */
-t_node					*new_node(char *name, uint8_t start, uint8_t end)
+t_node					*new_node(char *name)
 {
 	int32_t			id;
-	static int32_t	unid = 0;
 	t_node			*node;
 
 	if ((node = malloc(sizeof(t_node))) == NULL)
@@ -28,15 +27,10 @@ t_node					*new_node(char *name, uint8_t start, uint8_t end)
 		free(node);
 		return (NULL);
 	}
-	unid += 1;
 	node->id = id;
-	node->unid = unid;
 	node->name = ft_strdup(name);
-	node->parent_name = NULL;
-	node->dist = 0;
+	node->parent_addr = NULL;
 	node->nb_paths = 0;
-	node->start = start;
-	node->end = end;
 	node->path_lst = NULL;
 	node->next = NULL;
 	return (node);

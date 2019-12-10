@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:45:26 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/09 07:21:22 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/10 05:49:23 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void		print_ants(t_lemin *lem, t_circuits **cir_tab, int32_t tab_len)
 	send2 = 0;
 	while (h1.activated || h2.activated)
 	{
+		h1.send_size = (int32_t)(tab_len - n_use);
+		h2.send_size = (lem->nb_ants - (h1.total_enter + h2.total_enter)) % h1.send_size;
 		send1 = send_ants(&h1);
 		if (send1 == 0)
 			send2 = send_ants(&h2);
@@ -81,13 +83,14 @@ void		print_ants(t_lemin *lem, t_circuits **cir_tab, int32_t tab_len)
 			h2.activated = LM_TRUE;
 		prepare_print_one_data(&h1, send1);
 		prepare_print_two_data(&h2, send2, &h1);
-		print_anthill_two(lem, cir_tab, tab_len - n_use, &h2);//
+		print_anthill_two(lem, cir_tab, tab_len /* - n_use */, &h2);//
 		print_anthill_one(lem, cir_tab, &h1);
 		if (h1.total_enter - h1.total_exit == 0)
 			h1.activated = LM_FALSE;
 		if (h2.total_enter - h2.total_exit == 0)
 			h2.activated = LM_FALSE;
-		n_use = how_many_path(cir_tab, tab_len, lem->nb_ants - (h1.total_exit + h2.total_exit));//
 		ft_putchar('\n');
+		if (lem->nb_ants - (h1.total_enter + h2.total_enter) > 0)//
+			n_use = how_many_path(cir_tab, tab_len, lem->nb_ants - (h1.total_enter + h2.total_enter));//
 	}
 }

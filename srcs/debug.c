@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:32:10 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/09 07:22:23 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/10 05:42:16 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,35 +38,57 @@ void		debug_print_circuits(t_circuits **cir_tab, uint32_t tab_len)
 ** Cherche le meilleure ratio pour le nombre
 ** de ligne a afficher a chaque tour
 */
-uint32_t				how_many_path(t_circuits **c, uint32_t len, uint32_t ants)
+static void				next_how_many(t_circuits **c, uint32_t len, uint32_t ants, t_manypth *mp)
 {
-	uint32_t		not_use;
-	uint32_t		ratio;
-	uint32_t		old;
-	uint32_t		new;
-//	uint32_t		old_len;
-
-	not_use = 0;
-	old = 0;
-	new = 0;
-	ratio = ants / len;
-	old = c[--len]->nb_floor + (ratio - 1);
-//	old_len = len;
-	while (--len > 0)
+	mp->old = 0;
+	mp->not_use = 0;
+	while (--len + 1 > 0)
 	{
-		ratio = ants / (len + 1);
-		if (ratio > 0)
+		mp->ratio = ants / (len + 1);
+		if (mp->ratio > 0)
 		{
-			new = c[len]->nb_floor + (ratio - 1);
-			if (new <= old)
+			mp->new = c[len]->nb_floor + (mp->ratio - 1);
+			if ((mp->new < mp->old || mp->old == 0))
 			{
-				/* if (new == old && c[len]->nb_floor == c[old_len]->nb_floor) */
-				/* 	not_use--; */
-//				old_len = len;
-				old = new;
-				not_use++;
+				if (mp->old != 0)
+					mp->not_use++;
+				mp->old = mp->new;
 			}
 		}
+		else
+			mp->not_use++;
 	}
-	return (not_use);
+}
+
+uint32_t				how_many_path(t_circuits **c, uint32_t len, uint32_t ants)
+{
+	uint32_t		len_tmp;
+	t_manypth		mp;
+	t_manypth		next;
+
+	mp.old = 0;
+	mp.not_use = 0;
+	len_tmp = len;
+	while (--len + 1 > 0)
+	{
+		mp.ratio = ants / (len + 1);
+		if (mp.ratio > 0)
+		{
+			mp.new = c[len]->nb_floor + (mp.ratio - 1);
+			if ((mp.new <= mp.old || mp.old == 0))
+			{
+				if (mp.old != 0)
+					mp.not_use++;
+				mp.old = mp.new;
+			}
+		}
+		else
+			mp.not_use++;
+	}
+//	if ((ants = ants - (len_tmp - mp.not_use)) > 0)
+	next_how_many(c, len_tmp, ants, &next);
+	/* 		printf("new = %u, old = %u ===> NOT_USE = %u\n", mp.new, mp.old, mp.not_use); */
+	/* 		printf("next_new = %u, next_old = %u ===> next_NOT_USE = %u\n", next.new, next.old, next.not_use); */
+	/* printf("%u\n", (mp.old < next.old) ? mp.not_use : next.not_use); */
+	return ((mp.old <= next.old) ? mp.not_use : next.not_use);
 }

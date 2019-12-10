@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 17:25:51 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/09 06:25:54 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/10 04:00:17 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ void					solver(t_lemin *lem)
 
 	if ((tab_len = fulkerson_algo(lem, lem->nb_ants)) == 0)
 		return ;
-	/* printf("%d\n", tab_len); */
-	/* exit(0); */
 	if ((cir_tab = init_cir_tab(tab_len)) == NULL)
 		return ;
 	if (retrace_circuits(lem, tab_len, cir_tab))

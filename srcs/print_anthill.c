@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 19:06:30 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/08 20:54:55 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/10 03:49:13 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,19 @@ t_node		**get_node_in_circuit(t_list *cir, uint32_t floor)
 static void		print_one_floor_in_cir(uint32_t floor, t_circuits **cir_tab,
 									t_anthill *h, t_lemin *lem)
 {
-	int32_t			i;
 	t_node			**node;
+	int32_t			i;
+	uint32_t		nb;//
 
 	i = 0;
 	node = NULL;
+	nb = h->max_ant_index - h->send_size + 1;//
 	while (i < h->send_size && h->print_nb > 0)
 	{
 		node = get_node_in_circuit(cir_tab[i]->addr, floor);
 		if (node)
 		{
-			print_line(h->max_ant_index, (*node)->name);
+			print_line(nb + i, (*node)->name);//
 			check_if_exit(lem->end, node, h);
 			h->max_ant_index--;
 			h->print_nb--;

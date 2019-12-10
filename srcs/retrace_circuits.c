@@ -6,13 +6,11 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 13:34:02 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/04 13:34:12 by jleblond         ###   ########.fr       */
+/*   Updated: 2019/12/09 23:03:58 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solver.h"
-
-
 
 char			*get_parent_name(t_node *enter)
 {

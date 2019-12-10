@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 19:13:26 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/08 20:57:48 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/10 04:03:13 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,26 +69,39 @@ static int32_t		*fill_best_circuits(t_circuits **cir_tab, int32_t tab_len,
 	return (best_cir);
 }
 
-static t_node		**print_one_node(int32_t index, t_circuits **cir_tab,
-									t_anthill *h2, uint32_t floor)
+static t_node		**print_one_node(int32_t *index, t_circuits **cir_tab,
+									 t_anthill *h2, t_lemin *lem)
 {
 	t_node			**node;
+	int32_t			i;
+	uint32_t		floor;
+	uint32_t		nb;//
 
-	node = get_node_in_circuit(cir_tab[index]->addr, floor);
-	if (node)
+	floor = h2->start_floor;
+	nb = h2->max_ant_index - h2->send_size + 1;//
+	while (h2->print_nb > 0)
 	{
-		print_line(h2->max_ant_index, (*node)->name);
-		h2->max_ant_index--;
-		h2->print_nb--;
+		while (i < h2->send_size && h2->print_nb > 0)
+		{
+			node = get_node_in_circuit(cir_tab[(index[i])]->addr, floor);
+			if (node)
+			{
+				print_line(nb + i, (*node)->name);
+				h2->max_ant_index--;
+				h2->print_nb--;
+			}
+			check_if_exit(lem->end, node, h2);
+			i++;
+		}
+		i = 0;
+		floor++;
 	}
 	return (node);
 }
 
 void				print_anthill_two(t_lemin *lem, t_circuits **cir_tab,
-									int32_t tab_len, t_anthill *h2)
+										int32_t tab_len, t_anthill *h2)
 {
-	int32_t			i;
-	uint32_t		floor;
 	int32_t			*best_cir;
 	t_node			**node;
 
@@ -97,18 +110,6 @@ void				print_anthill_two(t_lemin *lem, t_circuits **cir_tab,
 	best_cir = fill_best_circuits(cir_tab, tab_len, h2->send_size);
 	if (!best_cir)
 		return ;
-	i = 0;
-	floor = h2->start_floor;
-	while (h2->print_nb > 0)
-	{
-		while (i < h2->send_size && h2->print_nb > 0)
-		{
-			node = print_one_node(best_cir[i], cir_tab, h2, floor);
-			check_if_exit(lem->end, node, h2);
-			i++;
-		}
-		i = 0;
-		floor++;
-	}
+	node = print_one_node(best_cir, cir_tab, h2, lem);
 	free(best_cir);
 }

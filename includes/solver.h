@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:36:05 by jleblond          #+#    #+#             */
-/*   Updated: 2019/11/29 15:36:07 by jleblond         ###   ########.fr       */
+/*   Updated: 2019/12/10 04:31:18 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,14 @@ typedef	struct	s_circuits
 	uint32_t	nb_floor;
 	t_list		*addr;
 }				t_circuits;
+
+typedef struct	s_manypth
+{
+	uint32_t	not_use;
+	uint32_t	ratio;
+	uint32_t	old;
+	uint32_t	new;
+}				t_manypth;
 
 typedef	struct	s_anthill
 {
@@ -62,5 +70,3 @@ void			debug_print_circuits(t_circuits **cir_tab, uint32_t tab_len);
 void			debug_print_address_lst(t_list **alst);
 
 # endif
-
-

@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:45:26 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/10 05:49:23 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/10 06:04:09 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,14 @@ void		print_ants(t_lemin *lem, t_circuits **cir_tab, int32_t tab_len)
 	send2 = 0;
 	while (h1.activated || h2.activated)
 	{
-		h1.send_size = (int32_t)(tab_len - n_use);
-		h2.send_size = (lem->nb_ants - (h1.total_enter + h2.total_enter)) % h1.send_size;
+		if (tab_len - n_use <= (uint32_t)h1.unsent)
+			h1.send_size = (int32_t)(tab_len - n_use);
 		send1 = send_ants(&h1);
 		if (send1 == 0)
+		{
+//			h2.send_size = (lem->nb_ants - (h1.total_enter + h2.total_enter)) % h1.send_size;
 			send2 = send_ants(&h2);
+		}
 		if (send2 > 0)
 			h2.activated = LM_TRUE;
 		prepare_print_one_data(&h1, send1);

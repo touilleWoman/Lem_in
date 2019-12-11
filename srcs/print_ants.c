@@ -6,12 +6,18 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:45:26 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/11 06:47:24 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/11 07:24:43 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solver.h"
 
+/*
+** Retire les chemins avec le moins bon ratio de ligne
+** renvoi le nombre de chemin NON utiliser (not_use)
+** qui est utiliser pour calculer le nombre de fourmie
+** qui entre dans la fourmiliere
+*/
 static uint32_t			how_many_path(t_circuits **c, uint32_t len,
 										uint32_t ants)
 {
@@ -40,6 +46,11 @@ static uint32_t			how_many_path(t_circuits **c, uint32_t len,
 	return (mp.not_use);
 }
 
+/*
+** Attribut les chemins au fourmies qui entre dans
+** la fourmilliere. Avant d'entrer leur PATH est
+** initialiser a NULL.
+*/
 static void				init_ant_cir(t_circuits **c, t_list **ants, int32_t nb)
 {
 	int32_t			i;
@@ -60,6 +71,9 @@ static void				init_ant_cir(t_circuits **c, t_list **ants, int32_t nb)
 	}
 }
 
+/*
+** Affiche une seul fourmie
+*/
 static void				print_one_ant(uint32_t ant_index, char *node_name)
 {
 	ft_putchar('L');
@@ -68,6 +82,12 @@ static void				print_one_ant(uint32_t ant_index, char *node_name)
 	ft_putstr(node_name);
 }
 
+/*
+** Affiche une ligne complete en se basant sur les
+** chemins stocker dans les noeuds des fourmies.
+** si une fourmies arrive en fin de chemin son
+** noeud est automatiquement liberer.
+*/
 static int32_t			print_line(t_list **ants, int32_t nb)
 {
 	int32_t			end;
@@ -97,10 +117,16 @@ static int32_t			print_line(t_list **ants, int32_t nb)
 	return (end);
 }
 
+/*
+** Selectionne les chemins et les attribut a chaque
+** fourmies au fur et a mesure qu'elles sont selectionner
+** pour entrer dans la fourmilliere
+** Affiche ligne par ligne les etapes.
+*/
 void					print_ants(t_lemin *lem, t_list **ants, t_circuits **cir_tab, int32_t tab_len)
 {
-	int32_t			total_enter;
 	int32_t			send;
+	int32_t			total_enter;
 	int32_t			total_exit;
 	int32_t			n_use;
 	int				line;// a delete
@@ -122,7 +148,5 @@ void					print_ants(t_lemin *lem, t_list **ants, t_circuits **cir_tab, int32_t t
 		ft_putchar('\n');
 		line++;// a delete
 	}
-	printf("Reste == %d\n", lem->nb_ants - total_enter);// a delete
-	printf("Enter == %d, Exit == %d\n", total_enter, total_exit);// a delete
 	printf("nb line == %d\n", line);// a delete
 }

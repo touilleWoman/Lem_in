@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 17:25:51 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/10 21:14:59 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/11 01:18:11 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void					solver(t_lemin *lem)
 {
 	int32_t			tab_len;
 	t_circuits		**cir_tab;
+	t_list			*ants;
 
 	// clock_t	start_t, finish_t;
 	// start_t = clock();
@@ -87,11 +88,18 @@ void					solver(t_lemin *lem)
 	// start_t = clock();
 	if (retrace_circuits(lem, tab_len, cir_tab))
 	{
-		sort_path(cir_tab, tab_len);
 		// finish_t = clock() - start_t;
 		// printf("retrace_circuits time%f\n", (double)finish_t / CLOCKS_PER_SEC);
+		sort_path(cir_tab, tab_len);
+		ants = init_ant_lst(lem->nb_ants);
+		// finish_t = clock() - start_t;
+		// printf("retrace_circuits time%f\n", (double)finish_t / CLOCKS_PER_SEC);
+		// start_t = clock();
 		// debug_print_circuits(cir_tab, tab_len);
-		print_ants(lem, cir_tab, tab_len);
+//		print_ants(lem, cir_tab, tab_len);
+		print_ants(lem, &ants, cir_tab, tab_len);
+		// finish_t = clock() - start_t;
+		// printf("retrace_circuits time%f\n", (double)finish_t / CLOCKS_PER_SEC);
 	}
 	free_cir_tab(cir_tab, tab_len);
 }

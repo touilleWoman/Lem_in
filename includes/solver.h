@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:36:05 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/11 02:16:20 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/11 06:38:24 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void			init_anthill_one(t_anthill *h, int32_t nb_ants,
 								int32_t max_flow);
 void			init_anthill_two(t_anthill *h, int32_t nb_ants,
 								int32_t max_flow);
-
 
 //à supprimer functions debug à la fin
 void			debug_print_circuits(t_circuits **cir_tab, uint32_t tab_len);

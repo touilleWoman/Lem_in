@@ -6,20 +6,11 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 19:06:30 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/11 01:22:28 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/11 06:33:41 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solver.h"
-
-void		print_line(uint32_t ant_index, char *node_name)
-{
-	ft_putchar('L');
-	ft_putnbr(ant_index);
-	ft_putchar('-');
-	ft_putstr(node_name);
-	ft_putchar(' ');
-}
 
 /*
 */
@@ -89,10 +80,8 @@ void		print_anthill_one(t_lemin *lem, t_circuits **cir_tab, t_anthill *h)
 	floor = h->start_floor;
 	while (h->print_nb > 0)
 	{
-		printf("%d\n", h->print_nb);
+//		printf("%d\n", h->print_nb);
 		print_one_floor_in_cir(floor, cir_tab, h, lem);
 		floor++;
-		if (floor == 90)
-			exit(0);
 	}
 }

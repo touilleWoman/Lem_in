@@ -59,6 +59,7 @@ static uint8_t		iter_adja_of_current(t_node *current,
 }
 
 
+
 /*
 ** In this function, t_list stores, in lst->contente,
 ** the address of pointer of node.

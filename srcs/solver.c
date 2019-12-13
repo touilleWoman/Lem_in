@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 17:25:51 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/13 22:18:46 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/13 22:40:15 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,9 @@ static uint32_t			sort_path(t_circuits **c, uint32_t len)
 		j = len - 1;
 		while (j > i)
 		{
-			looking_for_duplicated_node(c, i, j, &len);
 			if (c[j] && c[i]->nb_floor > c[j]->nb_floor)
 				ft_swap_ptr((void**)&(c[i]), (void**)&(c[j]));
+			looking_for_duplicated_node(c, i, j, &len);
 			--j;
 		}
 		++i;

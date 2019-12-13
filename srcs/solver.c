@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 17:25:51 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/12 08:13:26 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/13 22:18:46 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,45 @@ static t_circuits		**init_cir_tab(uint32_t tab_len)
 	return (cir_tab);
 }
 
-static void				sort_path(t_circuits **c, uint32_t len)
+static void				remove_duplicated(t_circuits **c, uint32_t len, uint32_t pos)
+{
+	while (pos < len - 1)
+	{
+		ft_swap_ptr((void**)&(c[pos]), (void**)&(c[pos + 1]));
+		pos++;
+	}
+	ft_memdel((void**)&(c[pos]));
+}
+
+static void				looking_for_duplicated_node(t_circuits **c, uint32_t i,
+													uint32_t j, uint32_t *len)
+{
+	t_list			*lst1;
+	t_list			*lst2;
+	t_node			*n1;
+	t_node			*n2;
+
+	lst1 = c[i]->addr;
+	while (lst1->next)
+	{
+		n1 = *(t_node**)lst1->content;
+		lst2 = ((t_list*)c[j]->addr)->next;
+		while (lst2->next)
+		{
+			n2 = *(t_node**)lst2->content;
+			if (ft_strcmp(n1->name, n2->name) == 0)
+			{
+				remove_duplicated(c, *len, j);
+				*len -= 1;
+				return ;
+			}
+			lst2 = lst2->next;
+		}
+		lst1 = lst1->next;
+	}
+}
+
+static uint32_t			sort_path(t_circuits **c, uint32_t len)
 {
 	uint32_t		i;
 	uint32_t		j;
@@ -59,27 +97,44 @@ static void				sort_path(t_circuits **c, uint32_t len)
 	i = 0;
 	while (i < len)
 	{
-		j = i + 1;
-		while (j < len)
+		j = len - 1;
+		while (j > i)
 		{
-			if (c[i]->nb_floor > c[j]->nb_floor)
-				ft_swap_ptr((void*)&(c[i]), (void**)&(c[j]));
-			j++;
+			looking_for_duplicated_node(c, i, j, &len);
+			if (c[j] && c[i]->nb_floor > c[j]->nb_floor)
+				ft_swap_ptr((void**)&(c[i]), (void**)&(c[j]));
+			--j;
 		}
-		i++;
+		++i;
 	}
+	return (len);
+}
+
+uint32_t				choose_wanted_flow(t_lemin *lem)
+{
+	uint32_t		wanted_flow;
+
+	if (lem->start->nb_paths > lem->end->nb_paths)
+		wanted_flow = lem->end->nb_paths;
+	else
+		wanted_flow = lem->end->nb_paths;
+	if ((uint32_t)lem->nb_ants < wanted_flow)
+		wanted_flow = (uint32_t)lem->nb_ants;
+	return (wanted_flow);
 }
 
 // decommente pour voir le temps utilisé
 void					solver(t_lemin *lem)
 {
+	uint32_t		wanted_flow;
 	int32_t			tab_len;
 	t_circuits		**cir_tab;
 	t_list			*ants;
 
 	/* clock_t	start_t, finish_t; */
 	/* start_t = clock(); */
-	if ((tab_len = fulkerson_algo(lem, lem->nb_ants)) == 0)
+	wanted_flow = choose_wanted_flow(lem);
+	if ((tab_len = fulkerson_algo(lem, wanted_flow)) == 0)
 		return ;
 	if ((cir_tab = init_cir_tab(tab_len)) == NULL)
 		return ;
@@ -94,15 +149,16 @@ void					solver(t_lemin *lem)
 		/* printf("retrace_circuits time%f\n", (double)finish_t / CLOCKS_PER_SEC); */
 		/* start_t = clock(); */
 
-		sort_path(cir_tab, tab_len);
+		tab_len = sort_path(cir_tab, tab_len);
 		ants = init_ant_lst(lem->nb_ants);
 
 		/* finish_t = clock() - start_t; */
 		/* printf("sort+antlst time%f\n", (double)finish_t / CLOCKS_PER_SEC); */
 		/* start_t = clock(); */
 
-		/* debug_print_circuits(cir_tab, tab_len); */
+//		debug_print_circuits(cir_tab, tab_len);
 		print_ants(lem, &ants, cir_tab, tab_len);
+//		printf("%d\n", tab_len);
 
 		/* finish_t = clock() - start_t; */
 		/* printf("print path time%f\n", (double)finish_t / CLOCKS_PER_SEC); */

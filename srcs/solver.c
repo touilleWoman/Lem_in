@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 17:25:51 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/13 22:40:15 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/14 02:58:47 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,24 +51,16 @@ static t_circuits		**init_cir_tab(uint32_t tab_len)
 	return (cir_tab);
 }
 
-static void				remove_duplicated(t_circuits **c, uint32_t len, uint32_t pos)
-{
-	while (pos < len - 1)
-	{
-		ft_swap_ptr((void**)&(c[pos]), (void**)&(c[pos + 1]));
-		pos++;
-	}
-	ft_memdel((void**)&(c[pos]));
-}
-
 static void				looking_for_duplicated_node(t_circuits **c, uint32_t i,
-													uint32_t j, uint32_t *len)
+													uint32_t j)
 {
 	t_list			*lst1;
 	t_list			*lst2;
 	t_node			*n1;
 	t_node			*n2;
 
+	if (!(c[i]) || !(c[j]))
+		return ;
 	lst1 = c[i]->addr;
 	while (lst1->next)
 	{
@@ -79,8 +71,10 @@ static void				looking_for_duplicated_node(t_circuits **c, uint32_t i,
 			n2 = *(t_node**)lst2->content;
 			if (ft_strcmp(n1->name, n2->name) == 0)
 			{
-				remove_duplicated(c, *len, j);
-				*len -= 1;
+				if (c[i]->nb_floor < c[j]->nb_floor)
+					ft_memdel((void**)&(c[j]));
+				else
+					ft_memdel((void**)&(c[i]));
 				return ;
 			}
 			lst2 = lst2->next;
@@ -89,7 +83,32 @@ static void				looking_for_duplicated_node(t_circuits **c, uint32_t i,
 	}
 }
 
-static uint32_t			sort_path(t_circuits **c, uint32_t len)
+static uint32_t			remove_null(t_circuits **c, uint32_t len)
+{
+	uint32_t		i;
+	uint32_t		j;
+
+	i = 0;
+	while (i < len)
+	{
+		if (!(c[i]))
+		{
+			j = i + 1;
+			while (j < len && !(c[i]))
+			{
+				ft_swap_ptr((void**)&(c[i]), (void**)&(c[j]));
+				++j;
+			}
+		}
+		++i;
+	}
+	i = 0;
+	while (i < len && c[i])
+		i++;
+	return (i);
+}
+
+static uint32_t			duplicate_check(t_circuits **c, uint32_t len)
 {
 	uint32_t		i;
 	uint32_t		j;
@@ -100,14 +119,31 @@ static uint32_t			sort_path(t_circuits **c, uint32_t len)
 		j = len - 1;
 		while (j > i)
 		{
-			if (c[j] && c[i]->nb_floor > c[j]->nb_floor)
-				ft_swap_ptr((void**)&(c[i]), (void**)&(c[j]));
-			looking_for_duplicated_node(c, i, j, &len);
+			looking_for_duplicated_node(c, i, j);
 			--j;
 		}
 		++i;
 	}
-	return (len);
+	return (remove_null(c, len));
+}
+
+static void				sort_path(t_circuits **c, uint32_t len)
+{
+	uint32_t		i;
+	uint32_t		j;
+
+	i = 0;
+	while (i < len)
+	{
+		j = len - 1;
+		while (j > i)
+		{
+			if (c[i]->nb_floor > c[j]->nb_floor)
+				ft_swap_ptr((void**)&(c[i]), (void**)&(c[j]));
+			--j;
+		}
+		++i;
+	}
 }
 
 uint32_t				choose_wanted_flow(t_lemin *lem)
@@ -149,7 +185,8 @@ void					solver(t_lemin *lem)
 		/* printf("retrace_circuits time%f\n", (double)finish_t / CLOCKS_PER_SEC); */
 		/* start_t = clock(); */
 
-		tab_len = sort_path(cir_tab, tab_len);
+		tab_len = duplicate_check(cir_tab, tab_len);
+		sort_path(cir_tab, tab_len);
 		ants = init_ant_lst(lem->nb_ants);
 
 		/* finish_t = clock() - start_t; */
@@ -158,7 +195,6 @@ void					solver(t_lemin *lem)
 
 //		debug_print_circuits(cir_tab, tab_len);
 		print_ants(lem, &ants, cir_tab, tab_len);
-//		printf("%d\n", tab_len);
 
 		/* finish_t = clock() - start_t; */
 		/* printf("print path time%f\n", (double)finish_t / CLOCKS_PER_SEC); */

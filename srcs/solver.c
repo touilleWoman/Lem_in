@@ -6,11 +6,12 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 17:25:51 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/14 02:58:47 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/16 17:22:16 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solver.h"
+#include "get_many_path.h"
 
 int8_t					flow_plus_modif(t_node *enter, t_node *exit,
 										int8_t modif)
@@ -187,6 +188,7 @@ void					solver(t_lemin *lem)
 
 		tab_len = duplicate_check(cir_tab, tab_len);
 		sort_path(cir_tab, tab_len);
+//		app_max = get_appro_max(cir_tab, tab_len, lem->nb_ants);// Calcul approximatif du nombre de ligne
 		ants = init_ant_lst(lem->nb_ants);
 
 		/* finish_t = clock() - start_t; */

@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:45:26 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/13 22:03:07 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/16 16:30:42 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void					print_ants(t_lemin *lem, t_list **ants, t_circuits **cir_tab, int32_t t
 		ft_putchar('\n');
 		line++;// a delete
 	}
-//	printf("nb line == %d\n", line);// a delete
-	/* printf("nb path == %d\n", tab_len + 1);// a delete */
+	printf("nb line == %d\n", line);// a delete
+	printf("nb path == %d\n", tab_len + 1);// a delete
 	/* printf("nb Enter_time == %d\n", enter_time);// a delete */
 }

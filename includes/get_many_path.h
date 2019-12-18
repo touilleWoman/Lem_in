@@ -6,12 +6,12 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 12:39:30 by nabih             #+#    #+#             */
-/*   Updated: 2019/12/12 12:44:28 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/18 13:21:14 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef		GET_MANY_PATH_H
-# define	GET_MANY_PATH_H
+#ifndef GET_MANY_PATH_H
+# define GET_MANY_PATH_H
 
 # include <solver.h>
 

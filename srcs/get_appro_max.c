@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 12:42:56 by nabih             #+#    #+#             */
-/*   Updated: 2019/12/12 12:44:18 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/18 13:55:29 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void			update_mp(t_manypth *mp, uint32_t diff,
 }
 
 static uint32_t		calc_appro_max(t_circuits **c, uint32_t len,
-									   t_manypth *mp)
+									t_manypth *mp)
 {
 	uint32_t		i;
 	uint32_t		appro_max;
@@ -40,7 +40,7 @@ static uint32_t		calc_appro_max(t_circuits **c, uint32_t len,
 }
 
 uint32_t			get_appro_max(t_circuits **c, uint32_t len,
-									  uint32_t ants)
+									uint32_t ants)
 {
 	t_manypth		mp;
 	uint32_t		i;

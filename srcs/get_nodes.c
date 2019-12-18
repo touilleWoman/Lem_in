@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 15:03:12 by nabih             #+#    #+#             */
-/*   Updated: 2019/12/08 06:39:25 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/18 13:57:08 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 /*
 ** Verifie la commande
 */
+
 static int8_t			check_cmd(t_lemin *lem, char *line)
 {
 	static uint8_t	end = 0;
@@ -45,6 +46,7 @@ static int8_t			check_cmd(t_lemin *lem, char *line)
 **        recuperer
 ** Appel check_cmd si besoin
 */
+
 static int8_t			check_line(t_lemin *lem, char *line)
 {
 	int32_t			i;
@@ -78,6 +80,7 @@ static int8_t			check_line(t_lemin *lem, char *line)
 **       Cree un nouveau noeud
 ** et l'insert dans la table de hash
 */
+
 static int8_t			create_n_add(t_lemin *lem)
 {
 	t_node			*tmp;
@@ -104,6 +107,7 @@ static int8_t			create_n_add(t_lemin *lem)
 ** Recuperation
 **  DES NOEUDS
 */
+
 int8_t					get_node(t_lemin *lem)
 {
 	int8_t			ret;

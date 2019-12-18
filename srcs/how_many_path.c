@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 11:27:59 by nabih             #+#    #+#             */
-/*   Updated: 2019/12/13 16:29:35 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/18 14:02:28 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ static uint32_t			init_max(t_circuits **c, uint32_t len, uint32_t ants)
 	max = get_appro_max(c, len, ants);
 	while (c[i]->nb_floor < max && i < len)
 		i++;
-//	printf("appro max = %d\n", c[i]->nb_floor);
 	return (i);
 }
 
-static void				fill_ant_tab(uint32_t **tab, uint32_t len, uint32_t ants)
+static void				fill_ant_tab(uint32_t **tab, uint32_t len,
+										uint32_t ants)
 {
 	uint32_t		i;
 
@@ -65,7 +65,8 @@ static uint32_t			*ants_spreading(t_circuits **c, uint32_t *tab,
 	while (i < len && ants > 0)
 	{
 		j = 0;
-		while ((c[j]->nb_floor + tab[j]) < (c[i]->nb_floor + tab[i]) && ants > 0 && i < max)
+		while ((c[j]->nb_floor + tab[j]) < (c[i]->nb_floor + tab[i])
+				&& ants > 0 && i < max)
 		{
 			j = 0;
 			while (j < i && ants > 0)
@@ -80,12 +81,11 @@ static uint32_t			*ants_spreading(t_circuits **c, uint32_t *tab,
 		max++;
 	}
 	fill_ant_tab(&tab, len, ants);
-//	debug_print_anttab(c, tab, len);// a delete
 	return (tab);
 }
 
 uint32_t				how_many_path(t_circuits **c, uint32_t len,
-									  uint32_t ants)
+										uint32_t ants)
 {
 	static uint32_t		enter = 0;
 	static uint32_t		*ants_tab = NULL;

@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 23:19:25 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/30 21:09:23 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/18 14:19:02 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 ** Ajoute un element
 ** au tableau de hash
 */
+
 void					add_node_in_tab(t_lemin *lem, t_node *node)
 {
 	if (node != NULL && node->id < HASHCODE)
@@ -26,6 +27,7 @@ void					add_node_in_tab(t_lemin *lem, t_node *node)
 ** Vide le tableau
 ** et free les espaces
 */
+
 void					clear_hashtab(t_lemin *lem)
 {
 	uint32_t		i;
@@ -43,6 +45,7 @@ void					clear_hashtab(t_lemin *lem)
 ** Renvoi le pointeur sur le
 ** noeud rechercher
 */
+
 t_node					*get_node_in_hash(t_lemin *lem, char *name)
 {
 	int32_t			id;
@@ -63,6 +66,7 @@ t_node					*get_node_in_hash(t_lemin *lem, char *name)
 ** Verifie si un noeud exite deja
 ** retourne vrai ou faux
 */
+
 uint8_t					node_exist(t_lemin *lem, char *name)
 {
 	int32_t			id;

@@ -6,7 +6,7 @@
 #    By: naali <naali@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/17 16:13:53 by naali             #+#    #+#              #
-#    Updated: 2019/12/12 12:46:35 by nabih            ###   ########.fr        #
+#    Updated: 2019/12/18 15:13:28 by naali            ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -41,7 +41,12 @@ OBJ_PATH		=	./objs
 SRC				=	main.c				\
 					lem_tab.c			\
 					lst_node.c			\
+					lst_node_bis1.c		\
+					lst_node_bis2.c		\
 					lst_path.c			\
+					lst_path_bis1.c		\
+					lst_path_bis2.c		\
+					lst_path_bis3.c		\
 					hash_encryption.c
 
 #					lem_path.c
@@ -53,6 +58,7 @@ SRC				+=	get_info.c			\
 					ant_lst.c
 
 SRC				+=	solver.c 			\
+					solver_bis.c		\
 					lst_address.c		\
 					print_ants.c		\
 					get_appro_max.c		\

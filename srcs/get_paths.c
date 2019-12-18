@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:48:44 by nabih             #+#    #+#             */
-/*   Updated: 2019/12/08 06:07:51 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/18 13:59:30 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 static uint8_t			check_existing_path(t_lemin *lem, char *line, t_node *n)
 {
- 	t_path			*tmp;
+	t_path			*tmp;
 
- 	tmp = n->path_lst;
- 	if (tmp != NULL)
- 	{
- 		while (tmp != NULL)
- 		{
- 			if (ft_strcmp(&(line[lem->dash + 1]), tmp->name) == 0)
- 				return (LM_TRUE);
- 			tmp = tmp->next;
- 		}
- 	}
- 	return (LM_FALSE);
+	tmp = n->path_lst;
+	if (tmp != NULL)
+	{
+		while (tmp != NULL)
+		{
+			if (ft_strcmp(&(line[lem->dash + 1]), tmp->name) == 0)
+				return (LM_TRUE);
+			tmp = tmp->next;
+		}
+	}
+	return (LM_FALSE);
 }
 
 static int8_t			check_for_valide_path(t_lemin *lem, char *line)
@@ -42,7 +42,7 @@ static int8_t			check_for_valide_path(t_lemin *lem, char *line)
 	if ((tmp = get_node_in_hash(lem, line)) != NULL)
 	{
 		if (check_existing_path(lem, line, tmp) == LM_TRUE)
-		 	return (LM_IGNORE);
+			return (LM_IGNORE);
 		tmp->nb_paths += 1;
 		if ((tmp = get_node_in_hash(lem, &(line[lem->dash + 1]))) != NULL)
 		{
@@ -85,6 +85,7 @@ static int8_t			check_line(char *line)
 ** Recuperation
 **  DES  PATHS
 */
+
 static int8_t			add_path(t_lemin *lem)
 {
 	t_path			*path1;

@@ -147,31 +147,18 @@ static void				sort_path(t_circuits **c, uint32_t len)
 	}
 }
 
-uint32_t				choose_wanted_flow(t_lemin *lem)
-{
-	uint32_t		wanted_flow;
 
-	if (lem->start->nb_paths > lem->end->nb_paths)
-		wanted_flow = lem->end->nb_paths;
-	else
-		wanted_flow = lem->end->nb_paths;
-	if ((uint32_t)lem->nb_ants < wanted_flow)
-		wanted_flow = (uint32_t)lem->nb_ants;
-	return (wanted_flow);
-}
 
 // decommente pour voir le temps utilisé
 void					solver(t_lemin *lem)
 {
-	uint32_t		wanted_flow;
 	int32_t			tab_len;
 	t_circuits		**cir_tab;
 	t_list			*ants;
 
 	/* clock_t	start_t, finish_t; */
 	/* start_t = clock(); */
-	wanted_flow = choose_wanted_flow(lem);
-	if ((tab_len = fulkerson_algo(lem, wanted_flow)) == 0)
+	if ((tab_len = fulkerson_algo(lem, lem->nb_ants)) == 0)
 		return ;
 	if ((cir_tab = init_cir_tab(tab_len)) == NULL)
 		return ;

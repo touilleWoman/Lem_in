@@ -113,7 +113,6 @@ void					solver(t_lemin *lem)
 		return ;
 	if (retrace_circuits(lem, tab_len, cir_tab)== LM_FALSE)
 		return ;
-	sort_path(cir_tab, tab_len);
 	paths_nb = calculate_best_paths_nb(cir_tab, tab_len, lem->nb_ants);
 	free_cir_tab(cir_tab, tab_len);
 

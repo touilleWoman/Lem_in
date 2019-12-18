@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 13:34:02 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/09 23:03:58 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/18 14:58:16 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char			*get_parent_name(t_node *enter)
 	t_path		*p;
 
 	p = enter->path_lst;
-	while(p)
+	while (p)
 	{
 		if (p->flow == 2)
 			return (p->name);
@@ -26,7 +26,8 @@ char			*get_parent_name(t_node *enter)
 	return (NULL);
 }
 
-uint8_t		retrace_one_circuit_and_modif_flow(t_lemin *lem, t_circuits *cir)
+uint8_t			retrace_one_circuit_and_modif_flow(t_lemin *lem,
+													t_circuits *cir)
 {
 	t_node			*child;
 	t_node			*parent;
@@ -43,7 +44,7 @@ uint8_t		retrace_one_circuit_and_modif_flow(t_lemin *lem, t_circuits *cir)
 		new = address_list_new(&parent);
 		if (!new)
 			return (LM_FALSE);
-	 	ft_lstadd_top(&(cir->addr), new);
+		ft_lstadd_top(&(cir->addr), new);
 		flow_plus_modif(child, parent, -1);
 		flow_plus_modif(parent, child, 1);
 		child = parent;
@@ -58,8 +59,8 @@ uint8_t		retrace_one_circuit_and_modif_flow(t_lemin *lem, t_circuits *cir)
 ** value stored in array is address of poiter of t_node
 */
 
-uint8_t		retrace_circuits(t_lemin *lem,
-							uint32_t tab_len, t_circuits** cir_tab)
+uint8_t			retrace_circuits(t_lemin *lem, uint32_t tab_len,
+								t_circuits **cir_tab)
 {
 	uint32_t		i;
 

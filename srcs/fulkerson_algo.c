@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:45:10 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/13 19:47:59 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/18 13:54:45 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ static void			free_open_and_visited(t_list *open, t_list *visited)
 	del_address_lst(open);
 }
 
-
 /*
 ** In this function, t_list stores, in lst->conente,
 ** the address of pointer of node.
@@ -61,6 +60,7 @@ static void			free_open_and_visited(t_list *open, t_list *visited)
 ** "visited" are nodes already visited,
 ** if inside, we don't evaluate this node.
 */
+
 static uint8_t		breadth_first_search(t_lemin *lem)
 {
 	uint8_t	ret;
@@ -95,7 +95,8 @@ static uint8_t		breadth_first_search(t_lemin *lem)
 ** but if wanted_flow == 0, it will return the actual maximum flow
 */
 
-uint32_t		fulkerson_algo(t_lemin *lem, uint32_t wanted_flow)
+uint32_t			fulkerson_algo(t_lemin *lem,
+									uint32_t wanted_flow)
 {
 	uint32_t	max_flow;
 	t_node		*parent;

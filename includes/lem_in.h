@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 17:03:23 by nabih             #+#    #+#             */
-/*   Updated: 2019/12/11 00:52:25 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/18 15:07:49 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,10 @@
 ** "int8_t" dans le cas d'un retour SUCCESS-ERROR
 */
 
-#ifndef		LEM_IN_H
-# define	LEM_IN_H
+#ifndef LEM_IN_H
+# define LEM_IN_H
 
 # include <includes.h>
-// a supprimer
-# include <time.h>
-
 
 # define LM_TRUE 1
 # define LM_FALSE 0
@@ -33,31 +30,45 @@
 # define LM_ERROR -1
 # define LM_IGNORE 0
 # define LM_STOP 2
-
 # define HASHCODE 10000
 
-typedef struct	s_path	t_path;
-typedef struct	s_node	t_node;
+typedef struct s_path	t_path;
+typedef struct s_node	t_node;
 
-struct					s_path//	Liste des chemins d'un seul noeud!!!
+/*
+** Liste des chemins d'un seul noeud!!!
+** Static incrementer a la creation - modif de creation...
+** La capacité résiduelle de flot, valeur peut etre 0, 1, ou 2
+** Stockage de nom de noeud relier
+** address de node lié à node en question
+** pointe sur le chemin suivant du meme noeud
+*/
+struct					s_path
 {
-	uint32_t		id;//			Static incrementer a la creation - modif de creation...
-	uint8_t			flow;//			La capacité résiduelle de flot, valeur peut etre 0, 1, ou 2
-	char			*name;//		Stockage de nom de noeud relier
-	t_node			*addr;//		address de node lié à node en question
-	t_path			*next;//		pointe sur le chemin suivant du meme noeud
+	uint32_t		id;
+	uint8_t			flow;
+	char			*name;
+	t_node			*addr;
+	t_path			*next;
 };
 
-
-
-struct					s_node//	Liste des noeuds a visiter ou deja visite
+/*
+** Liste des noeuds a visiter ou deja visite
+** Indice dans le tableau de HASH
+** Nom du noeud
+** address du node parent
+** Nombre de chemin (Entrant ou sortant peu importe)
+** Pointe sur 1er chemin de la liste des chemins connecter au noeud
+** Pointe sur le noeud suivant
+*/
+struct					s_node
 {
-	uint32_t		id;//			Indice dans le tableau de HASH
-	char			*name;//		Nom du noeud
-	t_node			*parent_addr;//	address du node parent
-	uint32_t		nb_paths;//		Nombre de chemin (Entrant ou sortant peu importe)
-	t_path			*path_lst;//	Pointe sur 1er chemin de la liste des chemins connecter au noeud
-	t_node			*next;//		Pointe sur le noeud suivant
+	uint32_t		id;
+	char			*name;
+	t_node			*parent_addr;
+	uint32_t		nb_paths;
+	t_path			*path_lst;
+	t_node			*next;
 };
 
 typedef struct			s_lemin
@@ -92,6 +103,8 @@ t_path					*get_path_by_id(t_path **start, uint32_t id);
 t_path					*remove_from_path(t_path **start, uint32_t id,
 											uint8_t flag);
 void					send_path_away(t_path **src, t_path **dst, uint32_t id);
+void					update_id_path(t_path **start);
+void					free_path(t_path **path);
 
 /*
 ** Fonctions de Gestion
@@ -109,6 +122,7 @@ void					del_node(t_node **start, char *name);
 void					clear_node(t_node **start);
 t_node					*remove_from_node(t_node **start, char *name);
 void					send_node_away(t_node **src, t_node **dst, char *name);
+void					free_node(t_node **node);
 
 /*
 ** Fonctions de Gestion
@@ -119,8 +133,9 @@ t_list					*init_ant_lst(int32_t nb);
 /*
 ** Fonstions de Gestion
 **   DES  ENCRYPTIONS
+** Stocker dans l'id des noeuds
 */
-int32_t					hash_name(char *name);// Stocker dans l'id des noeuds
+int32_t					hash_name(char *name);
 
 /*
 ** Fonstions de Gestion
@@ -138,12 +153,10 @@ void					clear_hashpth(t_lemin *lem);
 ** Fonctions de Gestion
 **      DES TESTS
 */
-void			print_tab(t_node *(tab[HASHCODE]), uint32_t max);
-void			print_pth(t_path **tab);
-void			print_info_inout(t_lemin *lem);
+void					print_tab(t_node *(tab[HASHCODE]), uint32_t max);
+void					print_pth(t_path **tab);
+void					print_info_inout(t_lemin *lem);
 
-void		solver(t_lemin *lem);
-
-
+void					solver(t_lemin *lem);
 
 #endif

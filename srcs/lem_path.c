@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 01:02:30 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/25 01:38:24 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/18 14:18:38 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 ** Ajoute un element
 ** au tableau de hash
 */
+
 void					add_path_at_id(t_lemin *lem, t_path *pth, uint32_t id)
 {
 	if (pth != NULL && id < HASHCODE)
@@ -26,6 +27,7 @@ void					add_path_at_id(t_lemin *lem, t_path *pth, uint32_t id)
 ** Vide le tableau
 ** et free les espaces
 */
+
 void					clear_hashpth(t_lemin *lem)
 {
 	uint32_t		i;

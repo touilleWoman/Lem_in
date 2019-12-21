@@ -22,8 +22,8 @@ static t_node		**get_top_elem(t_list *lst)
 	return (ret);
 }
 
-static uint8_t		iter_adja_of_current(t_node *current, t_list **visited,
-									t_list **open)
+static uint8_t		iter_adja_of_current(t_node *current,
+									t_list **open, uint32_t loop)
 {
 	t_node		*adjacen_node;
 	t_path		*p;
@@ -34,9 +34,9 @@ static uint8_t		iter_adja_of_current(t_node *current, t_list **visited,
 		adjacen_node = p->addr;
 		if (!adjacen_node)
 			return (LM_FALSE);
-		if (p->flow > 0 && not_in_address_lst(*visited, adjacen_node))
+		if (p->flow > 0 && adjacen_node->visited != loop)
 		{
-			ft_lstadd_top(visited, address_list_new(&adjacen_node));
+			adjacen_node->visited = loop;
 			ft_lstadd_bot(open, address_list_new(&adjacen_node));
 			adjacen_node->parent_addr = current;
 		}
@@ -45,11 +45,6 @@ static uint8_t		iter_adja_of_current(t_node *current, t_list **visited,
 	return (LM_TRUE);
 }
 
-static void			free_open_and_visited(t_list *open, t_list *visited)
-{
-	del_address_lst(visited);
-	del_address_lst(open);
-}
 
 /*
 ** In this function, t_list stores, in lst->conente,
@@ -61,29 +56,26 @@ static void			free_open_and_visited(t_list *open, t_list *visited)
 ** if inside, we don't evaluate this node.
 */
 
-static uint8_t		breadth_first_search(t_lemin *lem)
+static uint8_t		breadth_first_search(t_lemin *lem, uint32_t loop)
 {
 	uint8_t	ret;
 	t_list	*open;
-	t_list	*visited;
 	t_node	**current;
 
-	visited = NULL;
 	ret = LM_TRUE;
 	open = address_list_new(&(lem->start));
 	while (open && (current = get_top_elem(open)) && ret == LM_TRUE)
 	{
-		if (not_in_address_lst(visited, *current))
-			ft_lstadd_top(&visited, address_list_new(current));
+		(*current)->visited = loop;
 		if (*current == lem->end)
 		{
-			free_open_and_visited(open, visited);
+			del_address_lst(open);
 			return (LM_TRUE);
 		}
-		ret = iter_adja_of_current(*current, &visited, &open);
+		ret = iter_adja_of_current(*current, &open, loop);
 		del_top_elem(&open);
 	}
-	free_open_and_visited(open, visited);
+	del_address_lst(open);
 	return (LM_FALSE);
 }
 
@@ -93,6 +85,7 @@ static uint8_t		breadth_first_search(t_lemin *lem)
 ** if lem->nb_ants < max_flow, then the flow returned is wanted_flow,
 ** else, the flow returned is the maximum flow that anthill can provide.
 ** but if wanted_flow == 0, it will return the actual maximum flow
+** loop represents how many times bfs has been lauched
 */
 
 uint32_t			fulkerson_algo(t_lemin *lem,
@@ -101,12 +94,16 @@ uint32_t			fulkerson_algo(t_lemin *lem,
 	uint32_t	max_flow;
 	t_node		*parent;
 	t_node		*child;
+	uint32_t	loop;
 
 	max_flow = 0;
-	while (breadth_first_search(lem))
+	loop = 1;
+	while (breadth_first_search(lem, loop))
 	{
+		loop++;
 		max_flow++;
 		child = lem->end;
+		child->visited = LM_FALSE;
 		while (child != lem->start)
 		{
 			parent = child->parent_addr;

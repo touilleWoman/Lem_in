@@ -19,6 +19,9 @@
 ** "int8_t" dans le cas d'un retour SUCCESS-ERROR
 */
 
+// à supprimer
+#include <time.h>
+
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
@@ -68,6 +71,7 @@ struct					s_node
 	t_node			*parent_addr;
 	uint32_t		nb_paths;
 	t_path			*path_lst;
+	uint32_t		visited;
 	t_node			*next;
 };
 

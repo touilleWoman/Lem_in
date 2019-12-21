@@ -34,6 +34,7 @@ t_node					*new_node(char *name)
 	node->nb_paths = 0;
 	node->path_lst = NULL;
 	node->next = NULL;
+	node->visited = 0;
 	return (node);
 }
 

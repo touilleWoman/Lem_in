@@ -14,49 +14,49 @@
 #include "get_many_path.h"
 
 
-static uint32_t			remove_null(t_circuits **c, uint32_t len)
-{
-	uint32_t		i;
-	uint32_t		j;
+// static uint32_t			remove_null(t_circuits **c, uint32_t len)
+// {
+// 	uint32_t		i;
+// 	uint32_t		j;
 
-	i = 0;
-	while (i < len)
-	{
-		if (!(c[i]))
-		{
-			j = i + 1;
-			while (j < len && !(c[i]))
-			{
-				ft_swap_ptr((void**)&(c[i]), (void**)&(c[j]));
-				++j;
-			}
-		}
-		++i;
-	}
-	i = 0;
-	while (i < len && c[i])
-		i++;
-	return (i);
-}
+// 	i = 0;
+// 	while (i < len)
+// 	{
+// 		if (!(c[i]))
+// 		{
+// 			j = i + 1;
+// 			while (j < len && !(c[i]))
+// 			{
+// 				ft_swap_ptr((void**)&(c[i]), (void**)&(c[j]));
+// 				++j;
+// 			}
+// 		}
+// 		++i;
+// 	}
+// 	i = 0;
+// 	while (i < len && c[i])
+// 		i++;
+// 	return (i);
+// }
 
-static uint32_t			duplicate_check(t_circuits **c, uint32_t len)
-{
-	uint32_t		i;
-	uint32_t		j;
+// static uint32_t			duplicate_check(t_circuits **c, uint32_t len)
+// {
+// 	uint32_t		i;
+// 	uint32_t		j;
 
-	i = 0;
-	while (i < len)
-	{
-		j = len - 1;
-		while (j > i)
-		{
-			looking_for_duplicated_node(c, i, j);
-			--j;
-		}
-		++i;
-	}
-	return (remove_null(c, len));
-}
+// 	i = 0;
+// 	while (i < len)
+// 	{
+// 		j = len - 1;
+// 		while (j > i)
+// 		{
+// 			looking_for_duplicated_node(c, i, j);
+// 			--j;
+// 		}
+// 		++i;
+// 	}
+// 	return (remove_null(c, len));
+// }
 
 static void				sort_path(t_circuits **c, uint32_t len)
 {
@@ -133,7 +133,7 @@ void					solver(t_lemin *lem)
 		/* finish_t = clock() - start_t; */
 		/* printf("retrace_circuits time%f\n", (double)finish_t / CLOCKS_PER_SEC); */
 		/* start_t = clock(); */
-		tab_len = duplicate_check(cir_tab, tab_len);
+		// tab_len = duplicate_check(cir_tab, tab_len);
 		sort_path(cir_tab, tab_len);
 		// debug_print_circuits(cir_tab, tab_len);
 
@@ -144,7 +144,7 @@ void					solver(t_lemin *lem)
 		/* printf("sort+antlst time%f\n", (double)finish_t / CLOCKS_PER_SEC); */
 		/* start_t = clock(); */
 
-		// print_ants(lem, &ants, cir_tab, tab_len);
+		print_ants(lem, &ants, cir_tab, tab_len);
 
 		/* finish_t = clock() - start_t; */
 		/* printf("print path time%f\n", (double)finish_t / CLOCKS_PER_SEC); */

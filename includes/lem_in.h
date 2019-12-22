@@ -72,6 +72,7 @@ struct					s_node
 	uint32_t		nb_paths;
 	t_path			*path_lst;
 	uint32_t		visited;
+	uint8_t			node_flow;
 	t_node			*next;
 };
 

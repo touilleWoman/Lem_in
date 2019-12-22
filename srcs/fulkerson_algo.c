@@ -22,6 +22,8 @@ static t_node		**get_top_elem(t_list *lst)
 	return (ret);
 }
 
+
+
 static uint8_t		iter_adja_of_current(t_node *current,
 									t_list **open, uint32_t loop)
 {
@@ -47,13 +49,13 @@ static uint8_t		iter_adja_of_current(t_node *current,
 
 
 /*
-** In this function, t_list stores, in lst->conente,
+** In this function, t_list stores, in lst->contente,
 ** the address of pointer of node.
 ** "open" are nodes to be evaluate, elements are always added to the end,
 ** and taken from the top to be evaluated,
 ** then delete top elem after evaluation.
-** "visited" are nodes already visited,
-** if inside, we don't evaluate this node.
+** if "visited == loop", means node is already visited this round of bfs,,
+** so we don't evaluate this node.
 */
 
 static uint8_t		breadth_first_search(t_lemin *lem, uint32_t loop)
@@ -79,6 +81,25 @@ static uint8_t		breadth_first_search(t_lemin *lem, uint32_t loop)
 	return (LM_FALSE);
 }
 
+
+
+void		modify_residual_graph(t_lemin *lem)
+{
+	t_node		*parent;
+	t_node		*child;
+
+	child = lem->end;
+	child->node_flow += 1;
+	while (child != lem->start)
+	{
+		parent = child->parent_addr;
+		flow_plus_modif(parent, child, -1);
+		flow_plus_modif(child, parent, 1);
+		child = parent;
+		child->node_flow += 1;
+	}
+}
+
 /*
 ** wanted_flow is the maximum flow that we want,
 ** it will limite max_flow returned
@@ -92,27 +113,19 @@ uint32_t			fulkerson_algo(t_lemin *lem,
 									uint32_t wanted_flow)
 {
 	uint32_t	max_flow;
-	t_node		*parent;
-	t_node		*child;
-	uint32_t	loop;
+
+	static uint32_t	loop = 1;
 
 	max_flow = 0;
-	loop = 1;
 	while (breadth_first_search(lem, loop))
 	{
 		loop++;
 		max_flow++;
-		child = lem->end;
-		child->visited = LM_FALSE;
-		while (child != lem->start)
-		{
-			parent = child->parent_addr;
-			flow_plus_modif(parent, child, -1);
-			flow_plus_modif(child, parent, 1);
-			child = parent;
-		}
+		// if (node_flow_correct(lem))
+		modify_residual_graph(lem);
 		if (wanted_flow > 0 && max_flow == wanted_flow)
 			return (wanted_flow);
 	}
+	printf("loop ===%d\n", loop);
 	return (max_flow);
 }

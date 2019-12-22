@@ -20,16 +20,16 @@ t_list		*address_list_new(t_node **const new)
 	return (lst);
 }
 
-uint8_t		not_in_address_lst(t_list *lst, t_node const *address)
-{
-	while (lst != NULL)
-	{
-		if (address == *(t_node**)(lst->content))
-			return (LM_FALSE);
-		lst = lst->next;
-	}
-	return (LM_TRUE);
-}
+// uint8_t		not_in_address_lst(t_list *lst, t_node const *address)
+// {
+// 	while (lst != NULL)
+// 	{
+// 		if (address == *(t_node**)(lst->content))
+// 			return (LM_FALSE);
+// 		lst = lst->next;
+// 	}
+// 	return (LM_TRUE);
+// }
 
 void		del_top_elem(t_list **alst)
 {

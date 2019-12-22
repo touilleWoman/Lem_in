@@ -30,6 +30,7 @@ int8_t					get_info(t_lemin *lem)
 {
 	int8_t			ret;
 
+	lem->bfs_round = 0;
 	lem->nb_nodes = 0;
 	if ((ret = get_nb_ants(lem)) > 0)
 	{

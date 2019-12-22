@@ -36,6 +36,7 @@ t_node					*new_node(char *name)
 	node->next = NULL;
 	node->visited = 0;
 	node->node_flow = 0;
+	node->forbidden_path = NULL; // à free plus tard!!!
 	return (node);
 }
 

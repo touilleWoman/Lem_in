@@ -25,6 +25,19 @@ void		debug_print_anttab(t_circuits **c, uint32_t *tab, uint32_t len)
 	printf("Ants = %d\n", ants);
 }
 
+void		debug_print_address_lst(t_list *lst)
+{
+	t_node	*node;
+
+	printf("address list:\n");
+	while (lst != NULL)
+	{
+		node = *(t_node**)(lst->content);
+		printf("[%s]\n", node->name);
+		lst = lst->next;
+	}
+}
+
 void		debug_print_circuits(t_circuits **cir_tab, uint32_t tab_len)
 {
 	uint32_t		i;

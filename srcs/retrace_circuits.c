@@ -12,7 +12,7 @@
 
 #include "solver.h"
 
-char			*get_parent_name(t_node *enter)
+t_node			*get_parent(t_node *enter)
 {
 	t_path		*p;
 
@@ -20,13 +20,13 @@ char			*get_parent_name(t_node *enter)
 	while (p)
 	{
 		if (p->flow == 2)
-			return (p->name);
+			return (p->addr);
 		p = p->next;
 	}
 	return (NULL);
 }
 
-uint8_t			retrace_one_circuit_and_modif_flow(t_lemin *lem,
+uint8_t			retrace_one_circuit_and_reset_flow(t_lemin *lem,
 													t_circuits *cir)
 {
 	t_node			*child;
@@ -35,10 +35,12 @@ uint8_t			retrace_one_circuit_and_modif_flow(t_lemin *lem,
 	t_list			*new;
 
 	child = lem->end;
+	// printf("[%d]\n", child->node_flow);
+	child->node_flow--;
 	nb_floor = 0;
 	while (child != lem->start)
 	{
-		parent = get_node_in_hash(lem, get_parent_name(child));
+		parent = get_parent(child);
 		if (!parent)
 			return (LM_FALSE);
 		new = address_list_new(&parent);
@@ -48,6 +50,8 @@ uint8_t			retrace_one_circuit_and_modif_flow(t_lemin *lem,
 		flow_plus_modif(child, parent, -1);
 		flow_plus_modif(parent, child, 1);
 		child = parent;
+		// printf("[%d]\n", child->node_flow);
+		child->node_flow--;
 		nb_floor++;
 	}
 	cir->nb_floor = nb_floor;
@@ -70,7 +74,7 @@ uint8_t			retrace_circuits(t_lemin *lem, uint32_t tab_len,
 		cir_tab[i]->addr = address_list_new(&(lem->end));
 		if (cir_tab[i]->addr == NULL)
 			return (LM_FALSE);
-		if (retrace_one_circuit_and_modif_flow(lem, cir_tab[i]) == LM_FALSE)
+		if (retrace_one_circuit_and_reset_flow(lem, cir_tab[i]) == LM_FALSE)
 			return (LM_FALSE);
 		i++;
 	}

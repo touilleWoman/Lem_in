@@ -25,7 +25,7 @@ static t_node		**get_top_elem(t_list *lst)
 
 
 static uint8_t		iter_adja_of_current(t_node *current,
-									t_list **open, uint32_t loop)
+									t_list **open, uint32_t bfs_round)
 {
 	t_node		*adjacen_node;
 	t_path		*p;
@@ -36,11 +36,22 @@ static uint8_t		iter_adja_of_current(t_node *current,
 		adjacen_node = p->addr;
 		if (!adjacen_node)
 			return (LM_FALSE);
-		if (p->flow > 0 && adjacen_node->visited != loop)
-		{
-			adjacen_node->visited = loop;
-			ft_lstadd_bot(open, address_list_new(&adjacen_node));
-			adjacen_node->parent_addr = current;
+		// if (ft_strcmp(current->name, "5") == 0)
+		// {
+		// 	printf("adjacen_node of 5 is [%s], pflow[%d], visited[%d] vs bfs_round[%d]\n", adjacen_node->name, p->flow, adjacen_node->visited, bfs_round);
+		// }
+		if (p->flow > 0 && adjacen_node->visited != bfs_round)
+		{	
+
+
+			if (current->node_flow == 0 || not_in_address_lst(current->forbidden_path, adjacen_node))
+			{
+				printf("%s\n", adjacen_node->name);
+				ft_lstadd_bot(open, address_list_new(&adjacen_node));
+				adjacen_node->parent_addr = current;
+				adjacen_node->visited = bfs_round;
+
+			}
 		}
 		p = p->next;
 	}
@@ -54,30 +65,34 @@ static uint8_t		iter_adja_of_current(t_node *current,
 ** "open" are nodes to be evaluate, elements are always added to the end,
 ** and taken from the top to be evaluated,
 ** then delete top elem after evaluation.
-** if "visited == loop", means node is already visited this round of bfs,,
+** if "visited == lem->bfs_round", means node is already visited this round of bfs,,
 ** so we don't evaluate this node.
 */
 
-static uint8_t		breadth_first_search(t_lemin *lem, uint32_t loop)
+static uint8_t		breadth_first_search(t_lemin *lem)
 {
 	uint8_t	ret;
 	t_list	*open;
 	t_node	**current;
 
+	lem->bfs_round += 1;
 	ret = LM_TRUE;
 	open = address_list_new(&(lem->start));
 	while (open && (current = get_top_elem(open)) && ret == LM_TRUE)
 	{
-		(*current)->visited = loop;
+		(*current)->visited = lem->bfs_round;
 		if (*current == lem->end)
 		{
 			del_address_lst(open);
+			printf("BFS LM_TRUE\n");
 			return (LM_TRUE);
 		}
-		ret = iter_adja_of_current(*current, &open, loop);
+		ret = iter_adja_of_current(*current, &open, lem->bfs_round);
 		del_top_elem(&open);
 	}
 	del_address_lst(open);
+	printf("BFS LM_FALSE, open [%p], ret[%d]\n", open, ret);
+
 	return (LM_FALSE);
 }
 
@@ -100,32 +115,110 @@ void		modify_residual_graph(t_lemin *lem)
 	}
 }
 
+uint8_t				traversable_check(t_node *parent, t_node *child)
+{
+	t_path 		*p;
+	t_node		*adjacen_node;
+
+	p = parent->path_lst;
+	adjacen_node = p->addr;
+	while ( adjacen_node != child)
+	{
+		p = p->next;
+
+		//=========== à supprimer
+		if (p == NULL)
+			printf("ERROR1 in traversable_check!!!!!!!!!!!!!\n");
+		//=========== 
+
+
+		adjacen_node = p->addr;
+	}
+
+	// ============. à supprimer
+	if (p->flow != 0 && p->flow != 1)
+			printf("ERROR2 in traversable_check!!!!!!!!!!!!!\n");
+		// =============
+
+
+	if (p->flow == 1)
+	{
+		printf("[%s] -> [%s] forbidden_path\n", parent->name, child->name);
+		ft_lstadd_top(&(parent->forbidden_path), address_list_new(&child));
+		return (LM_FALSE);
+	}
+	else
+		return (LM_TRUE);
+}
+
+uint8_t		manage_cross_road(t_lemin *lem)
+{
+	t_node		*child;
+	t_node		*parent;
+
+	child = lem->end;
+	while (child != lem->start)
+	{
+		parent = child->parent_addr;
+		if (parent->node_flow > 0)
+		{
+			if (traversable_check(parent, child) == LM_FALSE)
+			{
+				return (LM_FALSE);
+			}
+		}
+		child = parent;
+	}
+	return (LM_TRUE);
+}
+
+t_list			*get_pathway(t_lemin *lem)
+{
+	t_node		*child;
+	t_list		*pathway;
+
+
+	child = lem->end;
+	ft_lstadd_top(&pathway, address_list_new(&child));
+	while (child != lem->start)
+	{
+		child = child->parent_addr;
+		ft_lstadd_top(&pathway, address_list_new(&child));
+	}
+	return (pathway);
+}
+
+
+
 /*
 ** wanted_flow is the maximum flow that we want,
 ** it will limite max_flow returned
 ** if lem->nb_ants < max_flow, then the flow returned is wanted_flow,
 ** else, the flow returned is the maximum flow that anthill can provide.
 ** but if wanted_flow == 0, it will return the actual maximum flow
-** loop represents how many times bfs has been lauched
+** bfs_round represents how many times bfs has been lauched
 */
 
 uint32_t			fulkerson_algo(t_lemin *lem,
 									uint32_t wanted_flow)
 {
 	uint32_t	max_flow;
-
-	static uint32_t	loop = 1;
+	t_list		*pathway;
 
 	max_flow = 0;
-	while (breadth_first_search(lem, loop))
+	pathway = NULL;
+	while (breadth_first_search(lem))
 	{
-		loop++;
-		max_flow++;
-		// if (node_flow_correct(lem))
-		modify_residual_graph(lem);
+		pathway = get_pathway(lem);
+		debug_print_address_lst(pathway);
+
+		if (manage_cross_road(lem))
+		{
+			modify_residual_graph(lem);
+			max_flow++;
+		}
 		if (wanted_flow > 0 && max_flow == wanted_flow)
 			return (wanted_flow);
 	}
-	printf("loop ===%d\n", loop);
 	return (max_flow);
 }

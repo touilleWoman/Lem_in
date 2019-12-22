@@ -75,7 +75,7 @@ void					looking_for_duplicated_node(t_circuits **c, uint32_t i,
 ** à supprimer functions debug à la fin
 */
 void			debug_print_circuits(t_circuits **cir_tab, uint32_t tab_len);
-void			debug_print_address_lst(t_list **alst);
+void			debug_print_address_lst(t_list *lst);
 void			debug_print_anttab(t_circuits **c, uint32_t *tab,
 									uint32_t len);
 

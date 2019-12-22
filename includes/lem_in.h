@@ -73,6 +73,7 @@ struct					s_node
 	t_path			*path_lst;
 	uint32_t		visited;
 	uint8_t			node_flow;
+	t_list			*forbidden_path;
 	t_node			*next;
 };
 
@@ -88,6 +89,7 @@ typedef struct			s_lemin
 	int32_t			dash;
 	uint8_t			isstart;
 	uint8_t			isend;
+	uint32_t		bfs_round;
 }						t_lemin;
 
 /*

@@ -116,6 +116,7 @@ void					solver(t_lemin *lem)
 	paths_nb = calculate_best_paths_nb(cir_tab, tab_len, lem->nb_ants);
 	free_cir_tab(cir_tab, tab_len);
 
+	printf("================seperater=======================\n");
 	if ((tab_len = fulkerson_algo(lem, paths_nb)) == 0)
 		return ;
 

@@ -6,50 +6,12 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 17:25:51 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/10 21:14:59 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/16 17:22:16 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solver.h"
-
-int8_t					flow_plus_modif(t_node *enter, t_node *exit,
-										int8_t modif)
-{
-	t_path			*p;
-
-	p = enter->path_lst;
-	while (p)
-	{
-		if (ft_strcmp(p->name, exit->name) == 0)
-		{
-			p->flow += modif;
-			return (LM_SUCCESS);
-		}
-		p = p->next;
-	}
-	return (LM_ERROR);
-}
-
-static t_circuits		**init_cir_tab(uint32_t tab_len)
-{
-	t_circuits		**cir_tab;
-	uint32_t		i;
-
-	i = 0;
-	if ((cir_tab = (t_circuits**)malloc(sizeof(t_circuits*) * tab_len)) == NULL)
-		return (NULL);
-	while (i < tab_len)
-	{
-		if ((cir_tab[i] = (t_circuits*)malloc(sizeof(t_circuits))) == NULL)
-		{
-			free_cir_tab(cir_tab, tab_len);
-			return (NULL);
-		}
-		ft_bzero(cir_tab[i], sizeof(t_circuits));
-		i++;
-	}
-	return (cir_tab);
-}
+#include "get_many_path.h"
 
 static void				sort_path(t_circuits **c, uint32_t len)
 {
@@ -59,39 +21,75 @@ static void				sort_path(t_circuits **c, uint32_t len)
 	i = 0;
 	while (i < len)
 	{
-		j = i + 1;
-		while (j < len)
+		j = len - 1;
+		while (j > i)
 		{
 			if (c[i]->nb_floor > c[j]->nb_floor)
-				ft_swap_ptr((void*)&(c[i]), (void**)&(c[j]));
-			j++;
+				ft_swap_ptr((void**)&(c[i]), (void**)&(c[j]));
+			--j;
 		}
-		i++;
+		++i;
 	}
 }
+
+// uint32_t	calculate_best_paths_nb(t_circuits **c, uint32_t tab_len, int32_t nb_ants)
+// {
+// 	uint32_t	nb_paths;
+// 	uint32_t	nb_lines;
+// 	uint32_t	i;
+
+// 	nb_paths = 1;
+// 	nb_lines = nb_ants / nb_paths + c[0]->nb_floor - 1;
+// 	i = 1;
+// 	while (i < tab_len && c[i]->nb_floor < nb_lines)
+// 	{
+// 		nb_paths++;
+// 		nb_lines = nb_ants / nb_paths + c[i]->nb_floor - 1;
+// 		i++;
+// 	}
+// 	return (nb_paths);
+// }
+
+
 
 // decommente pour voir le temps utilisé
 void					solver(t_lemin *lem)
 {
 	int32_t			tab_len;
 	t_circuits		**cir_tab;
+	t_list			*ants;
 
-	// clock_t	start_t, finish_t;
-	// start_t = clock();
+	 // clock_t	start_t, finish_t; 
+	 // start_t = clock();
 	if ((tab_len = fulkerson_algo(lem, lem->nb_ants)) == 0)
 		return ;
 	if ((cir_tab = init_cir_tab(tab_len)) == NULL)
 		return ;
-	// finish_t = clock() - start_t;
-	// printf("fulkerson_algo time%f\n", (double)finish_t / CLOCKS_PER_SEC);
-	// start_t = clock();
+
+	 // finish_t = clock() - start_t;
+	 // printf("fulkerson_algo time%f\n", (double)finish_t / CLOCKS_PER_SEC); 
+// 	 start_t = clock(); 
+
 	if (retrace_circuits(lem, tab_len, cir_tab))
 	{
+
+
+		/* finish_t = clock() - start_t; */
+		/* printf("retrace_circuits time%f\n", (double)finish_t / CLOCKS_PER_SEC); */
+		/* start_t = clock(); */
 		sort_path(cir_tab, tab_len);
-		// finish_t = clock() - start_t;
-		// printf("retrace_circuits time%f\n", (double)finish_t / CLOCKS_PER_SEC);
-		// debug_print_circuits(cir_tab, tab_len);
-		print_ants(lem, cir_tab, tab_len);
+		ants = init_ant_lst(lem->nb_ants);
+
+		/* finish_t = clock() - start_t; */
+		/* printf("sort+antlst time%f\n", (double)finish_t / CLOCKS_PER_SEC); */
+		/* start_t = clock(); */
+
+		print_ants(lem, &ants, cir_tab, tab_len);
+
+		/* finish_t = clock() - start_t; */
+		/* printf("print path time%f\n", (double)finish_t / CLOCKS_PER_SEC); */
+
 	}
+
 	free_cir_tab(cir_tab, tab_len);
 }

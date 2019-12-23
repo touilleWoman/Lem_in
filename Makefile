@@ -6,7 +6,7 @@
 #    By: naali <naali@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/17 16:13:53 by naali             #+#    #+#              #
-#    Updated: 2019/12/09 06:17:27 by nabih            ###   ########.fr        #
+#    Updated: 2019/12/18 15:13:28 by naali            ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -31,6 +31,7 @@ HEADERS			=	includes.h		\
 					lem_in.h		\
 					get_info.h		\
 					solver.h		\
+					get_many_path.h	\
 					libft.h
 
 INCLUDES		=	$(addprefix $(INC_FLAG), $(HEADERS_PATH))
@@ -40,7 +41,12 @@ OBJ_PATH		=	./objs
 SRC				=	main.c				\
 					lem_tab.c			\
 					lst_node.c			\
+					lst_node_bis1.c		\
+					lst_node_bis2.c		\
 					lst_path.c			\
+					lst_path_bis1.c		\
+					lst_path_bis2.c		\
+					lst_path_bis3.c		\
 					hash_encryption.c
 
 #					lem_path.c
@@ -48,17 +54,20 @@ SRC				=	main.c				\
 SRC				+=	get_info.c			\
 					get_nb_ants.c		\
 					get_nodes.c			\
-					get_paths.c
+					get_paths.c			\
+					ant_lst.c
 
 SRC				+=	solver.c 			\
+					solver_bis.c		\
 					lst_address.c		\
 					print_ants.c		\
+					get_appro_max.c		\
 					fulkerson_algo.c	\
 					retrace_circuits.c	\
-					print_anthill.c		\
-					print_anthill_two.c	\
 					init_anthill.c		\
+					how_many_path.c		\
 					debug.c	 #à supprimer
+
 
 OBJ 			=	$(addprefix $(OBJ_PATH)/, $(SRC:%.c=%.o))
 

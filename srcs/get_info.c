@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 08:23:51 by nabih             #+#    #+#             */
-/*   Updated: 2019/12/10 01:52:44 by nabih            ###   ########.fr       */
+/*   Updated: 2019/12/18 13:56:09 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ static int8_t			clear_info(t_lemin *lem, int8_t flg)
 	ft_memdel((void**)&(lem->line));
 	lem->start = NULL;
 	lem->end = NULL;
-	/* ft_memdel((void**)&(lem->start)); */
-	/* ft_memdel((void**)&(lem->end)); */
 	clear_hashtab(lem);
 	return (flg);
 }
@@ -27,10 +25,12 @@ static int8_t			clear_info(t_lemin *lem, int8_t flg)
 ** Recuperation
 **    D'INFO
 */
+
 int8_t					get_info(t_lemin *lem)
 {
 	int8_t			ret;
 
+	lem->bfs_round = 0;
 	lem->nb_nodes = 0;
 	if ((ret = get_nb_ants(lem)) > 0)
 	{

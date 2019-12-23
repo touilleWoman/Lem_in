@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   includes.h                                         :+:      :+:    :+:   */
+/*   get_many_path.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/26 17:01:52 by nabih             #+#    #+#             */
-/*   Updated: 2019/12/18 15:08:15 by naali            ###   ########.fr       */
+/*   Created: 2019/12/12 12:39:30 by nabih             #+#    #+#             */
+/*   Updated: 2019/12/18 13:21:14 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INCLUDES_H
-# define INCLUDES_H
+#ifndef GET_MANY_PATH_H
+# define GET_MANY_PATH_H
 
-// A DELETE
-# include <stdio.h>
+# include <solver.h>
 
-/*
-** Includes systeme
-*/
-# include <stdlib.h>
-
-/*
-** Include personnel
-*/
-# include <libft.h>
-# include <get_next_line.h>
+uint32_t			*init_ants_tab(uint32_t *tab, uint32_t len);
+uint32_t			get_appro_max(t_circuits **c, uint32_t len,
+									uint32_t ants);
 
 #endif

@@ -1,43 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hash_encryption.c                                  :+:      :+:    :+:   */
+/*   ant_lst.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/22 20:00:17 by nabih             #+#    #+#             */
-/*   Updated: 2019/12/18 13:59:54 by naali            ###   ########.fr       */
+/*   Created: 2019/12/11 00:41:56 by nabih             #+#    #+#             */
+/*   Updated: 2019/12/11 00:50:58 by nabih            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem_in.h>
 
-/*
-** Hashage du
-** nom de noeud
-*/
-
-int32_t				hash_name(char *name)
+t_list					*init_ant_lst(int32_t nb)
 {
-	int32_t		i;
-	uint32_t	ret;
-	int32_t		mult;
+	t_list			*tmp;
+	t_list			*lst;
 
-	ret = 0;
-	if (name != NULL)
+	lst = NULL;
+	while (nb > 0)
 	{
-		i = 0;
-		mult = 1;
-		while (name[i] != '\0')
-		{
-			if (ft_isalnum(name[i]) != 1 && name[i] != '_')
-				return (LM_ERROR);
-			ret += ft_square_rec(name[i], mult);
-			mult++;
-			i++;
-		}
+		tmp = ft_lstnew(NULL, 0);
+		tmp->content_size = nb;
+		ft_lstadd(&lst, tmp);
+		nb--;
 	}
-	else
-		return (LM_ERROR);
-	return (ret % HASHCODE);
+	tmp = NULL;
+	return (lst);
 }

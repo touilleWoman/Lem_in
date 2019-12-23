@@ -165,5 +165,6 @@ void					print_pth(t_path **tab);
 void					print_info_inout(t_lemin *lem);
 
 void					solver(t_lemin *lem);
+void					del_address_lst(t_list **lst);
 
 #endif

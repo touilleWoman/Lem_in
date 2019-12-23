@@ -78,6 +78,7 @@ void					solver(t_lemin *lem)
 		/* printf("retrace_circuits time%f\n", (double)finish_t / CLOCKS_PER_SEC); */
 		/* start_t = clock(); */
 		sort_path(cir_tab, tab_len);
+
 		ants = init_ant_lst(lem->nb_ants);
 
 		/* finish_t = clock() - start_t; */

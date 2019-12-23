@@ -50,7 +50,6 @@ void		del_address_lst(t_list **alst)
 {
 	t_list *keep;
 
-
 	while (*alst)
 	{
 		keep = (*alst)->next;

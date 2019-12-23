@@ -73,7 +73,7 @@ struct					s_node
 	t_path			*path_lst;
 	uint32_t		visited;
 	uint8_t			node_flow;
-	t_list			*forbidden_path;
+	t_list			*forbidden_path; //!!! n'a pas ete free encore
 	t_node			*next;
 };
 

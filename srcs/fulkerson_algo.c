@@ -22,8 +22,6 @@ static t_node		**get_top_elem(t_list *lst)
 	return (ret);
 }
 
-
-
 static uint8_t		iter_adja_of_current(t_node *current,
 									t_list **open, uint32_t bfs_round)
 {
@@ -40,7 +38,6 @@ static uint8_t		iter_adja_of_current(t_node *current,
 		{	
 			if (current->node_flow == 0 || not_in_address_lst(current->forbidden_path, adjacen_node))
 			{
-				// printf("%s\n", adjacen_node->name);
 				ft_lstadd_bot(open, address_list_new(&adjacen_node));
 				adjacen_node->parent_addr = current;
 				adjacen_node->visited = bfs_round;
@@ -77,20 +74,15 @@ static uint8_t		breadth_first_search(t_lemin *lem)
 		(*current)->visited = lem->bfs_round;
 		if (*current == lem->end)
 		{
-			del_address_lst(open);
-			printf("BFS LM_TRUE\n");
+			del_address_lst(&open);
 			return (LM_TRUE);
 		}
 		ret = iter_adja_of_current(*current, &open, lem->bfs_round);
 		del_top_elem(&open);
 	}
-	del_address_lst(open);
-	printf("BFS LM_FALSE, open [%p], ret[%d]\n", open, ret);
-
+	del_address_lst(&open);
 	return (LM_FALSE);
 }
-
-
 
 void		modify_residual_graph(t_lemin *lem)
 {
@@ -109,69 +101,12 @@ void		modify_residual_graph(t_lemin *lem)
 	}
 }
 
-uint8_t				traversable_check(t_node *parent, t_node *child)
-{
-	t_path 		*p;
-	t_node		*adjacen_node;
-
-	p = parent->path_lst;
-	adjacen_node = p->addr;
-	while ( adjacen_node != child)
-	{
-		p = p->next;
-
-		//=========== à supprimer
-		if (p == NULL)
-			printf("ERROR1 in traversable_check!!!!!!!!!!!!!\n");
-		//=========== 
-
-
-		adjacen_node = p->addr;
-	}
-
-	// ============. à supprimer
-	if (p->flow != 0 && p->flow != 1)
-			printf("ERROR2 in traversable_check!!!!!!!!!!!!!\n");
-		// =============
-
-
-	if (p->flow == 1)
-	{
-		printf("[%s] -> [%s] forbidden_path\n", parent->name, child->name);
-		ft_lstadd_top(&(parent->forbidden_path), address_list_new(&child));
-		return (LM_FALSE);
-	}
-	else
-		return (LM_TRUE);
-}
-
-uint8_t		manage_cross_road(t_lemin *lem)
-{
-	t_node		*child;
-	t_node		*parent;
-
-	child = lem->end;
-	while (child != lem->start)
-	{
-		parent = child->parent_addr;
-		if (parent->node_flow > 0)
-		{
-			if (traversable_check(parent, child) == LM_FALSE)
-			{
-				return (LM_FALSE);
-			}
-		}
-		child = parent;
-	}
-	return (LM_TRUE);
-}
-
 t_list			*get_pathway(t_lemin *lem)
 {
 	t_node		*child;
 	t_list		*pathway;
 
-
+	pathway = NULL;
 	child = lem->end;
 	ft_lstadd_top(&pathway, address_list_new(&child));
 	while (child != lem->start)
@@ -182,7 +117,67 @@ t_list			*get_pathway(t_lemin *lem)
 	return (pathway);
 }
 
+uint8_t				get_flow_node1_to_node2(t_node *node1, t_node *node2)
+{
+	t_path		*p;
 
+	p = node1->path_lst;
+	while (p->addr != node2)
+		p = p->next;
+	return (p->flow);
+}
+
+void				pathway_node_flow_update(t_list *lst)
+{
+	t_node		*node1;
+	t_node		*node2;
+	uint8_t		path_flow;
+
+	while (lst && lst->next)
+	{
+		node1 = *(t_node**)(lst->content);
+		node2 = *(t_node**)(lst->next->content);
+		path_flow = get_flow_node1_to_node2(node1, node2);
+		if (path_flow < 1)
+			ft_putendl_fd("Error in get_flow_node1_to_node2()\n", 2);
+		else if (path_flow == 2)
+		{
+			node1->node_flow -= 1;
+			node2->node_flow -= 1;
+		}
+		lst = lst->next;
+	}
+}
+
+void		forbade_next_step(t_list *lst)
+{
+	t_node		*node1;
+	t_node		*node2;
+
+	node1 = *(t_node**)(lst->content);
+	node2 = *(t_node**)(lst->next->content);
+	ft_lstadd_top(&(node1->forbidden_path), address_list_new(&node2));
+	// printf("[%s]->[%s]forbidden_path\n", node1->name, node2->name);
+}
+
+uint8_t		cross_road_ok(t_list *lst, t_lemin *lem)
+{
+	t_node		*node1;
+	t_node		*node2;
+
+	while (lst && lst->next)
+	{
+		node1 = *(t_node**)(lst->content);
+		node2 = *(t_node**)(lst->next->content);
+		if (node2 != lem->end && node2->node_flow > 0)
+		{
+			forbade_next_step(lst->next);
+			return (LM_FALSE);
+		}
+		lst = lst->next;
+	}
+	return (LM_TRUE);
+}
 
 /*
 ** wanted_flow is the maximum flow that we want,
@@ -200,13 +195,11 @@ uint32_t			fulkerson_algo(t_lemin *lem,
 	t_list		*pathway;
 
 	max_flow = 0;
-	pathway = NULL;
 	while (breadth_first_search(lem))
 	{
 		pathway = get_pathway(lem);
-		debug_print_address_lst(pathway);
-
-		if (manage_cross_road(lem))
+		pathway_node_flow_update(pathway);
+		if (cross_road_ok(pathway, lem))
 		{
 			modify_residual_graph(lem);
 			max_flow++;

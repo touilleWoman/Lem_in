@@ -116,7 +116,7 @@ void					solver(t_lemin *lem)
 	paths_nb = calculate_best_paths_nb(cir_tab, tab_len, lem->nb_ants);
 	free_cir_tab(cir_tab, tab_len);
 
-	printf("================seperater=======================\n");
+	// printf("================seperater=======================\n");
 	if ((tab_len = fulkerson_algo(lem, paths_nb)) == 0)
 		return ;
 
@@ -134,11 +134,7 @@ void					solver(t_lemin *lem)
 		/* finish_t = clock() - start_t; */
 		/* printf("retrace_circuits time%f\n", (double)finish_t / CLOCKS_PER_SEC); */
 		/* start_t = clock(); */
-		// tab_len = duplicate_check(cir_tab, tab_len);
 		sort_path(cir_tab, tab_len);
-		// debug_print_circuits(cir_tab, tab_len);
-
-		// app_max = get_appro_max(cir_tab, tab_len, lem->nb_ants);// Calcul approximatif du nombre de ligne
 		ants = init_ant_lst(lem->nb_ants);
 
 		/* finish_t = clock() - start_t; */

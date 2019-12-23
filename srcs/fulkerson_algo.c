@@ -36,21 +36,14 @@ static uint8_t		iter_adja_of_current(t_node *current,
 		adjacen_node = p->addr;
 		if (!adjacen_node)
 			return (LM_FALSE);
-		// if (ft_strcmp(current->name, "5") == 0)
-		// {
-		// 	printf("adjacen_node of 5 is [%s], pflow[%d], visited[%d] vs bfs_round[%d]\n", adjacen_node->name, p->flow, adjacen_node->visited, bfs_round);
-		// }
 		if (p->flow > 0 && adjacen_node->visited != bfs_round)
 		{	
-
-
 			if (current->node_flow == 0 || not_in_address_lst(current->forbidden_path, adjacen_node))
 			{
-				printf("%s\n", adjacen_node->name);
+				// printf("%s\n", adjacen_node->name);
 				ft_lstadd_bot(open, address_list_new(&adjacen_node));
 				adjacen_node->parent_addr = current;
 				adjacen_node->visited = bfs_round;
-
 			}
 		}
 		p = p->next;

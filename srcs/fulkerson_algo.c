@@ -48,15 +48,14 @@ static uint8_t		iter_adja_of_current(t_node *current,
 	return (LM_TRUE);
 }
 
-
-
 /*
 ** In this function, t_list stores, in lst->contente,
 ** the address of pointer of node.
-** "open" are nodes to be evaluate, elements are always added to the end,
+** "open" are nodes to be evaluate, elements are always added to the bottom,
 ** and taken from the top to be evaluated,
 ** then delete top elem after evaluation.
-** if "visited == lem->bfs_round", means node is already visited this round of bfs,,
+** if "visited == lem->bfs_round", 
+** it means node is already visited in this round of bfs,
 ** so we don't evaluate this node.
 */
 
@@ -180,12 +179,22 @@ uint8_t		cross_road_ok(t_list *lst, t_lemin *lem)
 }
 
 /*
-** wanted_flow is the maximum flow that we want,
-** it will limite max_flow returned
-** if lem->nb_ants < max_flow, then the flow returned is wanted_flow,
-** else, the flow returned is the maximum flow that anthill can provide.
-** but if wanted_flow == 0, it will return the actual maximum flow
-** bfs_round represents how many times bfs has been lauched
+** after each round of bfs :
+** 1. get_pathway():
+** pathway is not the circuit of ants, but the direction of flow of
+** fulkerson algo.
+** 2. pathway_node_flow_update() :
+** go through pathway for the first time to update node_flow, 
+** if path_flow between two nodes == 2, meaning it will cancel precedent bfs, 
+** therefore node_flow of these two nodes -=1.
+** 3. cross_road_ok():
+** check node_flow of all nodes on pathway.
+** if node flow == 0, no crossroad, can pass
+** if node flow == 1, can't pass
+** if all nodes can pass, it will accepte this bfs by modifying residual graph.
+** else, bfs is not accepted, it will find the bad path, 
+** add it in fordidden_path of node, so that next round of bfs will 
+** avoid this path
 */
 
 uint32_t			fulkerson_algo(t_lemin *lem,
@@ -204,6 +213,7 @@ uint32_t			fulkerson_algo(t_lemin *lem,
 			modify_residual_graph(lem);
 			max_flow++;
 		}
+		del_address_lst(&pathway);
 		if (wanted_flow > 0 && max_flow == wanted_flow)
 			return (wanted_flow);
 	}

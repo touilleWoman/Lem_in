@@ -76,5 +76,6 @@ void					free_node(t_node **node)
 {
 	ft_memdel((void**)&((*node)->name));
 	clear_path(&((*node)->path_lst));
+	del_address_lst(&((*node)->forbidden_path));
 	ft_memdel((void**)node);
 }

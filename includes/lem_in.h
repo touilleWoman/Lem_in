@@ -72,8 +72,9 @@ struct					s_node
 	uint32_t		nb_paths;
 	t_path			*path_lst;
 	uint32_t		visited;
-	uint8_t			node_flow;
-	t_list			*forbidden_path; //!!! n'a pas ete free encore
+	int8_t			node_flow;
+	t_list			*forbidden_path; //il est free en fin de program, si on lance plus qu'une fois fulkerson,
+										// faut trouver un moyen de le free plustot.
 	t_node			*next;
 };
 
@@ -165,5 +166,6 @@ void					print_pth(t_path **tab);
 void					print_info_inout(t_lemin *lem);
 
 void					solver(t_lemin *lem);
+void					del_address_lst(t_list **lst);
 
 #endif

@@ -94,10 +94,10 @@ void		modify_residual_graph(t_lemin *lem)
 	while (child != lem->start)
 	{
 		parent = child->parent_addr;
+		parent->node_flow += 1;
 		flow_plus_modif(parent, child, -1);
 		flow_plus_modif(child, parent, 1);
 		child = parent;
-		child->node_flow += 1;
 	}
 }
 
@@ -127,6 +127,12 @@ uint8_t				get_flow_node1_to_node2(t_node *node1, t_node *node2)
 	return (p->flow);
 }
 
+/*
+** if (path_flow == 2), meaning this step will be canceled,
+** so node_flow -= 1, but still need verify that its node_flow ==1,
+** because this node could have been canceled twice when passed by two circutis
+*/
+
 void				pathway_node_flow_update(t_list *lst)
 {
 	t_node		*node1;
@@ -139,11 +145,12 @@ void				pathway_node_flow_update(t_list *lst)
 		node2 = *(t_node**)(lst->next->content);
 		path_flow = get_flow_node1_to_node2(node1, node2);
 		if (path_flow < 1)
-			ft_putendl_fd("Error in get_flow_node1_to_node2()\n", 2);
+			ft_putendl_fd("\n\n\n\n\n\n\nError in get_flow_node1_to_node2()\n\n\n\n\n\n\n", 2);
 		else if (path_flow == 2)
 		{
-			node1->node_flow -= 1;
-			node2->node_flow -= 1;
+			// printf("[%s]->[%d],[%s]->[%d]\n",node1->name, node1->node_flow, node2->name, node2->node_flow);
+			node1->node_flow == 1 ? node1->node_flow -= 1 : 0;
+			node2->node_flow == 1 ? node2->node_flow -= 1 : 0;
 		}
 		lst = lst->next;
 	}
@@ -157,6 +164,7 @@ void		forbade_next_step(t_list *lst)
 	node1 = *(t_node**)(lst->content);
 	node2 = *(t_node**)(lst->next->content);
 	ft_lstadd_top(&(node1->forbidden_path), address_list_new(&node2));
+	// printf("[%s]->[%s]forbidden_path\n", node1->name, node2->name);
 }
 
 uint8_t		cross_road_ok(t_list *lst, t_lemin *lem)

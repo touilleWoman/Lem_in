@@ -30,9 +30,12 @@ int				main()
 			// parser_t = clock() - start_t;
 			// printf("parser time%f\n", (double)parser_t / CLOCKS_PER_SEC);
 
-//			print_tab(lem.tab, HASHCODE);// A DELETE
+			// print_tab(lem.tab, HASHCODE);// A DELETE
 			/* print_info_inout(&lem);// A DELETE */
 			solver(&lem);
+			printf("=================\n");
+			print_tab(lem.tab, HASHCODE);// A DELETE
+
 		}
 		clear_hashtab(&lem);
 	}
@@ -74,15 +77,18 @@ void			print_tab(t_node *(tab)[HASHCODE], uint32_t max)
 			tmp = tab[i];
 			while (tmp != NULL)
 			{
-				printf("|id[%d] ==> %s (nb_paths:%d)|", i, tmp->name,
-						 tmp->nb_paths);
-				printf("=PATH=>");
-				print_pth(&(tmp->path_lst));
-				if (tmp->next != NULL)
-					printf(" ");
+				// printf("|id[%d] ==> %s (nb_paths:%d)|", i, tmp->name,
+				// 		 tmp->nb_paths);
+				if (tmp->node_flow != 1 &&  tmp->node_flow !=0)
+					printf("name[%s] node_flow[%d]", tmp->name,
+						 tmp->node_flow);
+				// printf("=PATH=>");
+				// print_pth(&(tmp->path_lst));
+				// if (tmp->next != NULL)
+				// 	printf(" ");
 				tmp = tmp->next;
 			}
-			printf("\n");
+			// printf("\n");
 		}
 		i++;
 	}

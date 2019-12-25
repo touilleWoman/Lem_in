@@ -35,8 +35,6 @@ uint8_t			retrace_one_circuit_and_reset_flow(t_lemin *lem,
 	t_list			*new;
 
 	child = lem->end;
-	// printf("[%d]\n", child->node_flow);
-	child->node_flow--;
 	nb_floor = 0;
 	while (child != lem->start)
 	{
@@ -50,8 +48,6 @@ uint8_t			retrace_one_circuit_and_reset_flow(t_lemin *lem,
 		flow_plus_modif(child, parent, -1);
 		flow_plus_modif(parent, child, 1);
 		child = parent;
-		// printf("[%d]\n", child->node_flow);
-		child->node_flow--;
 		nb_floor++;
 	}
 	cir->nb_floor = nb_floor;

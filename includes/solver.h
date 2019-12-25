@@ -31,31 +31,23 @@ typedef struct	s_manypth
 	uint32_t	old_diff;
 }				t_manypth;
 
-typedef	struct	s_anthill
-{
-	int32_t		unsent;
-	int32_t		send_size;
-	uint32_t	total_exit;
-	uint32_t	total_enter;
-	uint32_t	print_nb;
-	uint32_t	start_floor;
-	uint32_t	max_ant_index;
-	uint8_t		activated;
-}				t_anthill;
-
 t_list			*address_list_new(t_node **const new);
 void			del_top_elem(t_list **alst);
+t_node			**get_top_elem(t_list *lst);
 uint8_t			not_in_address_lst(t_list *lst, t_node const *address);
-t_node			**get_node_in_circuit(t_list *cir, uint32_t floor);
 void			print_ants(t_lemin *lem, t_list **ants,
 							t_circuits **cir_tab, int32_t tab_len);
 uint32_t		fulkerson_algo(t_lemin *lem, uint32_t wanted_flow);
 int8_t			flow_plus_modif(t_node *enter, t_node *exit, int8_t modif);
-t_circuits			**retrace_circuits(t_lemin *lem, uint32_t tab_len);
+t_circuits		**retrace_circuits(t_lemin *lem, uint32_t tab_len);
 void			free_cir_tab(t_circuits **cir_tab, uint32_t tab_len);
-void			check_if_exit(t_node *end, t_node **node, t_anthill *h);
 uint32_t		how_many_path(t_circuits **c, uint32_t len,
 								uint32_t ants);
+uint8_t			cross_road_ok(t_list *lst, t_lemin *lem);
+t_list			*get_pathway(t_lemin *lem);
+void			pathway_node_flow_update(t_list *lst);
+
+
 // void			del_longer_cir(t_circuits **c1, t_circuits **c2);
 // void					looking_for_duplicated_node(t_circuits **c, uint32_t i,
 // 													uint32_t j);

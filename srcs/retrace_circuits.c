@@ -26,7 +26,7 @@ static t_node			*get_parent(t_node *enter)
 	return (NULL);
 }
 
-static uint8_t			retrace_one_circuit_and_reset_flow(t_lemin *lem,
+static uint8_t			retrace_one_and_reset_flow(t_lemin *lem,
 													t_circuits *cir)
 {
 	t_node			*child;
@@ -115,7 +115,7 @@ t_circuits			**retrace_circuits(t_lemin *lem, uint32_t tab_len)
 		cir_tab[i]->addr = address_list_new(&(lem->end));
 		if (cir_tab[i]->addr == NULL)
 			break;
-		if (retrace_one_circuit_and_reset_flow(lem, cir_tab[i]) == LM_FALSE)
+		if (retrace_one_and_reset_flow(lem, cir_tab[i]) == LM_FALSE)
 			break;
 		i++;
 	}

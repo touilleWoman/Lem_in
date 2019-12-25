@@ -44,22 +44,21 @@ void					solver(t_lemin *lem)
 
 	 // clock_t	start_t, finish_t; 
 	 // start_t = clock();
+
 	if ((tab_len = fulkerson_algo(lem, lem->nb_ants)) == 0)
-		return ;
-	if ((cir_tab = init_cir_tab(tab_len)) == NULL)
 		return ;
 
 	 // finish_t = clock() - start_t;
 	 // printf("fulkerson_algo time%f\n", (double)finish_t / CLOCKS_PER_SEC); 
 // 	 start_t = clock(); 
 
-	if (retrace_circuits(lem, tab_len, cir_tab))
+	cir_tab = retrace_circuits(lem, tab_len);
+	if (cir_tab)
 	{
-
-
 		/* finish_t = clock() - start_t; */
 		/* printf("retrace_circuits time%f\n", (double)finish_t / CLOCKS_PER_SEC); */
 		/* start_t = clock(); */
+
 		ants = init_ant_lst(lem->nb_ants);
 
 		/* finish_t = clock() - start_t; */
@@ -70,7 +69,7 @@ void					solver(t_lemin *lem)
 
 		/* finish_t = clock() - start_t; */
 		/* printf("print path time%f\n", (double)finish_t / CLOCKS_PER_SEC); */
-
+		
+		free_cir_tab(cir_tab, tab_len);
 	}
-	free_cir_tab(cir_tab, tab_len);
 }

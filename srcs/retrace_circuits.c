@@ -73,6 +73,27 @@ static void				sort_path(t_circuits **c, uint32_t len)
 	}
 }
 
+static t_circuits				**init_cir_tab(uint32_t tab_len)
+{
+	t_circuits		**cir_tab;
+	uint32_t		i;
+
+	i = 0;
+	if ((cir_tab = (t_circuits**)malloc(sizeof(t_circuits*) * tab_len)) == NULL)
+		return (NULL);
+	while (i < tab_len)
+	{
+		if ((cir_tab[i] = (t_circuits*)malloc(sizeof(t_circuits))) == NULL)
+		{
+			free_cir_tab(cir_tab, tab_len);
+			return (NULL);
+		}
+		ft_bzero(cir_tab[i], sizeof(t_circuits));
+		i++;
+	}
+	return (cir_tab);
+}
+
 /*
 ** circuits are array of t_circuits, array len = tab_len.
 ** t_circuits contains : (uint32_t)nb_floor, (t_list)*addr;
@@ -80,21 +101,30 @@ static void				sort_path(t_circuits **c, uint32_t len)
 ** adddr is list of address of node
 */
 
-uint8_t			retrace_circuits(t_lemin *lem, uint32_t tab_len,
-								t_circuits **cir_tab)
+t_circuits			**retrace_circuits(t_lemin *lem, uint32_t tab_len)
 {
 	uint32_t		i;
+	t_circuits		**cir_tab;
 
+	cir_tab = init_cir_tab(tab_len);
+	if (!cir_tab)
+		return (NULL);
 	i = 0;
 	while (i < tab_len)
 	{
 		cir_tab[i]->addr = address_list_new(&(lem->end));
 		if (cir_tab[i]->addr == NULL)
-			return (LM_FALSE);
+			break;
 		if (retrace_one_circuit_and_reset_flow(lem, cir_tab[i]) == LM_FALSE)
-			return (LM_FALSE);
+			break;
 		i++;
 	}
-	sort_path(cir_tab, tab_len);
-	return (LM_TRUE);
+	if (i == tab_len)
+		sort_path(cir_tab, tab_len);
+	else
+	{
+		free_cir_tab(cir_tab, tab_len);
+		cir_tab = NULL;
+	}
+	return (cir_tab);
 }

@@ -164,7 +164,7 @@ void		forbade_next_step(t_list *lst)
 	node1 = *(t_node**)(lst->content);
 	node2 = *(t_node**)(lst->next->content);
 	ft_lstadd_top(&(node1->forbidden_path), address_list_new(&node2));
-	printf("[%s]->[%s]forbidden_path\n", node1->name, node2->name);
+	// printf("[%s]->[%s]forbidden_path\n", node1->name, node2->name);
 }
 
 uint8_t		cross_road_ok(t_list *lst, t_lemin *lem)

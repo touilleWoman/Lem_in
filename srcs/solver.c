@@ -13,24 +13,7 @@
 #include "solver.h"
 #include "get_many_path.h"
 
-static void				sort_path(t_circuits **c, uint32_t len)
-{
-	uint32_t		i;
-	uint32_t		j;
 
-	i = 0;
-	while (i < len)
-	{
-		j = len - 1;
-		while (j > i)
-		{
-			if (c[i]->nb_floor > c[j]->nb_floor)
-				ft_swap_ptr((void**)&(c[i]), (void**)&(c[j]));
-			--j;
-		}
-		++i;
-	}
-}
 
 // uint32_t	calculate_best_paths_nb(t_circuits **c, uint32_t tab_len, int32_t nb_ants)
 // {
@@ -77,14 +60,13 @@ void					solver(t_lemin *lem)
 		/* finish_t = clock() - start_t; */
 		/* printf("retrace_circuits time%f\n", (double)finish_t / CLOCKS_PER_SEC); */
 		/* start_t = clock(); */
-		sort_path(cir_tab, tab_len);
 		ants = init_ant_lst(lem->nb_ants);
 
 		/* finish_t = clock() - start_t; */
 		/* printf("sort+antlst time%f\n", (double)finish_t / CLOCKS_PER_SEC); */
 		/* start_t = clock(); */
 
-		// print_ants(lem, &ants, cir_tab, tab_len);
+		print_ants(lem, &ants, cir_tab, tab_len);
 
 		/* finish_t = clock() - start_t; */
 		/* printf("print path time%f\n", (double)finish_t / CLOCKS_PER_SEC); */

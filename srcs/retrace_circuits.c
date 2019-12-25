@@ -12,7 +12,7 @@
 
 #include "solver.h"
 
-t_node			*get_parent(t_node *enter)
+static t_node			*get_parent(t_node *enter)
 {
 	t_path		*p;
 
@@ -26,7 +26,7 @@ t_node			*get_parent(t_node *enter)
 	return (NULL);
 }
 
-uint8_t			retrace_one_circuit_and_reset_flow(t_lemin *lem,
+static uint8_t			retrace_one_circuit_and_reset_flow(t_lemin *lem,
 													t_circuits *cir)
 {
 	t_node			*child;
@@ -54,9 +54,30 @@ uint8_t			retrace_one_circuit_and_reset_flow(t_lemin *lem,
 	return (LM_TRUE);
 }
 
+static void				sort_path(t_circuits **c, uint32_t len)
+{
+	uint32_t		i;
+	uint32_t		j;
+
+	i = 0;
+	while (i < len)
+	{
+		j = len - 1;
+		while (j > i)
+		{
+			if (c[i]->nb_floor > c[j]->nb_floor)
+				ft_swap_ptr((void**)&(c[i]), (void**)&(c[j]));
+			--j;
+		}
+		++i;
+	}
+}
+
 /*
-** circuits are array of circuits found, array len = tab_len
-** value stored in array is address of poiter of t_node
+** circuits are array of t_circuits, array len = tab_len.
+** t_circuits contains : (uint32_t)nb_floor, (t_list)*addr;
+** nb_floor is nb of nodes in each circuit.
+** adddr is list of address of node
 */
 
 uint8_t			retrace_circuits(t_lemin *lem, uint32_t tab_len,
@@ -74,5 +95,6 @@ uint8_t			retrace_circuits(t_lemin *lem, uint32_t tab_len,
 			return (LM_FALSE);
 		i++;
 	}
+	sort_path(cir_tab, tab_len);
 	return (LM_TRUE);
 }

@@ -33,8 +33,8 @@ int				main()
 			// print_tab(lem.tab, HASHCODE);// A DELETE
 			/* print_info_inout(&lem);// A DELETE */
 			solver(&lem);
-			printf("=================\n");
-			print_tab(lem.tab, HASHCODE);// A DELETE
+			// printf("=================\n");
+			// print_tab(lem.tab, HASHCODE);// A DELETE
 
 		}
 		clear_hashtab(&lem);

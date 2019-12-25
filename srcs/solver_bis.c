@@ -31,7 +31,27 @@ int8_t					flow_plus_modif(t_node *enter, t_node *exit,
 	return (LM_ERROR);
 }
 
+void		free_cir_tab(t_circuits **cir_tab, uint32_t tab_len)
+{
+	uint32_t	i;
 
+	i = 0;
+	if (cir_tab)
+	{
+		while (i < tab_len)
+		{
+			if (cir_tab[i])
+			{
+				del_address_lst(&(cir_tab[i]->addr));
+				free(cir_tab[i]);
+				cir_tab[i] = NULL;
+			}
+			i++;
+		}
+		free(cir_tab);
+		cir_tab = NULL;
+	}
+}
 
 // void					del_longer_cir(t_circuits **c1, t_circuits **c2)
 // {

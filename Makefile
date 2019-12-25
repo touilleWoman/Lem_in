@@ -63,8 +63,8 @@ SRC				+=	solver.c 			\
 					print_ants.c		\
 					get_appro_max.c		\
 					fulkerson_algo.c	\
+					cross_road.c		\
 					retrace_circuits.c	\
-					init_anthill.c		\
 					how_many_path.c		\
 					debug.c	 #à supprimer
 

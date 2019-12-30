@@ -11,9 +11,8 @@
 /* ************************************************************************** */
 
 #include "solver.h"
-#include "get_many_path.h"
 
-int8_t					flow_plus_modif(t_node *enter, t_node *exit,
+int8_t			flow_plus_modif(t_node *enter, t_node *exit,
 										int8_t modif)
 {
 	t_path			*p;
@@ -31,7 +30,7 @@ int8_t					flow_plus_modif(t_node *enter, t_node *exit,
 	return (LM_ERROR);
 }
 
-void		free_cir_tab(t_circuits **cir_tab, uint32_t tab_len)
+void			free_cir_tab(t_circuits **cir_tab, uint32_t tab_len)
 {
 	uint32_t	i;
 
@@ -52,40 +51,3 @@ void		free_cir_tab(t_circuits **cir_tab, uint32_t tab_len)
 		cir_tab = NULL;
 	}
 }
-
-// void					del_longer_cir(t_circuits **c1, t_circuits **c2)
-// {
-// 	if ((*c1)->nb_floor < (*c2)->nb_floor)
-// 		ft_memdel((void**)c2);
-// 	else
-// 		ft_memdel((void**)c1);
-// }
-
-// void					looking_for_duplicated_node(t_circuits **c, uint32_t i,
-// 														uint32_t j)
-// {
-// 	t_list			*lst1;
-// 	t_list			*lst2;
-// 	t_node			*n1;
-// 	t_node			*n2;
-
-// 	if (!(c[i]) || !(c[j]))
-// 		return ;
-// 	lst1 = c[i]->addr;
-// 	while (lst1->next)
-// 	{
-// 		n1 = *(t_node**)lst1->content;
-// 		lst2 = ((t_list*)c[j]->addr)->next;
-// 		while (lst2->next)
-// 		{
-// 			n2 = *(t_node**)lst2->content;
-// 			if (ft_strcmp(n1->name, n2->name) == 0)
-// 			{
-// 				del_longer_cir(&(c[i]), &(c[j]));
-// 				return ;
-// 			}
-// 			lst2 = lst2->next;
-// 		}
-// 		lst1 = lst1->next;
-// 	}
-// }

@@ -73,5 +73,3 @@ void		del_address_lst(t_list **alst)
 	}
 	*alst = NULL;
 }
-
-

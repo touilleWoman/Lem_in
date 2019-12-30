@@ -20,7 +20,7 @@ CC				=	gcc
 
 CFLAG 			=	-Wall -Wextra -Werror
 
-CFLAG			+=	-g -fsanitize=address
+CFLAG			+=	-g #-fsanitize=address
 
 INC_FLAG		=	-I
 
@@ -66,7 +66,6 @@ SRC				+=	solver.c 			\
 					cross_road.c		\
 					retrace_circuits.c	\
 					how_many_path.c		\
-					debug.c	 #à supprimer
 
 
 OBJ 			=	$(addprefix $(OBJ_PATH)/, $(SRC:%.c=%.o))

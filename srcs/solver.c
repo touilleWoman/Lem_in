@@ -13,28 +13,6 @@
 #include "solver.h"
 #include "get_many_path.h"
 
-
-
-// uint32_t	calculate_best_paths_nb(t_circuits **c, uint32_t tab_len, int32_t nb_ants)
-// {
-// 	uint32_t	nb_paths;
-// 	uint32_t	nb_lines;
-// 	uint32_t	i;
-
-// 	nb_paths = 1;
-// 	nb_lines = nb_ants / nb_paths + c[0]->nb_floor - 1;
-// 	i = 1;
-// 	while (i < tab_len && c[i]->nb_floor < nb_lines)
-// 	{
-// 		nb_paths++;
-// 		nb_lines = nb_ants / nb_paths + c[i]->nb_floor - 1;
-// 		i++;
-// 	}
-// 	return (nb_paths);
-// }
-
-
-
 // decommente pour voir le temps utilisé
 void					solver(t_lemin *lem)
 {

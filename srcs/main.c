@@ -23,83 +23,78 @@ int				main()
 	{
 		if (get_info(&lem) == LM_SUCCESS)
 		{
-			// print_tab(lem.tab, HASHCODE);// A DELETE
-			/* print_info_inout(&lem);// A DELETE */
 			solver(&lem);
-			// printf("=================\n");
-			// print_tab(lem.tab, HASHCODE);// A DELETE
-
 		}
 		clear_hashtab(&lem);
 	}
 	return (0);
 }
 
-/*
-** Test d'affichage
-*/
-void			print_info_inout(t_lemin *lem)
-{
-	ft_putstr("NB Fourmies = ");
-	ft_putnbr(lem->nb_ants);
-	ft_putchar('\n');
-	ft_putstr("NB nodes = ");
-	ft_putnbr(lem->nb_nodes);
-	ft_putchar('\n');
-	ft_putstr("NB paths = ");
-	ft_putnbr(lem->nb_paths);
-	ft_putchar('\n');
-	ft_putstr("Entrer = ");
-	ft_putstr(lem->start->name);
-	ft_putchar('\n');
-	ft_putstr("Sortie = ");
-	ft_putstr(lem->end->name);
-	ft_putchar('\n');
-}
+// /*
+// ** Test d'affichage
+// */
+// void			print_info_inout(t_lemin *lem)
+// {
+// 	ft_putstr("NB Fourmies = ");
+// 	ft_putnbr(lem->nb_ants);
+// 	ft_putchar('\n');
+// 	ft_putstr("NB nodes = ");
+// 	ft_putnbr(lem->nb_nodes);
+// 	ft_putchar('\n');
+// 	ft_putstr("NB paths = ");
+// 	ft_putnbr(lem->nb_paths);
+// 	ft_putchar('\n');
+// 	ft_putstr("Entrer = ");
+// 	ft_putstr(lem->start->name);
+// 	ft_putchar('\n');
+// 	ft_putstr("Sortie = ");
+// 	ft_putstr(lem->end->name);
+// 	ft_putchar('\n');
+// }
 
-void			print_tab(t_node *(tab)[HASHCODE], uint32_t max)
-{
-	t_node		*tmp;
-	uint32_t	i;
+// void			print_tab(t_node *(tab)[HASHCODE], uint32_t max)
+// {
+// 	t_node		*tmp;
+// 	uint32_t	i;
 
-	i = 0;
-	while (i < max)
-	{
-		if (tab[i] != NULL)
-		{
-			tmp = tab[i];
-			while (tmp != NULL)
-			{
-				// printf("|id[%d] ==> %s (nb_paths:%d)|", i, tmp->name,
-				// 		 tmp->nb_paths);
-				if (tmp->node_flow != 1 &&  tmp->node_flow !=0)
-					printf("name[%s] node_flow[%d]", tmp->name,
-						 tmp->node_flow);
-				// printf("=PATH=>");
-				// print_pth(&(tmp->path_lst));
-				// if (tmp->next != NULL)
-				// 	printf(" ");
-				tmp = tmp->next;
-			}
-			// printf("\n");
-		}
-		i++;
-	}
-}
+// 	i = 0;
+// 	while (i < max)
+// 	{
+// 		if (tab[i] != NULL)
+// 		{
+// 			tmp = tab[i];
+// 			while (tmp != NULL)
+// 			{
+// 				// printf("|id[%d] ==> %s (nb_paths:%d)|", i, tmp->name,
+// 				// 		 tmp->nb_paths);
+// 				if (tmp->node_flow != 1 &&  tmp->node_flow !=0)
+// 					printf("name[%s] node_flow[%d]", tmp->name,
+// 						 tmp->node_flow);
+// 				// printf("=PATH=>");
+// 				// print_pth(&(tmp->path_lst));
+// 				// if (tmp->next != NULL)
+// 				// 	printf(" ");
+// 				tmp = tmp->next;
+// 			}
+// 			// printf("\n");
+// 		}
+// 		i++;
+// 	}
+// }
 
-void			print_pth(t_path **tab)
-{
-	t_path		*tmp;
-	uint32_t	i;
+// void			print_pth(t_path **tab)
+// {
+// 	t_path		*tmp;
+// 	uint32_t	i;
 
-	i = 0;
-	tmp = *tab;
-	while (tmp != NULL)
-	{
-		printf("[%s, flow=%d]", tmp->name, tmp->flow);
-		if (tmp->next != NULL)
-			printf(" ");
-		tmp = tmp->next;
-	}
-}
-/* Fin de TEST */
+// 	i = 0;
+// 	tmp = *tab;
+// 	while (tmp != NULL)
+// 	{
+// 		printf("[%s, flow=%d]", tmp->name, tmp->flow);
+// 		if (tmp->next != NULL)
+// 			printf(" ");
+// 		tmp = tmp->next;
+// 	}
+// }
+// /* Fin de TEST */

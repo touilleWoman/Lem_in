@@ -48,10 +48,6 @@ t_list			*get_pathway(t_lemin *lem);
 void			pathway_node_flow_update(t_list *lst);
 
 
-// void			del_longer_cir(t_circuits **c1, t_circuits **c2);
-// void					looking_for_duplicated_node(t_circuits **c, uint32_t i,
-// 													uint32_t j);
-
 /*
 ** à supprimer functions debug à la fin
 */

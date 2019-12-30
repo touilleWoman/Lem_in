@@ -12,8 +12,6 @@
 
 #include "solver.h"
 
-
-
 static uint8_t		iter_adja_of_current(t_node *current,
 									t_list **open, uint32_t bfs_round)
 {
@@ -76,7 +74,7 @@ static uint8_t		breadth_first_search(t_lemin *lem)
 	return (LM_FALSE);
 }
 
-void		modify_residual_graph(t_lemin *lem)
+static void			modify_residual_graph(t_lemin *lem)
 {
 	t_node		*parent;
 	t_node		*child;
@@ -93,11 +91,10 @@ void		modify_residual_graph(t_lemin *lem)
 	}
 }
 
-
 /*
 ** after each round of bfs :
 ** 1. get_pathway():
-** pathway is not the circuit of ants, but the direction of flow of
+** pathway is not the circuit of ants, but the trace of flow of
 ** fulkerson algo.
 ** 2. pathway_node_flow_update() :
 ** go through pathway for the first time to update node_flow, 
@@ -131,7 +128,7 @@ uint32_t			fulkerson_algo(t_lemin *lem,
 		}
 		del_address_lst(&pathway);
 		if (wanted_flow > 0 && max_flow == wanted_flow)
-			return (wanted_flow);
+			break;
 	}
 	return (max_flow);
 }

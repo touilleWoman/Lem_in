@@ -11,7 +11,7 @@ static uint8_t			get_flow_node1_to_node2(t_node *node1, t_node *node2)
 	return (p->flow);
 }
 
-t_list			*get_pathway(t_lemin *lem)
+t_list					*get_pathway(t_lemin *lem)
 {
 	t_node		*child;
 	t_list		*pathway;
@@ -27,7 +27,6 @@ t_list			*get_pathway(t_lemin *lem)
 	return (pathway);
 }
 
-
 /*
 ** if path_flow == 2, means this step in precedent circuit will be canceled
 ** by modifying path flow later. 
@@ -36,7 +35,7 @@ t_list			*get_pathway(t_lemin *lem)
 ** because this node could have been canceled twice when passed by two circutis
 */
 
-void			pathway_node_flow_update(t_list *lst)
+void					pathway_node_flow_update(t_list *lst)
 {
 	t_node		*node1;
 	t_node		*node2;
@@ -51,7 +50,6 @@ void			pathway_node_flow_update(t_list *lst)
 			ft_putendl_fd("\n\n\n\n\n\n\nError in get_flow_node1_to_node2()\n\n\n\n\n\n\n", 2);
 		else if (path_flow == 2)
 		{
-			// printf("[%s]->[%d],[%s]->[%d]\n",node1->name, node1->node_flow, node2->name, node2->node_flow);
 			node1->node_flow == 1 ? node1->node_flow -= 1 : 0;
 			node2->node_flow == 1 ? node2->node_flow -= 1 : 0;
 		}
@@ -59,7 +57,7 @@ void			pathway_node_flow_update(t_list *lst)
 	}
 }
 
-static void		forbade_next_step(t_list *lst)
+static void				forbade_next_step(t_list *lst)
 {
 	t_node		*node1;
 	t_node		*node2;
@@ -67,10 +65,9 @@ static void		forbade_next_step(t_list *lst)
 	node1 = *(t_node**)(lst->content);
 	node2 = *(t_node**)(lst->next->content);
 	ft_lstadd_top(&(node1->forbidden_path), address_list_new(&node2));
-	// printf("[%s]->[%s]forbidden_path\n", node1->name, node2->name);
 }
 
-uint8_t			cross_road_ok(t_list *lst, t_lemin *lem)
+uint8_t					cross_road_ok(t_list *lst, t_lemin *lem)
 {
 	t_node		*node1;
 	t_node		*node2;

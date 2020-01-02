@@ -80,12 +80,10 @@ static void				forbade_next_step(t_list *lst)
 
 uint8_t					cross_road_ok(t_list *lst, t_lemin *lem)
 {
-	t_node		*node1;
 	t_node		*node2;
 
 	while (lst && lst->next)
 	{
-		node1 = *(t_node**)(lst->content);
 		node2 = *(t_node**)(lst->next->content);
 		if (node2 != lem->end && node2->node_flow > 0)
 		{

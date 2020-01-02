@@ -106,10 +106,10 @@ static int8_t			add_path(t_lemin *lem)
 
 int8_t					get_path(t_lemin *lem)
 {
-	t_path			*tmp;
+	// t_path			*tmp; (non utilisé)
 	int8_t			ret;
 
-	tmp = NULL;
+	// tmp = NULL; 
 	lem->nb_paths = 0;
 	while ((lem->line != NULL || get_next_line(0, &lem->line) == 1)
 			&& (ret = check_line(lem->line)) != LM_ERROR)

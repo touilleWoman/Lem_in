@@ -3,68 +3,77 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/24 18:53:57 by nabih             #+#    #+#             */
-/*   Updated: 2019/11/13 17:01:46 by naali            ###   ########.fr       */
+/*   Created: 2018/12/18 14:43:47 by jleblond          #+#    #+#             */
+/*   Updated: 2020/01/02 20:44:50 by jleblond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
 #include "get_next_line.h"
 
-static unsigned int		check_str(char *str)
+static int		buf_to_line(char **line, char const buf[BUFF_SIZE], size_t n)
 {
-	unsigned int	i;
+	char			str[n + 1];
+	char			*tmp;
 
-	i = 0;
-	if (str != NULL)
+	ft_strncpy(str, buf, n);
+	str[n] = '\0';
+	if (*line == NULL)
+		*line = ft_strdup(str);
+	else
 	{
-		while (str[i] != '\n' && str[i] != '\0')
-			i++;
+		tmp = ft_strjoin(*line, str);
+		if (tmp == NULL)
+			return (ERROR);
+		free(*line);
+		*line = tmp;
 	}
-	return (i);
+	if (*line == NULL)
+		return (ERROR);
+	return (SUCCESS);
 }
 
-static char				*choose_copy(char *tmp)
+static int		renew_buf(char **line, char buf[BUFF_SIZE], int *n_not_found)
 {
-	if (tmp != NULL && ft_strchr(tmp, '\n'))
-	{
-		ft_strcpy(tmp, ft_strchr(tmp, '\n') + 1);
-		return (tmp);
-	}
-	if (tmp != NULL && check_str(tmp) > 0)
-	{
-		tmp = ft_strcpy(tmp, ft_strchr(tmp, '\0'));
-		return (tmp);
-	}
-	return (NULL);
+	size_t			n;
+
+	n = 0;
+	while ((buf[n] != 0) && (buf[n] != '\n'))
+		n++;
+	if (buf_to_line(line, buf, n) == ERROR)
+		return (ERROR);
+	if (buf[n] == '\n')
+		*n_not_found = FALSE;
+	ft_memmove(buf, buf + n + 1, BUFF_SIZE - n);
+	ft_memset(buf + BUFF_SIZE - n, '\0', n);
+	return (SUCCESS);
 }
 
-int						get_next_line(int const fd, char **line)
+int				get_next_line(const int fd, char **line)
 {
-	int			rd;
-	int			check;
-	static char	*tmp1 = NULL;
-	char		*tmp2;
-	char		buf[BUFF_SIZE + 1];
+	int				readret;
+	static char		buf[BUFF_SIZE] = "\0";
+	int				n_not_found;
 
-	rd = 0;
-	check = 0;
-	tmp2 = NULL;
-	if (fd >= 0 && line && BUFF_SIZE > 0 && read(fd, buf, 0) >= 0)
+	if (BUFF_SIZE < 1 || line == NULL || fd < 0)
+		return (ERROR);
+	*line = NULL;
+	n_not_found = TRUE;
+	while (n_not_found)
 	{
-		*line = NULL;
-		while ((tmp1 == NULL || tmp1[(check = check_str(tmp1))] != '\n')
-					&& (rd = read(fd, buf, BUFF_SIZE)) > 0)
+		if (buf[0] == '\0')
 		{
-			buf[rd] = '\0';
-			tmp2 = tmp1;
-			tmp1 = ft_strjoin(tmp1, buf);
-			ft_memdel((void**)(&tmp2));
+			readret = read(fd, buf, BUFF_SIZE);
+			if (readret == ERROR)
+				return (ERROR);
+			else if (readret == 0 && *line == NULL)
+				return (FINISHED);
+			else if (readret == 0)
+				return (SUCCESS);
 		}
-		*line = ft_strsub(tmp1, 0, check);
-		return ((choose_copy(tmp1) == NULL) ? 0 : 1);
+		if (renew_buf(line, buf, &n_not_found) == ERROR)
+			return (ERROR);
 	}
-	return (-1);
+	return (SUCCESS);
 }

@@ -17,6 +17,10 @@ int				main(void)
 {
 	t_lemin		lem;
 
+
+	// clock_t	start_t, finish_t;
+	// start_t = clock();
+
 	lem.line = NULL;
 	ft_bzero(lem.tab, sizeof(t_node*) * HASHCODE);
 	if (HASHCODE > 100 && HASHCODE < 50000)
@@ -27,5 +31,7 @@ int				main(void)
 		}
 		clear_hashtab(&lem);
 	}
+	// finish_t = clock() - start_t;
+	// printf("total time%f\n", (double)finish_t / CLOCKS_PER_SEC);
 	return (0);
 }

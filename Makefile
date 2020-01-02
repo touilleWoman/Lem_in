@@ -20,7 +20,7 @@ CC				=	gcc
 
 CFLAG 			=	-Wall -Wextra -Werror
 
-CFLAG			+=	-g #-fsanitize=address
+CFLAG			+=	-g -ggdb #-fsanitize=address
 
 INC_FLAG		=	-I
 

@@ -32,6 +32,8 @@ int8_t					get_info(t_lemin *lem)
 
 	lem->bfs_round = 0;
 	lem->nb_nodes = 0;
+	lem->isstart = 0;
+	lem->isend = 0;
 	if ((ret = get_nb_ants(lem)) > 0)
 	{
 		if ((ret = get_node(lem)) == LM_SUCCESS)

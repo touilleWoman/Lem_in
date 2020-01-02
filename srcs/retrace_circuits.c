@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 13:34:02 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/18 14:58:16 by naali            ###   ########.fr       */
+/*   Updated: 2020/01/02 11:46:53 by jleblond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void				sort_path(t_circuits **c, uint32_t len)
 	}
 }
 
-static t_circuits				**init_cir_tab(uint32_t tab_len)
+static t_circuits		**init_cir_tab(uint32_t tab_len)
 {
 	t_circuits		**cir_tab;
 	uint32_t		i;
@@ -101,7 +101,7 @@ static t_circuits				**init_cir_tab(uint32_t tab_len)
 ** adddr is list of address of node
 */
 
-t_circuits			**retrace_circuits(t_lemin *lem, uint32_t tab_len)
+t_circuits				**retrace_circuits(t_lemin *lem, uint32_t tab_len)
 {
 	uint32_t		i;
 	t_circuits		**cir_tab;
@@ -114,9 +114,9 @@ t_circuits			**retrace_circuits(t_lemin *lem, uint32_t tab_len)
 	{
 		cir_tab[i]->addr = address_list_new(&(lem->end));
 		if (cir_tab[i]->addr == NULL)
-			break;
+			break ;
 		if (retrace_one_and_reset_flow(lem, cir_tab[i]) == LM_FALSE)
-			break;
+			break ;
 		i++;
 	}
 	if (i == tab_len)

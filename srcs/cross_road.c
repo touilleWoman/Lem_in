@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cross_road.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/02 11:50:07 by jleblond          #+#    #+#             */
+/*   Updated: 2020/01/02 11:50:11 by jleblond         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "solver.h"
 
@@ -29,7 +40,7 @@ t_list					*get_pathway(t_lemin *lem)
 
 /*
 ** if path_flow == 2, means this step in precedent circuit will be canceled
-** by modifying path flow later. 
+** by modifying path flow later.
 ** To update node_flow, We should reduce node_flow by 1 (node_flow -= 1)
 ** but still need check that its node_flow == 1,
 ** because this node could have been canceled twice when passed by two circutis

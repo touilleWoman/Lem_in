@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 14:23:13 by naali             #+#    #+#             */
-/*   Updated: 2019/12/18 14:26:00 by naali            ###   ########.fr       */
+/*   Updated: 2020/01/02 11:52:21 by jleblond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_node					*new_node(char *name)
 	node->next = NULL;
 	node->visited = 0;
 	node->node_flow = 0;
-	node->forbidden_path = NULL; // à free plus tard!!!
+	node->forbidden_path = NULL;
 	return (node);
 }
 

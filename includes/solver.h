@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:36:05 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/18 15:12:06 by naali            ###   ########.fr       */
+/*   Updated: 2020/01/03 10:28:32 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ uint32_t		how_many_path(t_circuits **c, uint32_t len,
 uint8_t			cross_road_ok(t_list *lst, t_lemin *lem);
 t_list			*get_pathway(t_lemin *lem);
 void			pathway_node_flow_update(t_list *lst);
-
 
 /*
 ** à supprimer functions debug à la fin

@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 17:03:23 by nabih             #+#    #+#             */
-/*   Updated: 2019/12/18 15:07:49 by naali            ###   ########.fr       */
+/*   Updated: 2020/01/03 10:27:56 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@
 **
 ** "int8_t" dans le cas d'un retour SUCCESS-ERROR
 */
-
-// à supprimer
-#include <time.h>
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
@@ -73,8 +70,7 @@ struct					s_node
 	t_path			*path_lst;
 	uint32_t		visited;
 	int8_t			node_flow;
-	t_list			*forbidden_path; //il est free en fin de program, si on lance plus qu'une fois fulkerson,
-										// faut trouver un moyen de le free plustot.
+	t_list			*forbidden_path;
 	t_node			*next;
 };
 

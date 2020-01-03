@@ -22,6 +22,12 @@ int8_t					get_nb_ants(t_lemin *lem)
 	lem->nb_ants = 0;
 	if (get_next_line(0, &(lem->line)) == 1)
 	{
+		if (lem->line[0] == '-')
+		{
+			ft_putstr_fd("Ants number can't be negative\n", 2);
+			free(lem->line);
+			return (LM_ERROR);
+		}
 		lem->nb_ants = ft_atoi(lem->line);
 		ft_memdel((void**)&(lem->line));
 	}

@@ -20,7 +20,7 @@ CC				=	gcc
 
 CFLAG 			=	-Wall -Wextra -Werror
 
-CFLAG			+=	-g -ggdb #-fsanitize=address
+CFLAG			+=	-g -ggdb
 
 INC_FLAG		=	-I
 
@@ -48,8 +48,6 @@ SRC				=	main.c				\
 					lst_path_bis2.c		\
 					lst_path_bis3.c		\
 					hash_encryption.c
-
-#					lem_path.c
 
 SRC				+=	get_info.c			\
 					get_nb_ants.c		\

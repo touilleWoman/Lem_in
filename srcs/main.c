@@ -22,9 +22,7 @@ int				main(void)
 	if (HASHCODE > 100 && HASHCODE < 50000)
 	{
 		if (get_info(&lem) == LM_SUCCESS)
-		{
 			solver(&lem);
-		}
 		clear_hashtab(&lem);
 	}
 	return (0);

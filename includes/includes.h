@@ -13,9 +13,6 @@
 #ifndef INCLUDES_H
 # define INCLUDES_H
 
-// A DELETE
-# include <stdio.h>
-
 /*
 ** Includes systeme
 */

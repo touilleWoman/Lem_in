@@ -57,9 +57,7 @@ void					pathway_node_flow_update(t_list *lst)
 		node1 = *(t_node**)(lst->content);
 		node2 = *(t_node**)(lst->next->content);
 		path_flow = get_flow_node1_to_node2(node1, node2);
-		if (path_flow < 1)
-			ft_putendl_fd("\n\n\n\n\n\n\nError in get_flow_node1_to_node2()\n\n\n\n\n\n\n", 2);
-		else if (path_flow == 2)
+		if (path_flow == 2)
 		{
 			node1->node_flow == 1 ? node1->node_flow -= 1 : 0;
 			node2->node_flow == 1 ? node2->node_flow -= 1 : 0;

@@ -50,6 +50,12 @@ static int		renew_buf(char **line, char buf[BUFF_SIZE], int *n_not_found)
 	return (SUCCESS);
 }
 
+static void		init(char **line, int *n_not_found)
+{
+	*line = NULL;
+	*n_not_found = TRUE;
+}
+
 int				get_next_line(const int fd, char **line)
 {
 	int				readret;
@@ -58,8 +64,7 @@ int				get_next_line(const int fd, char **line)
 
 	if (BUFF_SIZE < 1 || line == NULL || fd < 0)
 		return (ERROR);
-	*line = NULL;
-	n_not_found = TRUE;
+	init(line, &n_not_found);
 	while (n_not_found)
 	{
 		if (buf[0] == '\0')
@@ -71,6 +76,8 @@ int				get_next_line(const int fd, char **line)
 				return (FINISHED);
 			else if (readret == 0)
 				return (SUCCESS);
+			else if (readret == BUFF_SIZE && ft_strlen(buf) == 0)
+				return (ERROR);
 		}
 		if (renew_buf(line, buf, &n_not_found) == ERROR)
 			return (ERROR);

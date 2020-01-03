@@ -17,7 +17,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-# define BUFF_SIZE 40
+# define BUFF_SIZE 100
 # define ERROR -1
 # define SUCCESS 1
 # define FINISHED 0

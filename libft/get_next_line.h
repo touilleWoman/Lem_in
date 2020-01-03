@@ -6,10 +6,9 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/01 17:30:19 by jleblond          #+#    #+#             */
-/*   Updated: 2020/01/02 20:48:23 by jleblond         ###   ########.fr       */
+/*   Updated: 2020/01/03 13:39:07 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H

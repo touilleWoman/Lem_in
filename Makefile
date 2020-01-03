@@ -6,7 +6,7 @@
 #    By: naali <naali@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/17 16:13:53 by naali             #+#    #+#              #
-#    Updated: 2019/12/18 15:13:28 by naali            ###   ########.fr        #
+#    Updated: 2020/01/03 15:16:25 by naali            ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -79,7 +79,7 @@ vpath %.h ./includes/:./libft/
 
 all				:	libs $(NAME)
 
-$(NAME)			:	$(OBJ)
+$(NAME)			:	$(OBJ) ./libft/libft.a
 					@echo "${vertfonce}Compiling ...${neutre}\c"
 					@$(CC) $(CFLAG) -o $(NAME) $(OBJ) $(LFLAG) $(INCLUDES)
 					@echo "${rose}DONE${neutre}"

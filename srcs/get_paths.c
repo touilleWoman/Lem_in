@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:48:44 by nabih             #+#    #+#             */
-/*   Updated: 2019/12/18 13:59:30 by naali            ###   ########.fr       */
+/*   Updated: 2020/01/03 10:20:49 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,8 @@ static int8_t			add_path(t_lemin *lem)
 
 int8_t					get_path(t_lemin *lem)
 {
-	// t_path			*tmp; (non utilisé)
 	int8_t			ret;
 
-	// tmp = NULL; 
 	lem->nb_paths = 0;
 	while ((lem->line != NULL || get_next_line(0, &lem->line) == 1)
 			&& (ret = check_line(lem->line)) != LM_ERROR)

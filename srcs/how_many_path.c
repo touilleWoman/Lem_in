@@ -6,14 +6,14 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 11:27:59 by nabih             #+#    #+#             */
-/*   Updated: 2019/12/18 14:02:28 by naali            ###   ########.fr       */
+/*   Updated: 2020/01/03 10:22:41 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <solver.h>
 #include <get_many_path.h>
 
-uint32_t			*init_ants_tab(uint32_t *tab, uint32_t len)
+uint32_t				*init_ants_tab(uint32_t *tab, uint32_t len)
 {
 	if (!(tab = malloc(sizeof(uint32_t) * (len + 1))))
 		return (NULL);
@@ -71,9 +71,8 @@ static uint32_t			*ants_spreading(t_circuits **c, uint32_t *tab,
 			j = 0;
 			while (j < i && ants > 0)
 			{
-				tab[j] += 1;
+				tab[j++] += 1;
 				ants--;
-				j++;
 			}
 			j--;
 		}

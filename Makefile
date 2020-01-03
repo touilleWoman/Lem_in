@@ -20,8 +20,6 @@ CC				=	gcc
 
 CFLAG 			=	-Wall -Wextra -Werror
 
-CFLAG			+=	-g -ggdb
-
 INC_FLAG		=	-I
 
 HEADERS_PATH	=	./includes		\

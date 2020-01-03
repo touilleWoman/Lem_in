@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 13:34:02 by jleblond          #+#    #+#             */
-/*   Updated: 2020/01/02 11:46:53 by jleblond         ###   ########.fr       */
+/*   Updated: 2020/01/03 15:36:54 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ static t_circuits		**init_cir_tab(uint32_t tab_len)
 		return (NULL);
 	while (i < tab_len)
 	{
+		cir_tab[i] = NULL;
 		if ((cir_tab[i] = (t_circuits*)malloc(sizeof(t_circuits))) == NULL)
 		{
 			free_cir_tab(cir_tab, tab_len);

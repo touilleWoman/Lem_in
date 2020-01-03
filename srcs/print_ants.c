@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:45:26 by jleblond          #+#    #+#             */
-/*   Updated: 2019/12/18 14:55:49 by naali            ###   ########.fr       */
+/*   Updated: 2020/01/03 15:25:38 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ void					print_ants(t_lemin *lem, t_list **ants,
 		if (lem->nb_ants - total_enter > 0)
 		{
 			send = how_many_path(cir_tab, tab_len, lem->nb_ants - total_enter);
+			if (send == -1)
+				return ;
 			init_ant_cir(cir_tab, ants, send);
 			total_enter += send;
 		}

@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 11:27:59 by nabih             #+#    #+#             */
-/*   Updated: 2020/01/03 10:22:41 by naali            ###   ########.fr       */
+/*   Updated: 2020/01/03 15:51:46 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ uint32_t				how_many_path(t_circuits **c, uint32_t len,
 	enter++;
 	if (enter == 1)
 	{
-		ants_tab = init_ants_tab(ants_tab, len);
+		if ((ants_tab = init_ants_tab(ants_tab, len)) == NULL)
+			return (-1);
 		ants_tab = ants_spreading(c, ants_tab, len, ants);
 	}
 	while (i < len && ants_tab[i] > 0)

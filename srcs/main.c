@@ -6,7 +6,7 @@
 /*   By: nabih <naali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 16:48:42 by nabih             #+#    #+#             */
-/*   Updated: 2020/01/03 10:24:03 by naali            ###   ########.fr       */
+/*   Updated: 2020/01/06 13:40:51 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int				main(void)
 	{
 		if (get_info(&lem) == LM_SUCCESS)
 			solver(&lem);
+		else
+			ft_putstr_fd("ERROR\n", 2);
 		clear_hashtab(&lem);
 	}
 	return (0);

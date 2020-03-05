@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdel.c                                        :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/13 16:43:35 by naali             #+#    #+#             */
-/*   Updated: 2020/01/03 15:45:18 by naali            ###   ########.fr       */
+/*   Created: 2020/01/03 15:45:28 by naali             #+#    #+#             */
+/*   Updated: 2020/01/03 15:51:17 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./libft.h"
 
-void		ft_lstdel(t_list **alst, void (*del)(void*, size_t))
+void		ft_lstclear(t_list **alst)
 {
 	t_list	*tmp;
 
 	tmp = NULL;
-	if (alst != NULL && del != NULL)
+	if (alst != NULL)
 		while (*alst != NULL)
 		{
 			tmp = (*alst)->next;
-			ft_lstdelone(alst, del);
+			ft_memdel((void**)alst);
 			*alst = tmp;
 		}
 }

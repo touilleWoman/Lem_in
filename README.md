@@ -1,12 +1,20 @@
 # lem-in
 
-<b>Sujet</b>: => <a href="https://cdn.intra.42.fr/pdf/pdf/1555/lem-in.fr.pdf"> Cliquez ici pour le voir </a>
+School 42 team project, I'm in charge of the algorithme part.
 
-<a href="https://trello.com/b/6WApAcJM/lemin"> Organisation via Trello </a>
+The purpose of this project is to find paths from start room to end room and to move ants by these paths with the least amount of steps.
 
-  1. Parser:
-      - Doit pouvoir gérer plus de 4000 entrées en moins de 5s (9s mediocre, + inacceptable)
-      - Établir une structure en liste chaînée ou arbre (Position des boites + Liaisons entre elles)
 
-  2. Resolution:
-      - Voir algorythme de Edmond Karp
+**Usage**
+
+```
+make
+./lem-in < ressources/bigmap
+```
+
+I use Breadth-first search (BFS) algorithm and Edmonds-Karp algorithme with adaptation.
+
+>the Edmonds–Karp algorithm is an implementation of the Ford–Fulkerson method for computing 
+>the maximum flow in a flow network. 
+
+It is demanded that we can have maximum one ant in each room. So the max-flow of all edges are 1. However Edmonds-Karp algorithme doesn't take node flow in consideration. When two paths are crossed, the ants will walk over each other. To avoid this, I have a node_flow counter, if node_flow == 2, I will consider this round of BFS as invalid, and add this path in to forbidden pathlist.
